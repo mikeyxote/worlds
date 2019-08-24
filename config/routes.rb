@@ -1,10 +1,25 @@
 Rails.application.routes.draw do
+  get 'strava_request/show'
+  get 'strava_callback/show'
+
+  devise_for :users
+  get 'static_pages/home'
+  get 'help' => 'static_pages#help'
+  get 'users' => 'users#index'
+
+  get 'static_pages/help'
+  get 'strava_request' => 'strava_request#show'
+  get 'strava_callback' => 'strava_callback#show'
+
   resources :users
+
+  root 'static_pages#home'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

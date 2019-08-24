@@ -3,15 +3,17 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
-  def strava_test
-    puts "This is a second test"
-    # client = Strava::Api::Client.new(
-    #   access_token: "6eedc84145199d406ba2b6f4ddebc18fb85f5148"
-    #   )
-    
-    # activity = client.activity(2616895731)
-    
-    # puts activity.name
-  end
-  
+
+  # # Returns the current logged-in user (if any).
+  # def current_user
+  #   if session[:user_id]
+  #     @current_user ||= User.find_by(id: session[:user_id])
+  #   end
+  # end
+
+  # # Returns true if the user is logged in, false otherwise.
+  # def logged_in?
+  #   !current_user.nil?
+  # end
+
 end

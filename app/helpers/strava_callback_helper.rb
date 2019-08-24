@@ -1,0 +1,2 @@
+module StravaCallbackHelper
+end

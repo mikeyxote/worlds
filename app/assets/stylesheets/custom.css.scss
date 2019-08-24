@@ -1,0 +1,481 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/* mixins, variables, etc. */
+
+$gray-medium-light: #eaeaea;
+
+@mixin box_sizing {
+  -moz-box-sizing:     border-box;
+  -webkit-box-sizing:  border-box;
+  box-sizing:          border-box;
+}
+
+/* universal */
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center {
+  text-align: center;
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+/* typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: $gray-light;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+
+/* header */
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $gray-medium-light;
+  color: $gray-light;
+  a {
+    color: $gray;
+    &:hover {
+      color: $gray-darker;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
+}
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
+  
+/* sidebar */
+
+aside {
+  section.user_info {
+    margin-top: 20px;
+  }
+  section {
+    padding: 10px 0;
+    margin-top: 20px;
+    &:first-child {
+      border: 0;
+      padding-top: 0;
+    }
+    span {
+      display: block;
+      margin-bottom: 3px;
+      line-height: 1;
+    }
+    h1 {
+      font-size: 1.4em;
+      text-align: left;
+      letter-spacing: -1px;
+      margin-bottom: 3px;
+      margin-top: 0px;
+    }
+  }
+}
+
+.gravatar {
+  float: left;
+  margin-right: 10px;
+}
+
+.gravatar_edit {
+  margin-top: 15px;
+}
+
+.stats {
+  overflow: auto;
+  margin-top: 0;
+  padding: 0;
+  a {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid $gray-lighter;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: blue;
+    }
+  }
+  strong {
+    display: block;
+  }
+}
+
+.user_avatars {
+  overflow: auto;
+  margin-top: 10px;
+  .gravatar {
+    margin: 1px 1px;
+  }
+  a {
+    padding: 0;
+  }
+}
+
+.users.follow {
+  padding: 0;
+}
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .has-error;
+  .form-control {
+    color: $state-danger-text;
+  }
+}
+
+.checkbox {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span {
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
+
+#session_remember_me {
+  width: auto;
+  margin-left: 0;
+}
+
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid $gray-lighter;
+  }
+}
+
+/* microposts */
+
+.microposts {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .user {
+    margin-top: 5em;
+    padding-top: 0;
+    margin: auto;
+  }
+  .content {
+    display: block;
+    margin-left: 60px;
+    img {
+      display: block;
+      padding: 5px 0;
+    }
+  }
+  .timestamp {
+    color: $gray-light;
+    display: block;
+    margin-left: 60px;
+  }
+  .gravatar {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+}
+
+aside {
+  textarea {
+    height: 100px;
+    margin-bottom: 5px;
+  }
+}
+
+span.picture {
+  margin-top: 10px;
+  input {
+    border: 0;
+  }
+}
+
+#nemesis {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 95%;
+}
+
+#nemesis td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#nemesis tr:nth-child(even){background-color: #f2f2f2;}
+
+#nemesis tr:hover {background-color: #ddd;}
+
+#nemesis th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 8px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+#div.uploadform {
+  width: 100px;
+  margin: auto;
+}
+
+.stravaButton {
+  width: 100px;
+  height: 50px;
+}
+
+#landing {
+  width: 100%;
+  height: 0px;
+  color: white;
+  background-color: #4c6da3;
+  border-radius: 25px;
+  padding: 10px;
+}
+
+#landing h2 {
+  color: white;
+}
+
+.landing-text {
+  margin: auto;
+  width: 600px;
+}
+
+.welcome_link {
+  color: white;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+
+#activity-map-button {
+  background-color: grey;
+  border-radius: 10px;
+  padding: 10px;
+  button {
+    width: 100%;
+    margin: auto;
+  }
+  
+}
+.activity-table {
+  border: 1px solid black;
+  width: 100%;
+  a{
+    display: none;
+    column-span: 4;
+  }
+  th {
+    width: 25%;
+  }
+}
+
+.activity-form {
+  border: 1px solid black;
+  border-radius: 25px;
+  width: 400px;
+  background: #4286f4;
+}
+
+.activity-form .header {
+  margin: auto;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.activity-form .name {
+  font-weight: bold;
+  color: black;
+}
+
+.acitivy-form .activity {
+  padding-right: 0;
+  margin-right: 0;
+  text-align: right;
+  overflow-wrap: normal;
+}
+
+.activity-form .body {
+  background: white;
+  margin-bottom: 15px;
+}
+
+.activity-form .footer {
+  color: rgb(94, 96, 99);
+  text-align: right;
+  margin-bottom: 0px;
+  bottom: 0px;
+  margin-right: 15px;
+}
+
+.stats-title {
+  font-size: 10px;
+}
+
+.body button {
+  color: black;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+}
+
+.body ul {
+  list-style: none;
+  text-align: center;
+  display: inline-block;
+  padding-left: 10px;
+  // margin-left: 0;
+}
+
+.more-info {
+  display: none;
+  padding: auto;
+  margin: auto;
+}
+.taken-from {
+  padding: 0px;
+  vertical-align: top;
+  /* border: 1px solid black; */
+}
+
+.taken-from li {
+  vertical-align: left;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+
+.taken-from-outer {
+  background-color: #D13247;
+  border-radius: 25px;
+  padding-top: 10px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+  border: 1px solid black
+}
+.taken-from-outer div{
+  text-align: center;
+  vertical-align: center;
+  width: 100%;
+  font-size: 20px;
+}
+.taken-from-inner {
+  background-color: white;
+}
+
+.taken-from-table {
+  width: 100%;
+}
+
+.taken-from-table,
+th,
+td {
+  text-align: center;
+}
+
+.taken-from-table tr:nth-child(even) {background-color: #f2f2f2;}
+
+#strava_connect {
+  margin-left: 50px;
+}

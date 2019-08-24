@@ -1,17 +1,20 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
         
-    def test_me
-        puts "Starting Test"
-        # client = Strava::Api::Client.new(
-        #   access_token: "7ca3ca594e681742c160bf7ec5747b123520111a"
-        #   )
-        puts ENV['STRAVA_CLIENT_ID']
-        puts ENV['STRAVA_CLIENT_SECRET']
-        puts ENV['C9_PORT']
-        # activity = client.activity('2629877614')
-        
-        # puts activity.name
-        
-    end
+  def test_me
+    puts self.strava_token
+    client = Strava::Api::Client.new(
+      access_token: self.strava_token
+    )
+     
+    # resp = client.segment_effort(64468190475)
+    activities = client.athlete_activities
+    activity = activities.first
+    puts activity.to_s
+     
+  end
     
 end
