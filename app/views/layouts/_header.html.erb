@@ -3,13 +3,15 @@
     <% if user_signed_in? %>
       <% if current_user.avatar %>
         <%= image_tag current_user.avatar %>
-        <%= link_to "Home", root_path %>
-        <%= link_to "Users", users_path %>
       <% else %>
         <%= link_to current_user.name, root_path %>
       <% end %>
+      <%= link_to "Home", root_path %>
+      <%= link_to "Users", users_path %>
+      <%= link_to "Logout", destroy_user_session_path, method: :delete %>
     <% else %>
-      <%= link_to "Log in!", root_path, id: "logo" %>
+      <%= link_to "Log in", new_user_session_path %>
+      <%= link_to "Sign up", new_user_registration_path %>
     <% end %>
   </div>
 </header>

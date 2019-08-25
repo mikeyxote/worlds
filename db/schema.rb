@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190824093517) do
+ActiveRecord::Schema.define(version: 20190825193054) do
+
+  create_table "segments", force: :cascade do |t|
+    t.integer  "points"
+    t.string   "name"
+    t.integer  "strava_id"
+    t.float    "max_grade"
+    t.float    "average_grade"
+    t.integer  "climb_category"
+    t.integer  "star_count"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

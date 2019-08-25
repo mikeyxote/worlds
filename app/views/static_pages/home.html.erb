@@ -2,11 +2,13 @@
 
   <h1>Davidsonville Jersey Tracking</h1>
   
-  <p>This page is just a basic landing so that our test group can connect with Strava</p>
-  
-  <h2>Connect with Strava here:</h2>
-  <h1><%= link_to 'Strava', strava_request_path %></h1>
-
+  <p>Future Homepage</p>
+  <% if current_user.has_strava? %>
+    <h1>Looks like your Strava is good</h1>  
+  <% else %>
+    <h2>Connect with Strava here:</h2>
+    <h1><%= link_to 'Strava', strava_request_path %></h1>
+  <% end %>
 <% else %>
 
   <div class="center jumbotron">

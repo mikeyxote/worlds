@@ -15,19 +15,17 @@
         <div class="alert alert-<%= message_type %>"><%= message %></div>
       <% end %>
       <% if user_signed_in? %>
-        <%= link_to 'Edit profile', edit_user_registration_path %>
-        <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+        
       <% else %>
-        <%= link_to "Sign up", new_user_registration_path %>
+        Looks like you're not logged in.  From here, you can either
+        <%= link_to "Sign up", new_user_registration_path %> or
         <%= link_to "Log in", new_user_session_path %>
       <% end %>
       <%= yield %>
       <%= render 'layouts/footer' %>
       <%= debug(params) if Rails.env.development? %>
-      
     </div>
   </body>
-
 
 </body>
 </html>

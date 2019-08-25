@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :segments
   get 'strava_request/show'
   get 'strava_callback/show'
 
