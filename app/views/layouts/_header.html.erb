@@ -8,6 +8,8 @@
       <% end %>
       <%= link_to "Home", root_path %>
       <%= link_to "Users", users_path %>
+      <%= link_to "Segments", segments_path %>
+      <%= link_to "Efforts", efforts_path %>
       <%= link_to "Logout", destroy_user_session_path, method: :delete %>
     <% else %>
       <%= link_to "Log in", new_user_session_path %>

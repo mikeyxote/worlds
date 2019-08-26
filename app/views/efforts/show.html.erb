@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @effort.user %>
+</p>
+
+<p>
+  <strong>Segment:</strong>
+  <%= @effort.segment %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @effort.start_date %>
+</p>
+
+<p>
+  <strong>Elapsed time:</strong>
+  <%= @effort.elapsed_time %>
+</p>
+
+<%= link_to 'Edit', edit_effort_path(@effort) %> |
+<%= link_to 'Back', efforts_path %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  segment_id: 
+  start_date: 1.5
+  elapsed_time: 
+
+two:
+  user_id: 
+  segment_id: 
+  start_date: 1.5
+  elapsed_time: 

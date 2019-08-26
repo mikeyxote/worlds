@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Efforts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Segment</th>
+      <th>Start date</th>
+      <th>Elapsed time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @efforts.each do |effort| %>
+      <tr>
+        <td><%= User.find_by(strava_id: effort.user_id).name %></td>
+        <td><%= Segment.find_by(strava_id: effort.segment_id).name %></td>
+        <td><%= effort.start_date %></td>
+        <td><%= effort.elapsed_time %></td>
+        <td><%= link_to 'Show', effort %></td>
+        <td><%= link_to 'Edit', edit_effort_path(effort) %></td>
+        <td><%= link_to 'Destroy', effort, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Effort', new_effort_path %>
