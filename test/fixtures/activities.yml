@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  strava_id: 
+  user_id: 
+  name: MyString
+  distance: 1.5
+  start_date: 1.5
+  trainer: false
+
+two:
+  strava_id: 
+  user_id: 
+  name: MyString
+  distance: 1.5
+  start_date: 1.5
+  trainer: false

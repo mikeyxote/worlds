@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Strava:</strong>
+  <%= @activity.strava_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @activity.user %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @activity.name %>
+</p>
+
+<p>
+  <strong>Distance:</strong>
+  <%= @activity.distance %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @activity.start_date %>
+</p>
+
+<p>
+  <strong>Trainer:</strong>
+  <%= @activity.trainer %>
+</p>
+
+<%= link_to 'Edit', edit_activity_path(@activity) %> |
+<%= link_to 'Back', activities_path %>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :activities
   resources :efforts
   resources :segments
   get 'strava_request/show'

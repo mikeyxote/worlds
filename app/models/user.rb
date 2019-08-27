@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
         access_token: self.strava_token
       )
     
-    effort = client.segment_effort(effort_id)
+    effort = client.segment_effort(effort_id.to_s)
 
     Effort.create(user_id: effort.athlete['id'],
               segment_id: effort.segment['id'],
@@ -28,61 +28,49 @@ class User < ActiveRecord::Base
               strava_id: effort.id)
   end
   
+  def create_activity_from_id(activity_id)
+        client = Strava::Api::Client.new(
+      access_token: self.strava_token
+    )
+    
+    activity = client.activity(activity_id.to_s)
+    puts "Activity Name: " + activity.name
+    puts "Activity ID: " + activity.id.to_s
+    puts "Athlete ID: " + activity.athlete['id'].to_s
+    puts "Start Date: " + activity.start_date.to_s
+    puts "Trainer: " + activity.trainer.to_s
+    puts "Distance: " + activity.distance.to_s
+    Activity.create(name: activity.name,
+                    strava_id: activity.id,
+                    user_id: activity.athlete['id'],
+                    start_date: activity.start_date,
+                    trainer: activity.trainer,
+                    distance: activity.distance)
+    return nil
+  end
+  
   def test_me
     client = Strava::Api::Client.new(
       access_token: self.strava_token
     )
     
-    # activities = client.athlete_activities
-    # last_activity = activities.third
-    # efforts = activity.segment_efforts
-    # puts last_activity.name
-    # puts last_activity.id
     activity = client.activity(2616895731.to_s)
     puts "Activity Name: " + activity.name
     puts "Activity ID: " + activity.id.to_s
-    puts activity.to_yaml
+    puts "Athlete ID: " + activity.athlete['id'].to_s
+    puts "Start Date: " + activity.start_date.to_s
+    puts "Trainer: " + activity.trainer.to_s
+    puts "Distance: " + activity.distance.to_s
+    puts activity.keys.to_yaml
     
     # league_segments = Segment.all.pluck(:strava_id)
     # puts "Segment Names:"
     # activity.segment_efforts.each do |v|
     #   # puts v.segment.id
-    #   if league_segments.include? v.segment.id
-    #     puts v.name
-    #     puts v.activity
-    #     puts "Started: " + v.start_date.to_s
-    #     puts "Elapsed time: " + v.elapsed_time.to_s
-    #     puts "Completed at: " + Time.at(v.start_date.to_f + v.elapsed_time).to_s
-    #     # puts v.start_date.to_f
-    #     # puts v.moving_time
-    #     # puts v.elapsed_time
-    #     # puts v.time
-    #     # puts v.to_yaml
-    #     puts "------"
-    #   end
     # end
     return nil
     # puts activity.segment_efforts.first.name
     # puts activity.segment_efforts.methods
-    
-    
-    
-    # segment_efforts = client.segment_efforts(segment_id_1.to_s)
-    # first_segment = segment_efforts.first
-    
-    # segment_effort = client.segment_effort(first_segment.id)
-    # puts segment_effort.to_s
-    
-    
-    # segment_efforts = client.segment_efforts(64468190475)
-    # segment_effort = segment_efforts.first
-    # puts segment.name
-    # puts segment.id
-    # puts segment.start_date_local
-    # resp = client.segment_efforts(segment_id)
-    # puts resp.to_s
-
-    
      
   end
     
