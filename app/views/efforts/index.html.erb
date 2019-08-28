@@ -16,9 +16,9 @@
   <tbody>
     <% @efforts.each do |effort| %>
       <tr>
-        <td><%= User.find_by(strava_id: effort.user_id).name %></td>
+        <td><%= image_tag User.find_by(strava_id: effort.user_id).avatar %></td>
         <td><%= Segment.find_by(strava_id: effort.segment_id).name %></td>
-        <td><%= effort.start_date %></td>
+        <td><%= Time.at(effort.start_date).to_s %></td>
         <td><%= effort.elapsed_time %></td>
         <td><%= link_to 'Show', effort %></td>
         <td><%= link_to 'Edit', edit_effort_path(effort) %></td>
