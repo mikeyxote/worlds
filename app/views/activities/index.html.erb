@@ -17,7 +17,7 @@
   <tbody>
     <% @activities.each do |activity| %>
       <tr>
-        <td><%= User.find_by(strava_id: activity.user_id).name %></td>
+        <td><%= image_tag User.find_by(id: activity.user_id).avatar %></td>
         <td><%= activity.name %></td>
         <td><%= activity.distance %></td>
         <td><%= Time.at(activity.start_date).to_s %></td>

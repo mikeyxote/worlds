@@ -16,10 +16,10 @@
   <tbody>
     <% @efforts.each do |effort| %>
       <tr>
-        <td><%= image_tag User.find_by(strava_id: effort.user_id).avatar %></td>
+        <td><%= image_tag User.find_by(id: effort.user_id).avatar %></td>
         <td><%= Segment.find_by(strava_id: effort.segment_id).name %></td>
-        <td><%= Time.at(effort.start_date).to_s %></td>
-        <td><%= effort.elapsed_time %></td>
+        <td><%= Time.at(effort.start_date).strftime("%H:%M:%S") %></td>
+        <td><%= Time.at(effort.elapsed_time).strftime("%M:%S") %></td>
         <td><%= link_to 'Show', effort %></td>
         <td><%= link_to 'Edit', edit_effort_path(effort) %></td>
         <td><%= link_to 'Destroy', effort, method: :delete, data: { confirm: 'Are you sure?' } %></td>

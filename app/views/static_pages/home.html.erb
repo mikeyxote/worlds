@@ -4,7 +4,9 @@
   
   <p>Future Homepage</p>
   <% if current_user.has_strava? %>
-    <h1>Looks like your Strava is good</h1>  
+    <h1>Activity count <%= current_user.activities.count %></h1>
+    <h1>Effort count <%= current_user.efforts.count %></h1>
+    <h1>Unique Segments: <%= current_user.efforts.group(:segment_id).count.size %></h1>
   <% else %>
     <h2>Connect with Strava here:</h2>
     <h1><%= link_to 'Strava', strava_request_path %></h1>

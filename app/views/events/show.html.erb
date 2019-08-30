@@ -1,19 +1,29 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>Event Name:</strong>
   <%= @event.name %>
+  Started at: <%= Time.at(@event.start_date).strftime('%H:%M:%S') %></br>
 </p>
+
 
 <p>
-  <strong>Start date:</strong>
-  <%= @event.start_date %>
+  <strong>Activities:</strong>
+  <%= @event.activities.count.to_s %>
 </p>
-
+  
 <p>
-  <strong>Segment:</strong>
-  <%= @event.segment %>
+  Tracks:</br>
+  <% @tracks.each do |track| %>
+    <%= track.name %></br>
+    <% track.efforts.each do |effort| %>
+      -----------------</br>
+      <%= Segment.find_by(strava_id: effort.segment_id).name %>:
+      <%= Time.at(effort.start_date + effort.elapsed_time).strftime('%H:%M:%S') %></br>
+    <% end %>
+  
+  <% end %>
 </p>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Edit', edit_event_path(@event) %>
 <%= link_to 'Back', events_path %>

@@ -10,6 +10,21 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    @event.set_start_date
+    @users = @event.users
+    # @activities =  @event.activities
+    @efforts = @event.efforts.where(segment_id: [5472811, 13750586, 5113112, 675023, 1039537, 11744697, 5526446])
+    @tracks = []
+    @event.activities.each do |activity|
+      track = Track.new(activity, @event.start_date)
+      activity.efforts.each do |effort|
+        track.add_effort(effort)
+      end
+      
+      @tracks << track
+      
+    end
+    
   end
 
   # GET /events/new

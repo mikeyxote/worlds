@@ -11,17 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190827194555) do
+ActiveRecord::Schema.define(version: 20190829143315) do
 
   create_table "activities", force: :cascade do |t|
-    t.integer  "strava_id",  limit: 8
+    t.integer  "strava_id",         limit: 8
     t.integer  "user_id"
     t.string   "name"
     t.float    "distance"
     t.float    "start_date"
     t.boolean  "trainer"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "strava_athlete_id", limit: 8
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "event_id"
   end
 
@@ -31,13 +32,17 @@ ActiveRecord::Schema.define(version: 20190827194555) do
   create_table "efforts", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "segment_id"
+    t.integer  "activity_id"
     t.float    "start_date"
     t.integer  "elapsed_time"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "strava_id",    limit: 8
+    t.integer  "strava_id",          limit: 8
+    t.integer  "strava_athlete_id",  limit: 8
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "strava_activity_id", limit: 8
   end
 
+  add_index "efforts", ["activity_id"], name: "index_efforts_on_activity_id"
   add_index "efforts", ["segment_id"], name: "index_efforts_on_segment_id"
   add_index "efforts", ["user_id"], name: "index_efforts_on_user_id"
 
@@ -45,8 +50,9 @@ ActiveRecord::Schema.define(version: 20190827194555) do
     t.string   "name"
     t.integer  "start_date"
     t.integer  "segment_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "event_segments"
   end
 
   add_index "events", ["segment_id"], name: "index_events_on_segment_id"

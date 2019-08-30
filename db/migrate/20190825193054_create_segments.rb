@@ -8,7 +8,6 @@ class CreateSegments < ActiveRecord::Migration
       t.float :average_grade
       t.integer :climb_category
       t.integer :star_count
-      
 
       t.timestamps null: false
     end

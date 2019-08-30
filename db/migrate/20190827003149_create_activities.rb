@@ -7,6 +7,7 @@ class CreateActivities < ActiveRecord::Migration
       t.float :distance
       t.float :start_date
       t.boolean :trainer
+      t.bigint :strava_athlete_id
 
       t.timestamps null: false
     end

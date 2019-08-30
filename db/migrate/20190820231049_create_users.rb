@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :strava_refresh_token
       t.integer :strava_expiration
       t.integer :strava_id
-      t.boolean :admin, :default => false
+      t.boolean :director, :default => false
       t.boolean :developer, :default => false
       t.string :avatar
 
