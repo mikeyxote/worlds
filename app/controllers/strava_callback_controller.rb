@@ -19,9 +19,9 @@ class StravaCallbackController < ApplicationController
         lastname: response.athlete.lastname,
         username: response.athlete.username,
         profile_medium: response.athlete.profile_medium,
-        profile_large: response.athlete.profile_large
+        profile: response.athlete.profile
         )
-      current_user.initiate
+      current_user.user_initiate
       @avatar = response.athlete.profile_medium
 
       @message = "Success"

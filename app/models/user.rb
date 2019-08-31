@@ -1,10 +1,35 @@
 class User < ActiveRecord::Base
   has_many :activities, dependent: :destroy
   has_many :efforts, through: :activities
+  has_many :active_managements, class_name: "Management",
+                      foreign_key: "manager_id",
+                      dependent: :destroy
+  has_many :passive_managements, class_name: "Management",
+                      foreign_key: "managed_id",
+                      dependent: :destroy
+  has_many :managing, through: :active_managements, source: :managed
+  has_many :managers, through: :passive_managements, source: :manager
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  def full_name
+    return self.firstname + " " + self.lastname
+  end
+
+  def manage(other_user)
+    active_managements.create(managed_id: other_user.id)
+  end
+  
+  def release(other_user)
+    active_managements.find_by(managed_id: other_user.id).destroy
+  end
+
+  def managing?(other_user)
+    managing.include?(other_user)
+  end
 
   def user_initiate
     client = Strava::Api::Client.new(

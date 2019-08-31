@@ -19,7 +19,7 @@
   <tbody>
     <% @activities.each do |activity| %>
       <tr>
-        <td><%= image_tag User.find_by(id: activity.user_id).avatar %></td>
+        <td><%= image_tag User.find_by(id: activity.user_id).profile_medium %></td>
         <td><%= link_to activity.name, activity %></td>
         <% if activity.efforts.size == 0 %>
           <td><%= link_to 'Load Efforts', load_efforts_activity_path(activity) %></td>

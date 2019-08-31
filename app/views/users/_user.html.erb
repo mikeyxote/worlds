@@ -1,11 +1,11 @@
 <li>
-  <%= image_tag user.avatar %>
-  <%= link_to user.name, user %>
-  <% if current_user.admin? && current_user != user %>
+  <%= image_tag user.profile %>
+  <%= link_to user.firstname, user %>
+  <% if current_user.director? && current_user != user %>
     | <%= link_to "delete", user, method: :delete,
                                   data: { confirm: "You sure?" } %>
   <% end %>
-  Other excellent data about the user here.
+  Other excellent data about the user here.</br>
   Scores etc.
   
 </li>

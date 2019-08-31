@@ -11,7 +11,7 @@ class CreateUsers < ActiveRecord::Migration
       t.boolean :director, :default => false
       t.boolean :developer, :default => false
       t.string :profile_medium
-      t.string :profile_large
+      t.string :profile
 
       t.timestamps null: false
     end

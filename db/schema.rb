@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190829143315) do
+ActiveRecord::Schema.define(version: 20190831210912) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "strava_id",         limit: 8
@@ -57,6 +57,17 @@ ActiveRecord::Schema.define(version: 20190829143315) do
 
   add_index "events", ["segment_id"], name: "index_events_on_segment_id"
 
+  create_table "managements", force: :cascade do |t|
+    t.integer  "manager_id"
+    t.integer  "managed_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "managements", ["managed_id"], name: "index_managements_on_managed_id"
+  add_index "managements", ["manager_id", "managed_id"], name: "index_managements_on_manager_id_and_managed_id", unique: true
+  add_index "managements", ["manager_id"], name: "index_managements_on_manager_id"
+
   create_table "segments", force: :cascade do |t|
     t.integer  "points"
     t.string   "name"
@@ -70,14 +81,17 @@ ActiveRecord::Schema.define(version: 20190829143315) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "username"
     t.string   "strava_token"
     t.string   "strava_refresh_token"
     t.integer  "strava_expiration"
     t.integer  "strava_id"
-    t.boolean  "admin",                  default: false
+    t.boolean  "director",               default: false
     t.boolean  "developer",              default: false
-    t.string   "avatar"
+    t.string   "profile_medium"
+    t.string   "profile"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "email",                  default: "",    null: false
