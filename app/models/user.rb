@@ -5,32 +5,60 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-        
-  def get_seeds
-    seeds = ['2587074310',
-              '2547931983',
-              '2607125208',
-              '2657478348',
-              '2480683009',
-              '2471481921',
-              '2538432220',
-              '2557807526']
-    return seeds
+
+  def user_initiate
+    client = Strava::Api::Client.new(
+        access_token: self.strava_token
+        )
+    
+    all_activities = Activity.all.pluck(:strava_id)
+    ingest_count = 0
+    activity_list = client.athlete_activities
+    activity_list.each do |activity_obj|
+      if activity_obj.type == 'Ride' and not all_activities.include? activity_obj.id
+        self.activities.create(name: activity_obj.name,
+                    strava_athlete_id: activity_obj.athlete['id'],
+                    strava_id: activity_obj.id,
+                    start_date: activity_obj.start_date,
+                    trainer: activity_obj.trainer,
+                    distance: activity_obj.distance)
+        ingest_count += 1
+        if ingest_count >= 10
+          return nil
+        end
+      end
+    end
+    return nil
   end
-  
+
   def clear_all
     self.activities.delete_all
     self.efforts.delete_all
   end
   
-  def load_seeds
-    seeds = get_seeds
-    seeds.each do |seed|
-      fetch_activity(seed)
-    end
-    return nil
+  # def load_seeds
+  #       seeds = ['2587074310',
+  #             '2547931983',
+  #             '2607125208',
+  #             '2657478348',
+  #             '2480683009',
+  #             '2471481921',
+  #             '2538432220',
+  #             '2557807526']
+    
+  #   seeds.each do |seed|
+  #     fetch_activity(seed)
+  #   end
+  #   return nil
+  # end
+  
+  def api_client
+    client = Strava::Api::Client.new(
+        access_token: self.strava_token
+        )
+    return client
   end
-        
+  
   def get_segment_obj(segment_id)
     client = Strava::Api::Client.new(
         access_token: self.strava_token
@@ -84,6 +112,18 @@ class User < ActiveRecord::Base
                     start_date: activity_obj.start_date,
                     trainer: activity_obj.trainer,
                     distance: activity_obj.distance)
+    get_activity_efforts(activity_obj.id)
+    return new_activity
+  end
+  
+  def get_activity_efforts(activity_id)
+    puts "Activity ID: " + activity_id.to_s
+    client = Strava::Api::Client.new(
+      access_token: self.strava_token
+    )
+    
+    activity_obj = client.activity(activity_id)
+    new_activity = Activity.find_by(strava_id: activity_id)
     
     all_segments = Segment.all.pluck(:strava_id)
     activity_obj.segment_efforts.each do |effort|
@@ -98,12 +138,16 @@ class User < ActiveRecord::Base
               strava_id: effort.id)
     end
     
-    return new_activity
   end
   
   def fetch_activity(activity_id)
-    activity_obj = self.get_activity_obj(activity_id)
-    self.ingest_activity_obj(activity_obj)
+    self.refresh_token
+    activity_obj = self.get_activity_obj(activity_id.to_s)
+    if not Activity.all.pluck(:strava_id).include? activity_id
+      self.ingest_activity_obj(activity_obj)
+    else
+      puts "DUPLICATE STRAVA_ID REQUESTED"
+    end
     return nil
   end
   
@@ -121,22 +165,7 @@ class User < ActiveRecord::Base
         create_segment_from_id(s)
       end
     end
-      
-      
-    # activity = client.activity(2616895731.to_s)
-    # puts "Activity Name: " + activity.name
-    # puts "Activity ID: " + activity.id.to_s
-    # puts "Athlete ID: " + activity.athlete['id'].to_s
-    # puts "Start Date: " + activity.start_date.to_s
-    # puts "Trainer: " + activity.trainer.to_s
-    # puts "Distance: " + activity.distance.to_s
-    # puts activity.keys.to_yaml
     
-    # league_segments = Segment.all.pluck(:strava_id)
-    # puts "Segment Names:"
-    # activity.segment_efforts.each do |v|
-    #   # puts v.segment.id
-    # end
     return nil
      
   end

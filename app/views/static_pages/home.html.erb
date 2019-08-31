@@ -1,12 +1,11 @@
 <% if user_signed_in? %>
 
   <h1>Davidsonville Jersey Tracking</h1>
-  
-  <p>Future Homepage</p>
   <% if current_user.has_strava? %>
-    <h1>Activity count <%= current_user.activities.count %></h1>
-    <h1>Effort count <%= current_user.efforts.count %></h1>
-    <h1>Unique Segments: <%= current_user.efforts.group(:segment_id).count.size %></h1>
+    <h3>Greetings <%= current_user.name %>!</h3>
+    <h2>Activity count <%= current_user.activities.count %></h2>
+    <h2>Effort count <%= current_user.efforts.count %></h2>
+    <h2>Unique Segments: <%= current_user.efforts.group(:segment_id).count.size %></h2>
   <% else %>
     <h2>Connect with Strava here:</h2>
     <h1><%= link_to 'Strava', strava_request_path %></h1>

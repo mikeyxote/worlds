@@ -8,9 +8,6 @@ class Track
     @name = activity.name
     @athlete_id = activity.strava_athlete_id
     @featured = [5472811, 13750586, 5113112, 675023, 1039537, 11744697, 5526446]
-    # activity.efforts.each do |effort|
-    #   @efforts << Effort.find_by(strava_id: effort)
-    # end
   end
   
   def add_effort(effort)

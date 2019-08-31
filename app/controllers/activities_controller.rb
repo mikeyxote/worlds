@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :set_activity, only: [:show, :edit, :update, :destroy]
+  before_action :set_activity, only: [:show, :edit, :update, :destroy, :load_efforts]
 
   # GET /activities
   # GET /activities.json
@@ -35,6 +35,12 @@ class ActivitiesController < ApplicationController
         format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def load_efforts
+    puts "Params: " + params.to_yaml
+    current_user.get_activity_efforts(@activity.strava_id)
+    redirect_to activities_url, notice: 'Segments were successfully uploaded.'
   end
 
   # PATCH/PUT /activities/1

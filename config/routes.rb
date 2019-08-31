@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :events
-  resources :activities
+  resources :activities do
+    member do
+      get :load_efforts
+    end
+  end
   resources :efforts
   resources :segments
   get 'strava_request/show'

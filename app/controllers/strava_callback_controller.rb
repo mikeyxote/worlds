@@ -10,16 +10,18 @@ class StravaCallbackController < ApplicationController
       
       response = client.oauth_token(code: code)
       
-      # puts response.to_s
-      # @incoming_info = response.to_s
       current_user.update(
         strava_token: response.access_token,
         strava_refresh_token: response.refresh_token,
         strava_expiration: response.expires_at,
         strava_id: response.athlete.id,
-        name: response.athlete.username,
-        avatar: response.athlete.profile_medium
+        firstname: response.athlete.firstname,
+        lastname: response.athlete.lastname,
+        username: response.athlete.username,
+        profile_medium: response.athlete.profile_medium,
+        profile_large: response.athlete.profile_large
         )
+      current_user.initiate
       @avatar = response.athlete.profile_medium
 
       @message = "Success"

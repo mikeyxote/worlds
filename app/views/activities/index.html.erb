@@ -7,10 +7,12 @@
     <tr>
       <th>User</th>
       <th>Name</th>
+      <th>Loaded Efforts</th>
+      <th>Event</th>
       <th>Distance</th>
       <th>Start date</th>
       <th>Trainer</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -18,18 +20,25 @@
     <% @activities.each do |activity| %>
       <tr>
         <td><%= image_tag User.find_by(id: activity.user_id).avatar %></td>
-        <td><%= activity.name %></td>
-        <td><%= activity.distance %></td>
-        <td><%= Time.at(activity.start_date).to_s %></td>
+        <td><%= link_to activity.name, activity %></td>
+        <% if activity.efforts.size == 0 %>
+          <td><%= link_to 'Load Efforts', load_efforts_activity_path(activity) %></td>
+        <% else %>
+          <td><%= activity.efforts.size.to_s %></td>
+        <% end %>
+        <% if activity.event %>
+          <td><%= activity.event.name %></td>
+        <% else %>
+          <td>None</td>
+        <% end %>
+        <td><%= (activity.distance * 0.0006214).round(1) %></td>
+        <td><%= Time.at(activity.start_date).strftime('%d %b %Y').to_s %></td>
         <td><%= activity.trainer %></td>
-        <td><%= link_to 'Show', activity %></td>
         <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
-        <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Activity', new_activity_path %>
