@@ -1,23 +1,14 @@
 class StravaRequestController < ApplicationController
   def show
-    
-    
-    # client = Strava::OAuth::Client.new(
-    #     client_id: ENV['STRAVA_CLIENT_ID'],
-    #     client_secret: ENV['STRAVA_SECRET']
-    #   )
-      
-    # @redirect_url = client.authorize_url(
-    #   redirect_uri: 'https://0dbef404a85c424faff93688f927425e.vfs.cloud9.us-west-2.amazonaws.com/strava_callback',
-    #   approval_prompt: 'force',
-    #   response_type: 'code',
-    #   scope: 'activity:read_all',
-    #   state: 'request'
-    #   )
-      
+
     
     @strava_url = "https://www.strava.com/oauth/authorize"
-    redirect_uri = 'https://0dbef404a85c424faff93688f927425e.vfs.cloud9.us-west-2.amazonaws.com/strava_callback'
+    
+    if Rails.env.development?
+      redirect_uri = 'https://0dbef404a85c424faff93688f927425e.vfs.cloud9.us-west-2.amazonaws.com/strava_callback'
+    else
+      redirect_uri = 'https://jersey-tracker.herokuapp.com/strava_callback'
+    end
     @client_id = ENV['STRAVA_CLIENT_ID'].to_i
     
     @strava_params = {client_id: @client_id,
