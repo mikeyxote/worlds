@@ -32,9 +32,7 @@ class User < ActiveRecord::Base
   end
 
   def user_initiate
-    client = Strava::Api::Client.new(
-        access_token: self.strava_token
-        )
+    client = api_client
     
     all_activities = Activity.all.pluck(:strava_id)
     ingest_count = 0
@@ -78,6 +76,7 @@ class User < ActiveRecord::Base
   # end
   
   def api_client
+    refresh_token
     client = Strava::Api::Client.new(
         access_token: self.strava_token
         )
@@ -85,9 +84,7 @@ class User < ActiveRecord::Base
   end
   
   def get_segment_obj(segment_id)
-    client = Strava::Api::Client.new(
-        access_token: self.strava_token
-        )
+    client = api_client
     
     segment_obj = client.segment(segment_id.to_s)
     return segment_obj
@@ -105,9 +102,7 @@ class User < ActiveRecord::Base
   end
   
   def get_effort_obj(effort_id)
-    client = Strava::Api::Client.new(
-        access_token: self.strava_token
-      )
+    client = api_client
     
     effort_obj = client.segment_effort(effort_id.to_s)
     return effort_obj
@@ -123,9 +118,7 @@ class User < ActiveRecord::Base
   end
   
   def get_activity_obj(activity_id)
-    client = Strava::Api::Client.new(
-      access_token: self.strava_token
-    )
+    client = api_client
     activity_obj = client.activity(activity_id.to_s)
     return activity_obj
   end
@@ -143,9 +136,8 @@ class User < ActiveRecord::Base
   
   def get_activity_efforts(activity_id)
     puts "Activity ID: " + activity_id.to_s
-    client = Strava::Api::Client.new(
-      access_token: self.strava_token
-    )
+    client = api_client
+    
     
     activity_obj = client.activity(activity_id)
     new_activity = Activity.find_by(strava_id: activity_id)
