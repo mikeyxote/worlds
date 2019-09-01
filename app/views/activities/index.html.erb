@@ -22,7 +22,11 @@
         <td><%= image_tag User.find_by(id: activity.user_id).profile_medium %></td>
         <td><%= link_to activity.name, activity %></td>
         <% if activity.efforts.size == 0 %>
-          <td><%= link_to 'Load Efforts', load_efforts_activity_path(activity) %></td>
+          <% if current_user.strava_id == activity.strava_athlete_id %>
+            <td><%= link_to 'Load Efforts', load_efforts_activity_path(activity) %></td>
+          <% else %>
+            <td></td>
+          <% end %>
         <% else %>
           <td><%= activity.efforts.size.to_s %></td>
         <% end %>
@@ -32,10 +36,14 @@
           <td>None</td>
         <% end %>
         <td><%= (activity.distance * 0.0006214).round(1) %></td>
-        <td><%= Time.at(activity.start_date).strftime('%d %b %Y').to_s %></td>
+        <td><%= Time.at(activity.start_date).strftime('%a, %d %b %Y').to_s %></td>
         <td><%= activity.trainer %></td>
         <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
-        <td><%= link_to 'Delete', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user.strava_id == activity.strava_athlete_id %>
+          <td><%= link_to 'Delete', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+          <td></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
