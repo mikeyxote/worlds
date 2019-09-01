@@ -1,21 +1,26 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
+<nav class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     <% if user_signed_in? %>
+      <ul class="nav navbar-nav">
       <% if current_user.profile_medium %>
-        <%= image_tag current_user.profile_medium %>
+        <li><%= image_tag current_user.profile_medium %></li>
       <% else %>
-        <%= link_to current_user.firstname, root_path %>
+        <%= link_to current_user.firstname, root_path %></li>
       <% end %>
-      <%= link_to "Home", root_path %>
-      <%= link_to "Users", users_path %>
-      <%= link_to "Segments", segments_path %>
-      <%= link_to "Efforts", efforts_path %>
-      <%= link_to "Activities", activities_path %>
-      <%= link_to "Events", events_path %>
-      <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+      <li><%= link_to "Home", root_path %></li>
+      <li><%= link_to "Users", users_path %></li>
+      <li><%= link_to "Segments", segments_path %></li>
+      <li><%= link_to "Efforts", efforts_path %></li>
+      <li><%= link_to "Activities", activities_path %></li>
+      <li><%= link_to "Events", events_path %></li>
+      <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+      </ul>
     <% else %>
+    <ul>
       <%= link_to "Log in", new_user_session_path %>
       <%= link_to "Sign up", new_user_registration_path %>
+    </ul>
     <% end %>
+    </ul>
   </div>
-</header>
+</nav>
