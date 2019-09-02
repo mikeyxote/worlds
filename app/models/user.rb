@@ -150,7 +150,8 @@ class User < ActiveRecord::Base
       end
       new_activity.efforts.create(strava_athlete_id: effort.athlete['id'],
               user_id: new_activity.user_id,
-              segment_id: effort.segment['id'],
+              strava_segment_id: effort.segment['id'],
+              segment_id: Segment.find_by(strava_id: effort.segment['id']).id,
               start_date: effort.start_date.to_f,
               elapsed_time: effort.elapsed_time,
               strava_id: effort.id)
@@ -176,7 +177,7 @@ class User < ActiveRecord::Base
     
     segments = Segment.all.pluck(:strava_id)
     puts segments.to_yaml
-    Effort.all.pluck(:segment_id).each do |s|
+    Effort.all.pluck(:strava_segment_id).each do |s|
       puts "testing: " + s.to_s
       if not segments.include? s
         puts "It wasn't there"
