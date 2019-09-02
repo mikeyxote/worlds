@@ -10,14 +10,14 @@
       <th>Segment</th>
       <th>Activities</th>
       <th>Efforts</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @events.each do |event| %>
       <tr>
-        <td><%= event.name %></td>
+        <td><%= link_to event.name, event %></td>
         <% if event.start_date %>
           <td><%= Time.at(event.start_date).strftime('%a, %d %b, %H:%M:%S') %></td>
         <% else %>
@@ -26,7 +26,6 @@
         <td><%= event.segment %></td>
         <td><%= event.activities.count %></td>
         <td><%= event.efforts.count %></td>
-        <td><%= link_to 'Show', event %></td>
         <td><%= link_to 'Edit', edit_event_path(event) %></td>
         <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

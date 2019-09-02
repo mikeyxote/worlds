@@ -11,6 +11,7 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     # @event.set_start_date
+    @available_segments = @event.activities
     @users = @event.users
     # @activities =  @event.activities
     @efforts = @event.efforts.where(segment_id: [5472811, 13750586, 5113112, 675023, 1039537, 11744697, 5526446])

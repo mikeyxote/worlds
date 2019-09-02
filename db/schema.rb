@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190902200835) do
+ActiveRecord::Schema.define(version: 20190902205534) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "strava_id",         limit: 8
@@ -54,9 +54,11 @@ ActiveRecord::Schema.define(version: 20190902200835) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "event_segments"
+    t.integer  "user_id"
   end
 
   add_index "events", ["segment_id"], name: "index_events_on_segment_id"
+  add_index "events", ["user_id"], name: "index_events_on_user_id"
 
   create_table "features", force: :cascade do |t|
     t.integer  "event_id"

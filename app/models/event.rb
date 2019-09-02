@@ -15,4 +15,8 @@ class Event < ActiveRecord::Base
     Feature.create(event_id: self.id, segment_id: segment.id)
   end
   
+  def include_activity(activity)
+    activity.update(event_id: self.id)
+  end
+  
 end
