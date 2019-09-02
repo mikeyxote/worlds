@@ -31,10 +31,11 @@ ActiveRecord::Schema.define(version: 20190901183242) do
 
   create_table "efforts", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "segment_id"
+    t.integer  "segment_id_id"
     t.float    "start_date"
     t.integer  "elapsed_time"
     t.integer  "strava_id",          limit: 8
+    t.integer  "strava_segment_id",  limit: 8
     t.integer  "strava_athlete_id",  limit: 8
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
@@ -43,7 +44,7 @@ ActiveRecord::Schema.define(version: 20190901183242) do
   end
 
   add_index "efforts", ["activity_id"], name: "index_efforts_on_activity_id"
-  add_index "efforts", ["segment_id"], name: "index_efforts_on_segment_id"
+  add_index "efforts", ["segment_id_id"], name: "index_efforts_on_segment_id_id"
   add_index "efforts", ["user_id"], name: "index_efforts_on_user_id"
 
   create_table "events", force: :cascade do |t|
@@ -71,13 +72,13 @@ ActiveRecord::Schema.define(version: 20190901183242) do
   create_table "segments", force: :cascade do |t|
     t.integer  "points"
     t.string   "name"
-    t.integer  "strava_id"
+    t.integer  "strava_id",      limit: 8
     t.float    "max_grade"
     t.float    "average_grade"
     t.integer  "climb_category"
     t.integer  "star_count"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "users", force: :cascade do |t|

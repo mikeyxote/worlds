@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
   
   def ingest_effort_obj(effort_obj)
     effort = Effort.create(strava_athlete_id: effort_obj.athlete['id'],
-              segment_id: effort_obj.segment['id'],
+              segment_id: effort_obj.segment['id'], # need change to foreign key for segment and add strava_segment_id in schema
               start_date: effort_obj.start_date.to_f,
               elapsed_time: effort_obj.elapsed_time,
               strava_id: effort_obj.id)
