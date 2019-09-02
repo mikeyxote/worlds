@@ -2,7 +2,7 @@
 
 <h1>Listing Events</h1>
 
-<table>
+<table class="table table-hover table-striped">
   <thead>
     <tr>
       <th>Name</th>
@@ -18,7 +18,11 @@
     <% @events.each do |event| %>
       <tr>
         <td><%= event.name %></td>
-        <td><%= event.start_date %></td>
+        <% if event.start_date %>
+          <td><%= Time.at(event.start_date).strftime('%a, %d %b, %H:%M:%S') %></td>
+        <% else %>
+          <td>Pending...</td>
+        <% end %>
         <td><%= event.segment %></td>
         <td><%= event.activities.count %></td>
         <td><%= event.efforts.count %></td>

@@ -7,8 +7,9 @@
     <tr>
       <th>User</th>
       <th>Segment</th>
-      <th>Start date</th>
-      <th>Elapsed time</th>
+      <th>Date</th>
+      <th>Start Time</th>
+      <th>Elapsed Time</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,8 +17,10 @@
   <tbody>
     <% @efforts.each do |effort| %>
       <tr>
-        <td><%= image_tag User.find_by(id: effort.user_id).profile_medium %></td>
-        <td><%= Segment.find_by(strava_id: effort.segment_id).name %></td>
+        <td><%= link_to profile_for(effort.user), effort.user %></td>
+        
+        <td><%= link_to effort.segment.name, effort.segment %></td>
+        <td><%= Time.at(effort.start_date).strftime('%a, %d %b %Y') %></td>
         <td><%= Time.at(effort.start_date).strftime("%H:%M:%S") %></td>
         <td><%= Time.at(effort.elapsed_time).strftime("%M:%S") %></td>
         <td><%= link_to 'Show', effort %></td>

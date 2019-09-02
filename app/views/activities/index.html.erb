@@ -19,7 +19,7 @@
   <tbody>
     <% @activities.each do |activity| %>
       <tr>
-        <td><%= image_tag User.find_by(id: activity.user_id).profile_medium %></td>
+        <td><%= link_to profile_for(activity.user), activity.user %></td>
         <td><%= link_to activity.name, activity %></td>
         <% if activity.efforts.size == 0 %>
           <% if current_user.strava_id == activity.strava_athlete_id %>

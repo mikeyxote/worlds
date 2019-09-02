@@ -17,11 +17,11 @@
   </div>
   <div class="field">
     <%= f.label :start_date %><br>
-    <%= f.number_field :start_date %>
+    <%= f.text_field :start_date,"data-provide" => 'datepicker' %>
   </div>
   <div class="field">
     <%= f.label :segment_id %><br>
-    <%= f.text_field :segment_id %>
+    <%= f.collection_select(:segment, Segment.all, :id, :name, prompt: true) %>
   </div>
   <div class="actions">
     <%= f.submit %>

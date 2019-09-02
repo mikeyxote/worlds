@@ -1,11 +1,15 @@
 <li>
-  <%= image_tag user.profile %>
-  <%= link_to user.firstname, user %>
-  <% if current_user.director? && current_user != user %>
-    | <%= link_to "delete", user, method: :delete,
-                                  data: { confirm: "You sure?" } %>
-  <% end %>
-  Other excellent data about the user here.</br>
-  Scores etc.
-  
+<div class="card">
+  <%= image_tag(user.profile, class: "card-img-top")  %>
+  <div class="card-body">
+      <%= user.full_name %></br>
+    <div class="card-body">
+      Activties: <%= user.activities.size.to_s %></br>
+      Efforts: <%= user.efforts.size.to_s %></br>
+      Segments: <%= user.efforts.group(:strava_segment_id).count.size %></br>
+      Events: <%= user.username %>
+    </div>
+  </div>
+
+</div>
 </li>

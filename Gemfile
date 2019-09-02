@@ -13,6 +13,8 @@ gem 'devise'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
+# gem 'jquery-timepicker-rails', '~> 1.11', '>= 1.11.10'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '>= 0.4.0', group: :doc

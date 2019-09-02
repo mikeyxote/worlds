@@ -2,10 +2,18 @@
 
 <p>
   <strong>Event Name:</strong>
-  <%= @event.name %>
-  Started at: <%= Time.at(@event.start_date).strftime('%H:%M:%S') %></br>
+  <%= @event.name %></br>
+  Started at:
+  <% if @event.start_date %>
+     <%= Time.at(@event.start_date).strftime('%H:%M:%S') %></br>
+  <% else %>
+    Pending...
+  <% end %>
 </p>
-
+<p>
+  <strong>Participants:</strong>
+  <%= @event.activities.pluck(:user_id).uniq.size.to_s %>
+</p>
 
 <p>
   <strong>Activities:</strong>

@@ -3,10 +3,16 @@ class Event < ActiveRecord::Base
   has_many :activities
   has_many :efforts, through: :activities
   has_many :users, through: :activities
+  has_many :featured_segments, class_name: "Feature",
+                              foreign_key: "segment_id",
+                              dependent: :destroy
   
   def set_start_date
     self.start_date = (self.activities.pluck(:start_date)).min
   end
   
+  def add_feature segment
+    Feature.create(event_id: self.id, segment_id: segment.id)
+  end
   
 end

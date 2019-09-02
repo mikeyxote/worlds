@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event_id: 
+  segment_id: 
+  category: MyString
+  points: 1
+
+two:
+  event_id: 
+  segment_id: 
+  category: MyString
+  points: 1
