@@ -20,11 +20,11 @@ class User < ActiveRecord::Base
   end
 
   def manage(other_user)
-    active_managements.create(managed_id: other_user.id)
+    managing << other_user
   end
   
   def release(other_user)
-    active_managements.find_by(managed_id: other_user.id).destroy
+    managing.delete(other_user)
   end
 
   def managing?(other_user)

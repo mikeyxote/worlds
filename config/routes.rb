@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   end
   resources :efforts
   resources :segments
+  resources :managements,     only: [:create, :destroy]
+
   get 'strava_request/show'
   get 'strava_callback/show'
 
@@ -20,6 +22,12 @@ Rails.application.routes.draw do
   get 'strava_callback' => 'strava_callback#show'
 
   resources :users
+
+  resources :users do
+    member do
+      get :managing, :managers
+    end
+  end
 
   root 'static_pages#home'
 

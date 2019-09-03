@@ -4,6 +4,8 @@
   <strong>Name:</strong>
   <%= @user.firstname %>
 </p>
+Manage for here:</br>
+<%= render 'manage_form' %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
