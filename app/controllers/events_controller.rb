@@ -10,11 +10,24 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    # @event.set_start_date
+    @activities = []
+    @segments = []
+    if @event.start_date
+      race_day = Time.at(@event.start_date).to_date
+      @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
+      segment_array = []
+      @activities.each do |activity|
+        segment_array << activity.efforts.pluck(:segment_id)
+      end
+      flat_array = segment_array.flatten
+      segment_array.each {|sa| flat_array = flat_array & sa }
+      @segments = Segment.where(segment_id: segment_array)
+    end
+    
     @available_segments = @event.activities
     @users = @event.users
     # @activities =  @event.activities
-    @efforts = @event.efforts.where(segment_id: [5472811, 13750586, 5113112, 675023, 1039537, 11744697, 5526446])
+    # @efforts = @event.efforts.where(segment_id: [5472811, 13750586, 5113112, 675023, 1039537, 11744697, 5526446])
     @tracks = []
     @event.activities.each do |activity|
       track = Track.new(activity, @event.start_date)
