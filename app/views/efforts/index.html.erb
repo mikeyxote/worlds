@@ -20,7 +20,7 @@
         <td><%= link_to profile_for(effort.user), effort.user %></td>
         
         <td><%= link_to effort.segment.name, effort.segment %></td>
-        <td><%= Time.at(effort.start_date).strftime('%a, %d %b %Y') %></td>
+        <td><%= effort.start_date.localtime.strftime('%a, %d %b %Y') %></td>
         <td><%= Time.at(effort.start_date).strftime("%H:%M:%S") %></td>
         <td><%= Time.at(effort.elapsed_time).strftime("%M:%S") %></td>
         <td><%= link_to 'Show', effort %></td>

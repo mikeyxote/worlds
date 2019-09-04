@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
     managing.include?(other_user)
   end
 
-  def user_initiate
+  def grab_ten
     client = api_client
     
     all_activities = Activity.all.pluck(:strava_id)
@@ -112,7 +112,7 @@ class User < ActiveRecord::Base
     effort = Effort.create(strava_athlete_id: effort_obj.athlete['id'],
               segment_id: Segment.find_by(strava_id: effort_obj.segment['id']).id,
               strava_segment_id: effort_obj.segment['id'], # need change to foreign key for segment and add strava_segment_id in schema
-              start_date: effort_obj.start_date.to_f,
+              start_date: effort_obj.start_date,
               elapsed_time: effort_obj.elapsed_time,
               strava_id: effort_obj.id)
     return effort
@@ -152,7 +152,7 @@ class User < ActiveRecord::Base
               user_id: new_activity.user_id,
               strava_segment_id: effort.segment['id'],
               segment_id: Segment.find_by(strava_id: effort.segment['id']).id,
-              start_date: effort.start_date.to_f,
+              start_date: effort.start_date,
               elapsed_time: effort.elapsed_time,
               strava_id: effort.id)
     end
