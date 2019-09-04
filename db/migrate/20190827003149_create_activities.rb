@@ -5,7 +5,7 @@ class CreateActivities < ActiveRecord::Migration
       t.references :user, index: true, foreign_key: true
       t.string :name
       t.float :distance
-      t.float :start_date
+      t.datetime :start_date
       t.boolean :trainer
       t.bigint :strava_athlete_id
 

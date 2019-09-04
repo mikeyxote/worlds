@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190904192952) do
+ActiveRecord::Schema.define(version: 20190902205534) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "strava_id",         limit: 8
     t.integer  "user_id"
     t.string   "name"
     t.float    "distance"
-    t.float    "start_date"
+    t.datetime "start_date"
     t.boolean  "trainer"
     t.integer  "strava_athlete_id", limit: 8
     t.datetime "created_at",                  null: false
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20190904192952) do
   create_table "efforts", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "segment_id"
-    t.float    "start_date"
+    t.datetime "start_date"
     t.integer  "elapsed_time"
     t.integer  "strava_id",          limit: 8
     t.integer  "strava_segment_id",  limit: 8

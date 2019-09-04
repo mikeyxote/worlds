@@ -3,7 +3,7 @@ class CreateEfforts < ActiveRecord::Migration
     create_table :efforts do |t|
       t.references :user, index: true, foreign_key: true
       t.references :segment, index: true, foreign_key: true
-      t.float :start_date
+      t.datetime :start_date
       t.integer :elapsed_time
       t.bigint :strava_id
       t.bigint :strava_segment_id
