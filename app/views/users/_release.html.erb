@@ -1,4 +1,4 @@
 <%= form_for(current_user.active_managements.find_by(managed_id: @user.id),
-             html: { method: :delete }) do |f| %>
+             html: { method: :delete }, remote: true) do |f| %>
   <%= f.submit "Release", class: "btn" %>
 <% end %>
