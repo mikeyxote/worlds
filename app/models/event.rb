@@ -19,4 +19,7 @@ class Event < ActiveRecord::Base
     activity.update(event_id: self.id)
   end
   
+  def event_time
+    return Time.at(self.start_date)
+  end
 end
