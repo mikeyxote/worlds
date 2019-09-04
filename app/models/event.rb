@@ -22,4 +22,8 @@ class Event < ActiveRecord::Base
   def event_time
     return Time.at(self.start_date)
   end
+  
+  def manager
+    return User.find_by(id: self.user_id)
+  end
 end

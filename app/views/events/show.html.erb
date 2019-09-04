@@ -1,18 +1,22 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Event Name:</strong>
-  <%= @event.name %></br>
-  Started at:
+  <h1><%= @event.name %></h1>
+  <h2>Managed by: <%= @event.manager.full_name %></h2>
+  <h2>Date:
   <% if @event.start_date %>
      <%= Time.at(@event.start_date).strftime('%H:%M:%S') %></br>
   <% else %>
     Pending...
-  <% end %>
+  <% end %></h2>
 </p>
 <p>
   <strong>Participants:</strong>
-  <%= @event.activities.pluck(:user_id).uniq.size.to_s %>
+  <% if @participant_ids.size == 0 %>
+    Looks like no one is participating yet...
+  <% else %>
+    <%= @participant_ids.size.to_s %>
+  <% end %>
 </p>
 
 <p>

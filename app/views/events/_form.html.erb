@@ -10,18 +10,18 @@
       </ul>
     </div>
   <% end %>
-
+  <div><%= hidden_field_tag :user_id, current_user.id %></div>
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
     <%= f.label :start_date %><br>
-    <%= f.text_field :start_date,"data-provide" => 'datepicker' %>
+    <%= f.datetime_select :start_date,"data-provide" => 'datepicker' %>
   </div>
   <div class="field">
     <%= f.label :segment_id %><br>
-    <%= f.collection_select(:segment, Segment.all, :id, :name, prompt: true) %>
+    <%= f.collection_select(:segment_id, Segment.all, :id, :name, prompt: true) %>
   </div>
   <div class="actions">
     <%= f.submit %>

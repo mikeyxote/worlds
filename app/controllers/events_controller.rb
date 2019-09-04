@@ -13,7 +13,8 @@ class EventsController < ApplicationController
     @activities = []
     @segments = []
     if @event.start_date
-      race_day = Time.at(@event.start_date).to_date
+      race_day = @event.start_date.to_date
+      @participant_ids = @event.activities.pluck(:user_id).uniq
       @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
       segment_array = []
       @activities.each do |activity|
@@ -53,8 +54,10 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(event_params)
 
+    @event = Event.new(event_params)
+    @event.update(user_id: params['user_id'],
+                  segment_id: params['event']['segment'])
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
