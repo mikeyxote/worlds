@@ -15,14 +15,14 @@ class StravaCallbackController < ApplicationController
         strava_refresh_token: response.refresh_token,
         strava_expiration: response.expires_at,
         strava_id: response.athlete.id,
-        firstname: response.athlete.firstname,
-        lastname: response.athlete.lastname,
-        username: response.athlete.username,
+        firstname: response.athlete.firstname || "NoFirstname",
+        lastname: response.athlete.lastname || "NoLastname",
+        username: response.athlete.username || "NoUsername",
         profile_medium: response.athlete.profile_medium,
         profile: response.athlete.profile
         )
-      current_user.user_initiate
-      @avatar = response.athlete.profile_medium
+      current_user.grab_ten
+      @profile = response.athlete.profile
 
       @message = "Success"
     else
