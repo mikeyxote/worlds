@@ -15,6 +15,8 @@ class EventsController < ApplicationController
     if @event.start_date
       race_day = @event.start_date.to_date
       @participant_ids = @event.activities.pluck(:user_id).uniq
+      @participant_ids << @event.owner.id
+      @participants = User.where(id: @participant_ids)
       @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
       segment_array = []
       @activities.each do |activity|

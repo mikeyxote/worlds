@@ -6,8 +6,10 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Owner</th>
       <th>Start date</th>
       <th>Segment</th>
+      <th>Participants</th>
       <th>Activities</th>
       <th>Efforts</th>
       <th colspan="2"></th>
@@ -18,12 +20,14 @@
     <% @events.each do |event| %>
       <tr>
         <td><%= link_to event.name, event %></td>
+        <td><%= event.owner.full_name %></td>
         <% if event.start_date %>
-          <td><%= Time.at(event.start_date).strftime('%a, %d %b, %H:%M:%S') %></td>
+          <td><%= Time.at(event.start_date).strftime('%a, %d %b, %H:%M:%S')  %></td>
         <% else %>
           <td>Pending...</td>
         <% end %>
-        <td><%= event.segment %></td>
+        <td><%= event.segment.name %></td>
+        <td><%= event.users.size.to_s %></td>
         <td><%= event.activities.count %></td>
         <td><%= event.efforts.count %></td>
         <td><%= link_to 'Edit', edit_event_path(event) %></td>

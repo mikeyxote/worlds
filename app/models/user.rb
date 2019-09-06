@@ -16,7 +16,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
 
   def full_name
-    return self.firstname + " " + self.lastname
+    if self.firstname and self.lastname
+      return self.firstname + " " + self.lastname
+    else
+      return "Your Name Here"
+    end
   end
 
   def manage(other_user)

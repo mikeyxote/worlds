@@ -2,30 +2,37 @@
 
 <p>
   <h1><%= @event.name %></h1>
-  <h2>Managed by: <%= @event.manager.full_name %></h2>
+  <h2>Managed by: <%= @event.owner.full_name %></h2>
   <h2>Date:
   <% if @event.start_date %>
-     <%= Time.at(@event.start_date).strftime('%H:%M:%S') %></br>
+     <%= Time.at(@event.start_date).strftime('%a, %d %b') %></br>
   <% else %>
     Pending...
   <% end %></h2>
 </p>
 <p>
-  <strong>Participants:</strong>
+  <strong>Participants:</strong></br>
   <% if @participant_ids.size == 0 %>
     Looks like no one is participating yet...
   <% else %>
-    <%= @participant_ids.size.to_s %>
+    <% @participants.each do |p| %>
+      -<%= p.full_name %><br>
+    <% end %>
   <% end %>
 </p>
 
 <p>
-  <strong>Activities:</strong>
-  <%= @event.activities.count.to_s %>
+  <strong>Activities:</strong></br>
+  <% if @activities.size == 0 %>
+    No activities are included currently.
+  <% else %>
+    <%= @event.activities.count.to_s %>
+  <% end %>
 </p>
   
 <p>
   Tracks:</br>
+  <strong>This is going to be where the meat of the page is.</strong>
   <% @tracks.each do |track| %>
     <%= track.name %></br>
     <% track.efforts.each do |effort| %>
