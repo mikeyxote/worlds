@@ -22,11 +22,24 @@
 </p>
 
 <p>
-  <strong>Activities:</strong></br>
+  <strong>Available Activities:</strong></br>
   <% if @activities.size == 0 %>
     No activities are included currently.
   <% else %>
-    <%= @event.activities.count.to_s %>
+    <% @activities.each do |activity| %><br>
+      <%= activity.name %>
+    <% end %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Available Segments:</strong></br>
+  <% if @segments.size == 0 %>
+    No activities are included currently.
+  <% else %>
+    <% @segments.each do |segment| %>
+      <%= render 'feature_form', segment: segment %>
+    <% end %>
   <% end %>
 </p>
   

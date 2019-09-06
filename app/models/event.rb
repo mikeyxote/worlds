@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   has_many :efforts, through: :activities
   has_many :users, through: :activities
   has_many :featured_segments, class_name: "Feature",
-                              foreign_key: "segment_id",
+                              foreign_key: "event_id",
                               dependent: :destroy
   
   def set_start_date

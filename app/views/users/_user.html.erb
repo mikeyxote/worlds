@@ -1,14 +1,14 @@
 <li>
 <div class="card">
-  <%= image_tag(user.profile, class: "card-img-top")  %>
+  <%= link_to profile_for(user, medium: false), user %>
   <div class="card-body">
       <%= user.full_name %></br>
     <div class="card-body">
       Activties: <%= user.activities.size.to_s %></br>
       Efforts: <%= user.efforts.size.to_s %></br>
       Segments: <%= user.efforts.group(:strava_segment_id).count.size %></br>
-      Events: <%= user.username %>
     </div>
+    
   </div>
 
 </div>

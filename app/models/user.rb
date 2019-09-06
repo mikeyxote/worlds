@@ -63,22 +63,6 @@ class User < ActiveRecord::Base
     self.efforts.delete_all
   end
   
-  # def load_seeds
-  #       seeds = ['2587074310',
-  #             '2547931983',
-  #             '2607125208',
-  #             '2657478348',
-  #             '2480683009',
-  #             '2471481921',
-  #             '2538432220',
-  #             '2557807526']
-    
-  #   seeds.each do |seed|
-  #     fetch_activity(seed)
-  #   end
-  #   return nil
-  # end
-  
   def api_client
     refresh_token
     client = Strava::Api::Client.new(

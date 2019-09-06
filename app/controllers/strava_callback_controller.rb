@@ -23,6 +23,7 @@ class StravaCallbackController < ApplicationController
         )
       current_user.grab_ten
       @profile = response.athlete.profile
+      # Place to start can go here
 
       @message = "Success"
     else
