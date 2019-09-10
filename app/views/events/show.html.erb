@@ -22,7 +22,7 @@
 </p>
 
 <p>
-  <strong>Available Activities:</strong></br>
+  <strong>Available Activities:</strong></br> # Need to add athlete name to each activity in parens or something.
   <% if @activities.size == 0 %>
     No activities are included currently.
   <% else %>
@@ -38,7 +38,8 @@
     No activities are included currently.
   <% else %>
     <% @segments.each do |segment| %>
-      <%= render 'feature_form', segment: segment %>
+      <%= link_to segment.name, segment %></br>
+      
     <% end %>
   <% end %>
 </p>

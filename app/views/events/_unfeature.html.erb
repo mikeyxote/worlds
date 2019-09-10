@@ -1,0 +1,4 @@
+<%= form_for(@event.featured_segments.find_by(segment_id: segment.id),
+             html: { method: :delete }) do |f| %>
+  <%= f.submit "Unfeature", class: "btn" %>
+<% end %>

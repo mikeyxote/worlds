@@ -1,12 +1,25 @@
 Rails.application.routes.draw do
   resources :events
+  
+  resources :events do
+    member do
+      get :features
+    end
+  end
+  
   resources :activities do
     member do
       get :load_efforts
     end
   end
+  
   resources :efforts
   resources :segments
+  resources :segments do
+    member do
+      get :featured_by
+    end
+  end
   resources :managements,     only: [:create, :destroy]
 
   get 'strava_request/show'

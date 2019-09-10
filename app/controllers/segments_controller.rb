@@ -1,5 +1,5 @@
 class SegmentsController < ApplicationController
-  before_action :set_segment, only: [:show, :edit, :update, :destroy]
+  before_action :set_segment, only: [:show, :edit, :update, :destroy, :featured_by]
 
   # GET /segments
   # GET /segments.json

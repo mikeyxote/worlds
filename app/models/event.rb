@@ -6,6 +6,8 @@ class Event < ActiveRecord::Base
   has_many :featured_segments, class_name: "Feature",
                               foreign_key: "event_id",
                               dependent: :destroy
+  has_many :featuring, through: :featured_segments, source: :segment
+  
   
   def set_start_date
     self.start_date = (self.activities.pluck(:start_date)).min
@@ -13,6 +15,10 @@ class Event < ActiveRecord::Base
   
   def add_feature segment
     Feature.create(event_id: self.id, segment_id: segment.id)
+  end
+  
+  def remove_feature segment
+   featured_segments.find_by(segment_id: segment.id).destroy
   end
   
   def include_activity(activity)

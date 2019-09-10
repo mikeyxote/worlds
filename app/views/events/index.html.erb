@@ -26,7 +26,11 @@
         <% else %>
           <td>Pending...</td>
         <% end %>
-        <td><%= event.segment.name %></td>
+        <% if event.segment %>
+          <td><%= event.segment.name %></td>
+        <% else %>
+          <td>No Segment</td>
+        <% end %>
         <td><%= event.users.size.to_s %></td>
         <td><%= event.activities.count %></td>
         <td><%= event.efforts.count %></td>
