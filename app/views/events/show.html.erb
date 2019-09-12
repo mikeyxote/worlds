@@ -3,24 +3,28 @@
 <p>
   <h1><%= @event.name %></h1>
   <h2>Managed by: <%= @event.owner.full_name %></h2>
-  <h2>Date:
   <% if @event.start_date %>
-     <%= Time.at(@event.start_date).strftime('%a, %d %b') %></br>
+    <h2>Official Start Time:
+    <%= @event.start_date.strftime('%a, %d %b, %H:%M:%S') %>
   <% else %>
-    Pending...
+    Official Start Time Pending...
   <% end %></h2>
 </p>
-<p>
+<div class="panel panel-default">
   <strong>Participants:</strong></br>
+  <div class="panel-body">
   <% if @participant_ids.size == 0 %>
     Looks like no one is participating yet...
   <% else %>
-    <% @participants.each do |p| %>
-      -<%= p.full_name %><br>
+    <% @participants.each do |user| %>
+    <td>
+      <%= link_to profile_for(user), user %>
+    </td>
     <% end %>
   <% end %>
-</p>
-
+  </div>
+</div>
+</br>
 <p>
   <strong>Featured Segments:</strong></br>
   <% if @features.size == 0 %>
