@@ -46,7 +46,7 @@
     <tr>
       <% row.each do |cell| %>
         <% if cell.is_a? Numeric %>
-          <td><%= Time.at(cell.to_i).strftime('%M:%S') %></td>
+          <td><%= Time.at(cell).strftime('%H:%M:%S') %></td>
         <% else %>
           <td><%= cell %></td>
         <% end %>
@@ -64,7 +64,7 @@
     No activities are included currently.
   <% else %>
     <% @activities.each do |activity| %><br> 
-      <%= activity.name %>
+      <%= activity.user.full_name %> -> <%= link_to activity.name, activity %>
     <% end %>
   <% end %>
 </p>
@@ -78,20 +78,6 @@
       <%= link_to segment.name, segment %></br>
       
     <% end %>
-  <% end %>
-</p>
-  
-<p>
-  Tracks:</br>
-  <strong>This is going to be where the meat of the page is.</strong>
-  <% @tracks.each do |track| %>
-    <%= track.name %></br>
-    <% track.efforts.each do |effort| %>
-      -----------------</br>
-      <%= Segment.find_by(strava_id: effort.segment_id).name %>:
-      <%= Time.at(effort.start_date + effort.elapsed_time).strftime('%H:%M:%S') %></br>
-    <% end %>
-  
   <% end %>
 </p>
 

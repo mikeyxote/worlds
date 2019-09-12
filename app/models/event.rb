@@ -9,30 +9,44 @@ class Event < ActiveRecord::Base
   has_many :featuring, through: :featured_segments, source: :segment
   
   def get_table
+    puts "----Starting get_table-----"
+
     out = []
     race_day = self.start_date.to_date
     activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
-    # efforts = Effort.where(strava_activity_id: activities.pluck(:strava_id))
-    # fields = self.featuring.pluck(:name)
+
+    if activities.count > 0
+      self.start_date = activities.pluck(:start_date).min
+    end
+
+    official_start = self.start_date
+    puts "Official Start:"
+    puts official_start.to_i.to_s
+
     out << ['Athlete'] + self.featuring.pluck(:name)
     segments = self.featuring.pluck(:id)
     activities.each do |activity|
       efforts = activity.efforts.where(segment_id: segments)
       row = {}
+
       efforts.each do |effort|
-        row[effort.segment.name] = effort.elapsed_time
-      
+        puts "Times"
+        puts official_start.to_i
+        puts effort.start_date.to_i
+        puts effort.elapsed_time
+        row[effort.segment.name] = (effort.start_date.to_i - official_start.to_i) + effort.elapsed_time
       end
       out << [activity.user.full_name] + row.values
-      # efforts.each do |effort|
-      #   out << "=>" + effort.segment.name + ": " + effort.elapsed_time.to_s
-      # end
+
     end
     return out
   end
   
-  def set_start_date
-    self.start_date = (self.activities.pluck(:start_date)).min
+  def set_start_date #might not need this one
+    puts "----SETTING START DATE-----"
+    puts "Start Dates"
+    puts self.activities.pluck(:start_date).to_s
+    self.start_date = self.activities.pluck(:start_date).min
   end
   
   def add_feature segment
