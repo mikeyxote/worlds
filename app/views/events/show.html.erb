@@ -22,11 +22,48 @@
 </p>
 
 <p>
-  <strong>Available Activities:</strong></br> # Need to add athlete name to each activity in parens or something.
+  <strong>Featured Segments:</strong></br>
+  <% if @features.size == 0 %>
+    No segments are currently featured.
+  <% else %>
+    <% @features.each do |segment| %>
+      <%= segment.name %> @ <%= segment.average_grade %>%</br>
+    <% end %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Table (in progress)</strong></br>
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <% @table[0].each do |cell| %>
+          <th><%= cell %></th>
+          <% end %>
+      </tr>
+    </thead>
+    <% @table[1,@table.size-1].each do |row| %>
+    <tr>
+      <% row.each do |cell| %>
+        <% if cell.is_a? Numeric %>
+          <td><%= Time.at(cell.to_i).strftime('%M:%S') %></td>
+        <% else %>
+          <td><%= cell %></td>
+        <% end %>
+      <% end %>
+    </tr>
+    <% end %>
+    
+  </table>
+</p>
+
+<!--/// Need to add athlete name to each activity in parens or something.///-->
+<p>
+  <strong>Available Activities:</strong></br> 
   <% if @activities.size == 0 %>
     No activities are included currently.
   <% else %>
-    <% @activities.each do |activity| %><br>
+    <% @activities.each do |activity| %><br> 
       <%= activity.name %>
     <% end %>
   <% end %>

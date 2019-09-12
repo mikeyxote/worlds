@@ -15,15 +15,17 @@ class EventsController < ApplicationController
     if @event.start_date
       race_day = @event.start_date.to_date
       @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
-      
+      @table = @event.get_table
       
       
       
       @participant_ids = @activities.pluck(:user_id).uniq
       @participant_ids << @event.owner.id
       @participants = User.where(id: @participant_ids)
-      
+      @features = @event.featuring
       segment_array = []
+      
+      
       @activities.each do |activity|
         segment_array << activity.efforts.pluck(:segment_id)
       end
