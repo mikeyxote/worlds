@@ -39,7 +39,8 @@ class ActivitiesController < ApplicationController
 
   def load_efforts
     puts "Params: " + params.to_yaml
-    current_user.get_activity_efforts(@activity.strava_id)
+    user = User.find_by(id: @activity.user_id)
+    user.get_activity_efforts(@activity.strava_id)
     redirect_to activities_url, notice: 'Segments were successfully uploaded.'
   end
 
