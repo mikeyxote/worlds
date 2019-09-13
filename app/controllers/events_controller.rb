@@ -31,7 +31,8 @@ class EventsController < ApplicationController
       end
       flat_array = segment_array.flatten
       segment_array.each {|sa| flat_array = flat_array & sa }
-      @segments = Segment.where(id: segment_array)
+      flat_array -= @features.pluck(:id)
+      @segments = Segment.where(id: flat_array)
     end
     
     @users = @event.users

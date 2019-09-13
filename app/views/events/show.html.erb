@@ -25,16 +25,6 @@
   </div>
 </div>
 </br>
-<p>
-  <strong>Featured Segments:</strong></br>
-  <% if @features.size == 0 %>
-    No segments are currently featured.
-  <% else %>
-    <% @features.each do |segment| %>
-      <%= segment.name %> @ <%= segment.average_grade %>%</br>
-    <% end %>
-  <% end %>
-</p>
 
 <p>
   <strong>Table (in progress)</strong></br>
@@ -61,7 +51,6 @@
   </table>
 </p>
 
-<!--/// Need to add athlete name to each activity in parens or something.///-->
 <p>
   <strong>Available Activities:</strong></br> 
   <% if @activities.size == 0 %>
@@ -72,6 +61,25 @@
     <% end %>
   <% end %>
 </p>
+
+<p>
+  <strong>Featured Segments:</strong></br>
+  <% if @features.size == 0 %>
+    No segments are currently featured.
+  <% else %>
+    <table>
+    <% @features.each do |segment| %>
+      <tr>
+      <td><%= link_to segment.name, segment %></td>
+      <td><%= render 'feature_form', segment: segment %></td>
+      </tr>
+    <% end %>
+    </table>
+  <% end %>
+</p>
+
+<!--/// Need to add athlete name to each activity in parens or something.///-->
+
 
 <p>
   <strong>Available Segments:</strong></br>
