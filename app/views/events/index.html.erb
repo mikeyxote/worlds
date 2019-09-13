@@ -10,7 +10,7 @@
       <th>Start date</th>
       <th>Segment</th>
       <th>Participants</th>
-      <th>Activities</th>
+      <th>Segments</th>
       <th>Efforts</th>
       <th colspan="2"></th>
     </tr>
@@ -20,19 +20,19 @@
     <% @events.each do |event| %>
       <tr>
         <td><%= link_to event.name, event %></td>
-        <td><%= event.owner.full_name %></td>
+        <td><%= link_to event.owner.full_name, event.owner %></td>
         <% if event.start_date %>
           <td><%= Time.at(event.start_date).strftime('%a, %d %b, %H:%M:%S')  %></td>
         <% else %>
           <td>Pending...</td>
         <% end %>
         <% if event.segment %>
-          <td><%= event.segment.name %></td>
+          <td><%= link_to event.segment.name, event.segment %></td>
         <% else %>
           <td>No Segment</td>
         <% end %>
         <td><%= event.users.size.to_s %></td>
-        <td><%= event.activities.count %></td>
+        <td><%= event.featuring.count %></td>
         <td><%= event.efforts.count %></td>
         <td><%= link_to 'Edit', edit_event_path(event) %></td>
         <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>

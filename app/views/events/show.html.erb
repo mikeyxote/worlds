@@ -78,10 +78,14 @@
   <% if @segments.size == 0 %>
     No activities are included currently.
   <% else %>
+    <table class="panel panel-default">
     <% @segments.each do |segment| %>
-      <%= link_to segment.name, segment %></br>
-      
+      <tr>
+      <td><%= link_to segment.name, segment %></td>
+      <td><%= render 'feature_form', segment: segment %></td>
+      </tr>
     <% end %>
+    </table>
   <% end %>
 </p>
 

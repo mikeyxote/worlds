@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     end
   end
   resources :managements,     only: [:create, :destroy]
+  resources :features,        only: [:create, :destroy]
 
   get 'strava_request/show'
   get 'strava_callback/show'

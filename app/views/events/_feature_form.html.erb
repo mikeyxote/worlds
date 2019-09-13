@@ -1,7 +1,6 @@
   <div id="feature_form">
-    <%= link_to segment.name, segment %>
     <% if segment.featured? @event %>
-      Featured
+      <%= render 'unfeature', segment: segment %>
     <% else %>
       <%= render 'feature', segment: segment %>
     <% end %>

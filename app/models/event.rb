@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
                               dependent: :destroy
   has_many :featuring, through: :featured_segments, source: :segment
   
-  def get_table # should be able to sort segments by associated strava_effort_ids assuming they are numerical by creation
+  def get_table
     puts "----Starting get_table-----"
 
     out = []

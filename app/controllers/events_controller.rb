@@ -34,19 +34,8 @@ class EventsController < ApplicationController
       @segments = Segment.where(id: segment_array)
     end
     
-    @available_segments = @event.activities
     @users = @event.users
-    @tracks = []
-    @event.activities.each do |activity|
-      track = Track.new(activity, @event.start_date)
-      activity.efforts.each do |effort|
-        track.add_effort(effort)
-      end
-      
-      @tracks << track
-      
-    end
-    
+
   end
 
   # GET /events/new
