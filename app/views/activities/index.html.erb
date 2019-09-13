@@ -22,7 +22,7 @@
         <td><%= link_to profile_for(activity.user), activity.user %></td>
         <td><%= link_to activity.name, activity %></td>
         <% if activity.efforts.size == 0 %>
-          <% if current_user.strava_id == activity.strava_athlete_id %>
+          <% if current_user.strava_id == activity.strava_athlete_id  or current_user.developer %>
             <td><%= link_to 'Load Efforts', load_efforts_activity_path(activity) %></td>
           <% else %>
             <td></td>

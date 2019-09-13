@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
                               dependent: :destroy
   has_many :featuring, through: :featured_segments, source: :segment
   
-  def get_table
+  def get_table # should be able to sort segments by associated strava_effort_ids assuming they are numerical by creation
     puts "----Starting get_table-----"
 
     out = []
@@ -20,25 +20,25 @@ class Event < ActiveRecord::Base
     end
 
     official_start = self.start_date
-    puts "Official Start:"
-    puts official_start.to_i.to_s
-
-    out << ['Athlete'] + self.featuring.pluck(:name)
     segments = self.featuring.pluck(:id)
+    ordered_segments = activities.first.efforts.where(segment_id: segments).order(:strava_id).pluck(:segment_id)
+    segment_names = ['Athlete']
+    ordered_segments.each do |id|
+      segment_names << Segment.find_by(id: id).name
+    end    
+    
+    out << segment_names
+    
     activities.each do |activity|
-      efforts = activity.efforts.where(segment_id: segments)
-      row = {}
-
-      efforts.each do |effort|
-        puts "Times"
-        puts official_start.to_i
-        puts effort.start_date.to_i
-        puts effort.elapsed_time
-        row[effort.segment.name] = (effort.start_date.to_i - official_start.to_i) + effort.elapsed_time
+      effort = activity.efforts.where(segment_id: segments)
+      row = [activity.user.full_name]
+      ordered_segments.each do |segment|
+        effort = activity.efforts.find_by(segment_id: segment)
+        row << (effort.start_date.to_i - official_start.to_i) + effort.elapsed_time
       end
-      out << [activity.user.full_name] + row.values
-
+      out << row
     end
+        
     return out
   end
   
