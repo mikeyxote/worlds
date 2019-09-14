@@ -63,7 +63,7 @@
 </p>
 
 <p>
-  <strong>Featured Segments:</strong></br>
+  <strong>Featured Segments <span class='badge'><%= @features.size %></span></strong></br>
   <% if @features.size == 0 %>
     No segments are currently featured.
   <% else %>
@@ -82,10 +82,15 @@
 
 
 <p>
-  <strong>Available Segments:</strong></br>
+
+  <strong>Available Segments <span class='badge'> <%= @segments.size %></span></strong></br>
+  
+  <div id='segment_table' class='collapse in'>
   <% if @segments.size == 0 %>
     No activities are included currently.
   <% else %>
+    <input class="form-control" id="segment_search" type="text" width='200' placeholder="Search..">
+
     <table class="panel panel-default">
     <% @segments.each do |segment| %>
       <tr>
@@ -95,6 +100,7 @@
     <% end %>
     </table>
   <% end %>
+  </div>
 </p>
 
 <%= link_to 'Edit', edit_event_path(@event) %>

@@ -1,9 +1,15 @@
 <% if user_signed_in? %>
 
-  <h1>Davidsonville Jersey Tracking</h1>
+  <h1>Jersey Tracking</h1>
   <% if current_user.has_strava? %>
     <h3>Greetings <%= current_user.firstname %>!</h3>
-    <h2>You are managing: <%= pluralize(current_user.managing.count, 'rider') %></h2>
+    <% if @managing.size > 1 %>
+      <h2>You are managing: <%= pluralize(@managing.count, 'rider') %></h2>
+    <% else %> Looks like you aren't managing anyone </br>
+                Try heading to the <strong><%= link_to "Users Page", users_path %></strong>, click on a profile </br>
+                and add them to your roster with the 'Manage' button.
+    <% end %>
+      <h2></h2>
     <h2>Activity count <%= current_user.activities.count %></h2>
     <h2>Effort count <%= current_user.efforts.count %></h2>
     <h2>Unique Segments: <%= current_user.efforts.group(:segment_id).count.size %></h2>
@@ -17,7 +23,8 @@
     <h1>Welcome to the Davidsonville Jersey Tracker!</h1>
 
     <h2>
-      This is the home page for Strava users who want to track their progress on the regular rides that leave out of Davidsonville.
+      This is the home page for Strava users who want to track their progress 
+      on the regular rides that leave out of Davidsonville.
     </h2>
 
     <%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-lg btn-primary" %>

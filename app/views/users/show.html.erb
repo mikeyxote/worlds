@@ -1,8 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @user.firstname %>
+  <div class="row">
+    <div class='col-sm-2'>
+      <%= image_tag @user.profile %></br>
+    </div>
+    <div class='col-sm-10'>
+      <strong>Name:</strong><%= @user.full_name %></br>
+      <strong>Activites:</strong><span class='badge'><%= @user.activities.size %></span></br>
+      <strong>Efforts:</strong><span class='badge'><%= @user.efforts.size %></span></br>
+      <strong>Managing:</strong><span class='badge'><%= @user.managing.size %></span></br>
+      <strong>Developer:</strong><span class='badge'><%= @user.developer %></span></br>
+    </div>
+  </div>
 </p>
 Manage for here:</br>
 <%= render 'manage_form' %>
