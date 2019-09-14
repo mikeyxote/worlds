@@ -5,6 +5,7 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
+    @recommends = current_user.recommend_events
   end
 
   # GET /events/1
@@ -21,7 +22,7 @@ class EventsController < ApplicationController
       
       @participant_ids = @activities.pluck(:user_id).uniq
       @participant_ids << @event.owner.id
-      @participants = User.where(id: @participant_ids)
+      @participants = current_user.managing.where(id: @participant_ids)
       @features = @event.featuring
       segment_array = []
       

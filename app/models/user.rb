@@ -15,9 +15,28 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :events
+
+  def recommend_events
+    if !self.managing? self
+      self.manage self
+    end
+    days = []
+    self.managing.each do |user|
+      user_days = user.activities.where(start_date: 60.days.ago..Time.now).pluck(:start_date)
+      user_days = user_days.map {|day| day.to_date}
+      user_days |= []
+      days += user_days
+    end
+
+    days = days.inject(Hash.new(0)) { |h,x| h[x] += 1; h}
+    days = days.sort_by {|k,v| v}.reverse
+    return days[0..5]
+  end
+
   def full_name
     if self.firstname and self.lastname
-      return self.firstname + " " + self.lastname
+      return self.firstname.titleize + " " + self.lastname.titleize
     else
       return "Your Name Here"
     end

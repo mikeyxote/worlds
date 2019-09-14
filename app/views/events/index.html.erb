@@ -43,4 +43,22 @@
 
 <br>
 
-<%= link_to 'New Event', new_event_path %>
+<%= button_to 'New Event', new_event_path, {class: 'btn-success'} %>
+
+<table>
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Active Athletes</th>
+  </tr>
+  </thead>
+  
+  <body>
+    <% @recommends.each do |r| %>
+    <tr>
+      <td><%= r[0].strftime('%a, %d %b') %></td>
+      <td><%= r[1] %></td>
+    </tr>
+    <% end %>
+  </body>
+</table>

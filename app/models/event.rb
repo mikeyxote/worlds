@@ -7,7 +7,8 @@ class Event < ActiveRecord::Base
                               foreign_key: "event_id",
                               dependent: :destroy
   has_many :featuring, through: :featured_segments, source: :segment
-  
+  # belongs_to :user
+
   def get_table
     puts "----Starting get_table-----"
 

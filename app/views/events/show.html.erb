@@ -67,7 +67,7 @@
   <% if @features.size == 0 %>
     No segments are currently featured.
   <% else %>
-    <table>
+    <table  class="panel panel-default">
     <% @features.each do |segment| %>
       <tr>
       <td><%= link_to segment.name, segment %></td>

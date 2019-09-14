@@ -11,7 +11,6 @@
       <th>Event</th>
       <th>Distance</th>
       <th>Start date</th>
-      <th>Trainer</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -37,7 +36,6 @@
         <% end %>
         <td><%= (activity.distance * 0.0006214).round(1) %></td>
         <td><%= Time.at(activity.start_date).strftime('%a, %d %b %Y').to_s %></td>
-        <td><%= activity.trainer %></td>
         <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
         <% if current_user.strava_id == activity.strava_athlete_id %>
           <td><%= link_to 'Delete', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
