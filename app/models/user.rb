@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :activities, dependent: :destroy
+  has_many :points, dependent: :destroy
   has_many :efforts, through: :activities, dependent: :destroy
   has_many :active_managements, class_name: "Management",
                       foreign_key: "manager_id",

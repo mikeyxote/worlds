@@ -11,7 +11,6 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @activities = []
     @segments = []
     if @event.start_date
       race_day = @event.start_date.to_date

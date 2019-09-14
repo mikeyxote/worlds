@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
   belongs_to :segment
   has_many :activities
+  has_many :points, dependent: :destroy
   has_many :efforts, through: :activities
   has_many :users, through: :activities
   has_many :featured_segments, class_name: "Feature",
@@ -9,13 +10,18 @@ class Event < ActiveRecord::Base
   has_many :featuring, through: :featured_segments, source: :segment
   # belongs_to :user
 
+  # def post_scores
+    
+    
+  # end
+
   def get_table
     puts "----Starting get_table-----"
 
     out = []
     race_day = self.start_date.to_date
     activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
-
+    activity_ids = activities.pluck(:id)
     if activities.count > 0
       self.start_date = activities.pluck(:start_date).min
     end
@@ -28,6 +34,25 @@ class Event < ActiveRecord::Base
       segment_names << Segment.find_by(id: id).name
     end    
     
+    # compute winning data here
+    win = {}
+    self.featuring.each do |segment|
+      winning_effort = segment.efforts.where(activity_id: activity_ids).order("elapsed_time + efforts.start_date" => :asc).first
+      # winning_time = nil
+      # winning_effort = nil
+      # efforts.each do |effort|
+        
+      # end
+      
+      winner = User.find_by(id: winning_effort.user_id)
+
+      win[segment.id] = {name: segment.name,
+                        winner_name: winner.full_name,
+                        effort: winning_effort.id,
+                        start: winning_effort.start_date
+      }
+    end
+    puts win.to_yaml
     out << segment_names
     
     activities.each do |activity|
