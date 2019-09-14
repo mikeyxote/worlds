@@ -35,24 +35,16 @@ class Event < ActiveRecord::Base
     end    
     
     # compute winning data here
-    win = {}
+    Point.where(event: self).delete_all
     self.featuring.each do |segment|
-      winning_effort = segment.efforts.where(activity_id: activity_ids).order("elapsed_time + efforts.start_date" => :asc).first
-      # winning_time = nil
-      # winning_effort = nil
-      # efforts.each do |effort|
-        
-      # end
-      
+      winning_effort = segment.efforts.where(activity_id: activity_ids).order(:stop_date).first
+
       winner = User.find_by(id: winning_effort.user_id)
 
-      win[segment.id] = {name: segment.name,
-                        winner_name: winner.full_name,
-                        effort: winning_effort.id,
-                        start: winning_effort.start_date
-      }
+      Point.create(event: self,
+                  user: winner,
+                  effort: winning_effort)
     end
-    puts win.to_yaml
     out << segment_names
     
     activities.each do |activity|

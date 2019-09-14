@@ -17,7 +17,7 @@ class EventsController < ApplicationController
       @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
       @table = @event.get_table
       
-      
+      @points = Point.where(event: @event)
       
       @participant_ids = @activities.pluck(:user_id).uniq
       @participant_ids << @event.owner.id

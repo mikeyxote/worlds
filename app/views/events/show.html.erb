@@ -26,8 +26,27 @@
 </div>
 </br>
 
+<div>
+  <strong>Points assigned:</strong>
+  <table class="table table-hover table-striped">
+    <thead>
+      <th>Athlete</th>
+      <th>Segment</th>
+      <th>Points</th>
+    </thead>
+      <% @points.each do |pt| %>
+        <tr>
+        <td><%= User.find_by(id: pt.user_id).full_name %></td>
+        <td><%= Segment.find_by(id: pt.effort.segment.id).name %></td>
+        <td>1</td>
+        </tr>
+      <% end %>
+    
+  </table>
+</div>
+
 <p>
-  <strong>Table (in progress)</strong></br>
+  <strong>Segment Completion Times</strong></br>
   <table class="table table-hover table-striped">
     <thead>
       <tr>
