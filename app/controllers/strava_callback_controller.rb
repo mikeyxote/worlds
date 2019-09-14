@@ -21,7 +21,7 @@ class StravaCallbackController < ApplicationController
         profile_medium: response.athlete.profile_medium,
         profile: response.athlete.profile
         )
-      current_user.grab_ten
+      current_user.grab_five
       @profile = response.athlete.profile
       # Place to start can go here
 

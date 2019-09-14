@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
     managing.include?(other_user)
   end
 
-  def grab_ten
+  def grab_five
     client = api_client
     
     all_activities = Activity.all.pluck(:strava_id)
@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
                     trainer: activity_obj.trainer,
                     distance: activity_obj.distance)
         ingest_count += 1
-        if ingest_count >= 10
+        if ingest_count >= 5
           return nil
         end
       end
@@ -143,10 +143,18 @@ class User < ActiveRecord::Base
     return new_activity
   end
   
+  def get_all_efforts
+    self.activities.each do |a|
+      if a.efforts.count == 0
+        get_activity_efforts(a.strava_id)
+      end
+    end
+    return nil
+  end
+  
   def get_activity_efforts(activity_id)
     puts "Activity ID: " + activity_id.to_s
     client = api_client
-    
     
     activity_obj = client.activity(activity_id)
     new_activity = Activity.find_by(strava_id: activity_id)
@@ -162,6 +170,7 @@ class User < ActiveRecord::Base
               segment_id: Segment.find_by(strava_id: effort.segment['id']).id,
               start_date: effort.start_date,
               elapsed_time: effort.elapsed_time,
+              stop_date: effort.start_date + effort.elapsed_time,
               strava_id: effort.id)
     end
     
