@@ -63,12 +63,13 @@ class User < ActiveRecord::Base
     activity_list = client.athlete_activities
     activity_list.each do |activity_obj|
       if activity_obj.type == 'Ride' and not all_activities.include? activity_obj.id
-        self.activities.create(name: activity_obj.name,
+        new_activity = self.activities.create(name: activity_obj.name,
                     strava_athlete_id: activity_obj.athlete['id'],
                     strava_id: activity_obj.id,
                     start_date: activity_obj.start_date,
                     trainer: activity_obj.trainer,
                     distance: activity_obj.distance)
+        get_activity_efforts(new_activity.strava_id)
         ingest_count += 1
         if ingest_count >= 5
           return nil
