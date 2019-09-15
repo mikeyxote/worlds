@@ -1,6 +1,10 @@
 class StaticPagesController < ApplicationController
   def home
-    @managing = current_user.managing
+    if current_user
+      @managing = current_user.managing
+    else
+      @managing = nil
+    end
   end
 
   def help
