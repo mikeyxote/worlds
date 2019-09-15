@@ -10,7 +10,6 @@
       <li><%= link_to "Home", root_path %></li>
       <li><%= link_to "Users", users_path %></li>
       <li><%= link_to "Segments", segments_path %></li>
-      <li><%= link_to "Efforts", efforts_path %></li>
       <li><%= link_to "Activities", activities_path %></li>
       <li><%= link_to "Events", events_path %></li>
       <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
@@ -19,7 +18,7 @@
     <ul>
       <%= link_to "Log in", new_user_session_path %>
       <%= link_to "Sign up", new_user_registration_path %>
-    </ul>
+    </ul> 
     <% end %>
     </ul>
   </div>
