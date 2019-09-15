@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'strava/download'
+
   resources :points
   resources :events
   
@@ -26,6 +28,7 @@ Rails.application.routes.draw do
 
   get 'strava_request/show'
   get 'strava_callback/show'
+  get 'download_strava' => 'strava#download'
 
   devise_for :users
   get 'static_pages/home'

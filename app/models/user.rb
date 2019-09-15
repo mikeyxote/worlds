@@ -143,6 +143,26 @@ class User < ActiveRecord::Base
     return new_activity
   end
   
+  def get_new_activities # can enrich with key segment triggers here
+    client = api_client
+    
+    all_activities = Activity.all.pluck(:strava_id)
+    new_activities = []
+
+    activity_list = client.athlete_activities
+    activity_list.each do |activity_obj|
+      if activity_obj.type == 'Ride' and not all_activities.include? activity_obj.id
+        new_activities << {name: activity_obj.name,
+                    strava_athlete_id: activity_obj.athlete['id'],
+                    strava_id: activity_obj.id,
+                    start_date: activity_obj.start_date,
+                    trainer: activity_obj.trainer,
+                    distance: activity_obj.distance}
+      end
+    end
+    return new_activities
+  end
+  
   def get_all_efforts
     self.activities.each do |a|
       if a.efforts.count == 0

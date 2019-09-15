@@ -14,25 +14,17 @@ gem 'devise'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-# gem 'jquery-timepicker-rails', '~> 1.11', '>= 1.11.10'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '>= 0.4.0', group: :doc
 gem 'strava-ruby-client'
 gem 'bcrypt', '~> 3.1.7'
 
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 group :development, :test do
   gem 'sqlite3', '~> 1.3.6'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # gem 'rspec-rails', '~> 3.6'
-  # gem 'capybara'
+
 end
 
 group :development do
