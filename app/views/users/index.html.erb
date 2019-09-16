@@ -1,8 +1,17 @@
-<p id="notice"><%= notice %></p>
-
-<h1>All users</h1>
-
-
-<ul class="users">
-  <%= render @users %>
-</ul>
+<% if user_signed_in? %>
+  <h1>All users</h1>
+    <ul class="users">
+      <%= render @users %>
+    </ul>
+  <% else %>
+    <div class="center jumbotron">
+      <h1>Welcome to the Davidsonville Jersey Tracker!</h1>
+  
+      <h2>
+        This is the home page for Strava users who want to track their progress 
+        on the regular rides that leave out of Davidsonville.
+      </h2>
+  
+      <%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-lg btn-primary" %>
+    </div>
+<% end %>

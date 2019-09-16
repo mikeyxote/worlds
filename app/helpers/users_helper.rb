@@ -9,4 +9,7 @@ module UsersHelper
     image_tag(profile_url, alt: user.username, class: "gravatar")
   end
   
+  def strava_for(user)
+    link_to "STRAVA!", "https://www.strava.com/athletes/" + user.strava_id.to_s, target: "_blank", class: "btn btn-sm btn-strava"
+  end
 end

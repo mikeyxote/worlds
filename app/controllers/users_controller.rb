@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @new_activities = @user.get_new_activities
+    @athlete_link = "https://www.strava.com/athletes/" + @user.strava_id.to_s
   end
 
   # GET /users/new

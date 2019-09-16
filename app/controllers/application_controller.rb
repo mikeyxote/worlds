@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
-
   private
   
   # Returns true if the user is logged in, false otherwise.
@@ -25,6 +24,4 @@ class ApplicationController < ActionController::Base
       redirect_to login_url
     end
   end  
-
-
 end
