@@ -4,6 +4,7 @@
   <strong>Points:</strong>
   Points: <%= @segment.points %></br>
   Strava Id: <%= @segment.strava_id %><br>
+  <%= strava_for_segment @segment %>
 </p>
 
 <%= link_to 'Edit', edit_segment_path(@segment) %> |

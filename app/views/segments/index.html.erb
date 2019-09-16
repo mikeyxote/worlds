@@ -12,7 +12,7 @@
       <th>Max Grade</th>
       <th>Average Grade</th>
       <th>Star Count</th>
-      <th colspan="1"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -27,6 +27,7 @@
         <td><%= segment.average_grade %></td>
         <td><%= segment.star_count %></td>
         <td><%= link_to 'Edit', edit_segment_path(segment) %></td>
+        <td><%= strava_for_segment segment %></td>
       </tr>
     <% end %>
   </tbody>
