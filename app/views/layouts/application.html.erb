@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Worlds</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
+    <meta name="description"        content="A Strava-powered app for cyclists in the Annapolis area to track informal competition.">
+    <meta property="og:title"       content="Jersey Tracker" />
+    <meta property="og:url"         content="https://jersey-tracker.herokuapp.com/" />
+    <meta property="og:description" content="Turn casual group rides into events by calculating and awarding jerseys.">
+    <meta property="og:image"       content="https://s3.amazonaws.com/bucketroyal/App+Graphics/castletracks_og.jpg">
+    <meta property="og:type"        content="website" />
+    <meta property="og:locale"      content="en_US" />
+    
+    <%= stylesheet_link_tag "application", media: "all",
+                                           "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+    <%= render 'layouts/shim' %>
+  </head>
 <body>
 
   <%= render 'layouts/header' %>
@@ -15,13 +24,13 @@
         <div class="alert alert-<%= message_type %>"><%= message %></div>
       <% end %>
       <% if user_signed_in? %>
-        
+
       <% else %>
         Looks like you're not logged in.  From here, you can either
         <%= link_to "Sign up", new_user_registration_path %> or
         <%= link_to "Log in", new_user_session_path %>
       <% end %>
-      <%= yield %>
+        <%= yield %>
       <%= render 'layouts/footer' %>
       <%= debug(params) if Rails.env.development? %>
     </div>

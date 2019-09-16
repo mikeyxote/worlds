@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Events</th>
       <th>Points</th>
       <th>Climb Category</th>
       <th>Max Grade</th>
@@ -19,6 +20,7 @@
     <% @segments.each do |segment| %>
       <tr>
         <td><%= link_to segment.name, segment %></td>
+        <td><%= segment.featured_by.size %></td>
         <td><%= segment.points %></td>
         <td><%= segment.climb_category %></td>
         <td><%= segment.max_grade %></td>
