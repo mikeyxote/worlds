@@ -1,0 +1,5 @@
+<% if @event.participants.include? user %>
+  <%= render 'unregister', user: user %>
+<% else %>
+  <%= render 'register', user: user %>
+<% end %>

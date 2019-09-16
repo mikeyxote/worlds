@@ -13,18 +13,17 @@ class EventsController < ApplicationController
   def show
     @segments = []
     if @event.start_date
-      race_day = @event.start_date.to_date
-      @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
-      @table = @event.get_table
       
+      @table = @event.get_table
+      @team = @event.owner.managing
       @points = Point.where(event: @event)
       
-      @participant_ids = @activities.pluck(:user_id).uniq
-      @participant_ids << @event.owner.id
-      @participants = current_user.managing.where(id: @participant_ids)
+      @participants = @event.participants
+      race_day = @event.start_date.to_date
+      @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day]).where(user: @participants)
+      
       @features = @event.featuring
       segment_array = []
-      
       
       @activities.each do |activity|
         segment_array << activity.efforts.pluck(:segment_id)
@@ -34,8 +33,6 @@ class EventsController < ApplicationController
       flat_array -= @features.pluck(:id)
       @segments = Segment.where(id: flat_array)
     end
-    
-    @users = @event.users
 
   end
 

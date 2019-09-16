@@ -2,19 +2,22 @@ class ParticipationsController < ApplicationController
   before_action :logged_in_user
   
   def create
-    @user = User.find(params[:managed_id])
-    current_user.manage(@user)
+    @event = Event.find_by(id: params[:event_id])
+    @user = User.find_by(id: params[:user_id])
+    @event.register @user
+
     respond_to do |format|
-      format.html { redirect_to user }
+      format.html { redirect_to @event }
       format.js
     end
   end
 
   def destroy
-    @user = Management.find(params[:id]).managed
-    current_user.release(@user)
+    @event = Event.find_by(id: params[:event_id])
+    @user = User.find_by(id: params[:user_id])
+    @event.unregister @user
     respond_to do |format|
-      format.html { redirect_to user }
+      format.html { redirect_to @event }
       format.js
     end
   end
