@@ -15,8 +15,8 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
-  has_many :events
+  has_many :participations
+  has_many :participating_in, through: :participations, source: :user
 
   def recommend_events
     if !self.managing? self

@@ -3,17 +3,22 @@ class Event < ActiveRecord::Base
   has_many :activities
   has_many :points, dependent: :destroy
   has_many :efforts, through: :activities
-  has_many :users, through: :activities
+  has_many :participations
+  has_many :participants, through: :participations, source: :user
   has_many :featured_segments, class_name: "Feature",
                               foreign_key: "event_id",
                               dependent: :destroy
   has_many :featuring, through: :featured_segments, source: :segment
   # belongs_to :user
 
-  # def post_scores
-    
-    
-  # end
+
+  def register user
+    self.participations.create(user: user)
+  end
+
+  def unregister user
+    self.participations.find_by(user_id: user.id).destroy
+  end
 
   def get_table
     puts "----Starting get_table-----"
