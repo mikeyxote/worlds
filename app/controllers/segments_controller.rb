@@ -24,18 +24,8 @@ class SegmentsController < ApplicationController
   # POST /segments
   # POST /segments.json
   def create
-    # puts "Segment Params:"
-    # puts segment_params.to_s
-    puts "Strava_id for new segment:"
     segment_id =  params['segment']['strava_id']
     segment = current_user.get_segment(segment_id)
-    puts "From segments controller:"
-    puts "Name: " + segment.name
-    puts "Max grade: " + segment.maximum_grade.to_s
-    puts "Avg Grade: " + segment.average_grade.to_s
-    puts "Climb Cat: " + segment.climb_category.to_s
-    puts "Star Count: " + segment.star_count.to_s
-    # puts segment_params.keys.to_s #params['segment']['strava_id']
     @segment = Segment.new(name: segment.name,
                           strava_id: segment_id,
                           max_grade: segment.maximum_grade,
