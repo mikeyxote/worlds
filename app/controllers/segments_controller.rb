@@ -4,7 +4,7 @@ class SegmentsController < ApplicationController
   # GET /segments
   # GET /segments.json
   def index
-    @segments = Segment.all
+    @segments = Segment.paginate(page: params[:page])
   end
 
   # GET /segments/1
