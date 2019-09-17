@@ -209,9 +209,6 @@ class User < ActiveRecord::Base
   end
   
   def test_me
-    # client = Strava::Api::Client.new(
-    #   access_token: self.strava_token
-    # )
     
     segments = Segment.all.pluck(:strava_id)
     puts segments.to_yaml

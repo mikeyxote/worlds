@@ -1,7 +1,13 @@
-<%= profile_for(user) %>
-<%= form_for(@event.participations.find_by(user_id: user.id),
-             html: { method: :delete }) do |f| %>
- <div><%= hidden_field_tag :user_id, user.id %></div>
- <div><%= hidden_field_tag :event_id, @event.id %></div>
-  <%= f.submit "Unregister", class: "btn" %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div><%= profile_for(user, medium: false) %></div>
+  </div>
+  <div class="row">
+    <%= form_for(@event.participations.find_by(user_id: user.id),
+                 html: { method: :delete }) do |f| %>
+     <div><%= hidden_field_tag :user_id, user.id %></div>
+     <div><%= hidden_field_tag :event_id, @event.id %></div>
+      <%= f.submit "Unregister", class: "btn btn-unregister" %>
+    <% end %>
+  </div>
+</div>
