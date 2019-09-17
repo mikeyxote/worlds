@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :participations
-  has_many :participating_in, through: :participations, source: :user
+  has_many :participating_in, through: :participations, source: :event
 
   def recommend_events
     if !self.managing? self
