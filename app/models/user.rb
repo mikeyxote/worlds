@@ -18,6 +18,12 @@ class User < ActiveRecord::Base
   has_many :participations
   has_many :participating_in, through: :participations, source: :event
 
+  def recommend
+    puts "Starting New Recommend method:"
+    
+    
+  end
+
   def recommend_events
     if !self.managing? self
       self.manage self

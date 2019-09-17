@@ -34,7 +34,8 @@ class Event < ActiveRecord::Base
     official_start = self.start_date
     segments = self.featuring.pluck(:id)
     if activities.size > 0
-      ordered_segments = activities.first.efforts.where(segment_id: segments).order(:strava_id).uniq.pluck(:segment_id)
+      ordered_segments = activities.first.efforts.where(segment_id: segments).order(:strava_id).pluck(:segment_id)
+      ordered_segments |= []
       segment_names = ['Athlete']
 
       ordered_segments.each do |id|
