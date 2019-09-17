@@ -100,14 +100,19 @@ class User < ActiveRecord::Base
   end
   
   def ingest_segment_obj(segment_obj)
-    segment = Segment.create(name: segment_obj.name,
+    all_segments = Segment.all.pluck(:strava_id)
+    if all_segments.include? segment_obj.id
+      return Segment.find_by(strava_id: segment_obj.id).first
+    else
+      segment = Segment.create(name: segment_obj.name,
                   strava_id: segment_obj.id,
                   max_grade: segment_obj.maximum_grade,
                   average_grade: segment_obj.average_grade,
                   climb_category: segment_obj.climb_category,
                   points: 0,
                   star_count: segment_obj.star_count)
-    return segment
+      return segment
+    end
   end
   
   def get_effort_obj(effort_id)

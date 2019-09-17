@@ -1,2 +1,22 @@
-<h1>StaticPages#help</h1>
-<p>Find me in app/views/static_pages/help.html.erb</p>
+<div class="jumbotron">
+
+  <h1>Welcome to Jersey Tracker!</h1>
+  <p class='lead'>
+    Not sure where to start? No Problem!</p>
+    <hr class="my-4">
+    1) Start by going to the <%= link_to "USERS' PAGE", users_path %>.</br>
+    2) From there, select the riders you'd like to manage and have available for events.</br>
+    3) Next go to the <%= link_to "EVENTS PAGE", events_path %> and create an event on a day 
+    that you know your athletes rode together.</br>
+    4) Register your athletes for the event.</br>
+    5) Select the segments you'd like featured in the event.</br><br>
+    <p class='lead'>That's it, you've created an event! From here you should 
+    be able to watch the glory of your team grow with every passing sufferfest. </p>
+    <hr class="my-4">
+    <p class='lead'>Can't see the activities you are looking for?</p>
+    <hr class="my-4">
+    Unless they are marked 'Private', you can head to your 
+    <%= link_to "user profile page", current_user %> and download them from Strava.
+    
+  </p>
+</div>
