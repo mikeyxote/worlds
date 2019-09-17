@@ -8,23 +8,23 @@
     Official Start Time Pending...
   <% end %></h2>
 </p>
-<div class="panel panel-default">
-  <strong>Team:</strong></br>
-  <div class="panel-body">
-  <% if @team.size == 0 %>
-    Looks like you're not managing anyone yet. You should try heading to the 
-    <%= link_to "Users' Page", users_path %>.  from there, click on some 
-    profiles and start building your team.
-  <% else %>
-    <% @team.each do |user| %>
-    <td>
-      <%= render 'participant_form', user: user %>
-    </td>
-    <% end %>
-  <% end %>
-  </div>
-</div>
-</br>
+
+<strong>Team:</strong></br>
+
+<% if @team.size == 0 %>
+  Looks like you're not managing anyone yet. You should try heading to the 
+  <%= link_to "Users' Page", users_path %>.  from there, click on some 
+  profiles and start building your team.
+<% else %>
+
+  <table>
+    <tr>
+      <% @team.each do |user| %>
+        <td><%= render 'participant_form', user: user %></td>
+      <% end %>
+    </tr>
+  </table>
+<% end %>
 
 <div>
   <strong>Points assigned:</strong>
@@ -55,7 +55,7 @@
           <% end %>
       </tr>
     </thead>
-    <% @table[1,@table.size-1].each do |row| %>
+    <% @table[1, @table.size-1].each do |row| %>
     <tr>
       <% row.each do |cell| %>
         <% if cell.is_a? Numeric %>

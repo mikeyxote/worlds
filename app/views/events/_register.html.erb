@@ -1,8 +1,7 @@
-<div>
-<%= profile_for(user) %>
 <%= form_for(@event.participations.build) do |f| %>
+  <div><img src= <%= user.profile %>></div>
+  <div class="form-reg"></div>
   <div><%= hidden_field_tag :user_id, user.id %></div>
   <div><%= hidden_field_tag :event_id, @event.id %></div>
-  <%= f.submit "Register", class: "btn btn-primary" %>
+  <%= f.submit "Register", class: "btn btn-primaery btn-register" %>
 <% end %>
-</div>

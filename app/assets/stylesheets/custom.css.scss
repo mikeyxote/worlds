@@ -491,6 +491,31 @@ td {
   width: 125px;
 }
 
+.btn-register {
+  width: 125px;
+  background-color: #0000FF ;
+  color: #EEEEEE;
+}
+
 .div-registration {
   display : in-line;
+}
+
+.form-reg {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+#new_participation {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  
+}
+.team-spot {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
