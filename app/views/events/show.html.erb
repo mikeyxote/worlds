@@ -44,32 +44,34 @@
     
   </table>
 </div>
-
-<p>
-  <strong>Segment Completion Times</strong></br>
-  <table class="table table-hover table-striped">
-    <thead>
+<% if @table %>
+  <p>
+    <strong>Segment Completion Times</strong></br>
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <% @table[0].each do |cell| %>
+            <th><%= cell %></th>
+            <% end %>
+        </tr>
+      </thead>
+      <% @table[1, @table.size-1].each do |row| %>
       <tr>
-        <% @table[0].each do |cell| %>
-          <th><%= cell %></th>
+        <% row.each do |cell| %>
+          <% if cell.is_a? Numeric %>
+            <td><%= Time.at(cell).strftime('%H:%M:%S') %></td>
+          <% else %>
+            <td><%= cell %></td>
           <% end %>
-      </tr>
-    </thead>
-    <% @table[1, @table.size-1].each do |row| %>
-    <tr>
-      <% row.each do |cell| %>
-        <% if cell.is_a? Numeric %>
-          <td><%= Time.at(cell).strftime('%H:%M:%S') %></td>
-        <% else %>
-          <td><%= cell %></td>
         <% end %>
+      </tr>
       <% end %>
-    </tr>
-    <% end %>
-    
-  </table>
-</p>
-
+      
+    </table>
+  </p>
+<% else %>
+  <strong>Add some athletes or segments to create the results table!</strong>
+<% end %>
 <p>
   <strong>Available Activities:</strong></br> 
   <% if @activities.size == 0 %>

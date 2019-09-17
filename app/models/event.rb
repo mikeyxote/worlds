@@ -33,16 +33,29 @@ class Event < ActiveRecord::Base
 
     official_start = self.start_date
     segments = self.featuring.pluck(:id)
-    puts "Segments:"
-    puts segments.to_yaml
-    ordered_segments = activities.first.efforts.where(segment_id: segments).order(:strava_id).uniq.pluck(:segment_id)
-    segment_names = ['Athlete']
-    puts "Ordered Segments"
-    puts ordered_segments.to_yaml
-    ordered_segments.each do |id|
-      segment_names << Segment.find_by(id: id).name
-    end    
-    out << segment_names
+    if activities.size > 0
+      ordered_segments = activities.first.efforts.where(segment_id: segments).order(:strava_id).uniq.pluck(:segment_id)
+      segment_names = ['Athlete']
+
+      ordered_segments.each do |id|
+        segment_names << Segment.find_by(id: id).name
+      end    
+      out << segment_names
+      
+      activities.each do |activity|
+        effort = activity.efforts.where(segment_id: segments)
+        row = [activity.user.full_name]
+        ordered_segments.each do |segment|
+          effort = activity.efforts.find_by(segment_id: segment)
+          row << (effort.start_date.to_i - official_start.to_i) + effort.elapsed_time
+        end
+        out << row
+      end
+      
+    else
+      return nil
+    end
+    
     
     # compute winning data here
     Point.where(event: self).delete_all
@@ -54,17 +67,6 @@ class Event < ActiveRecord::Base
       Point.create(event: self,
                   user: winner,
                   effort: winning_effort)
-    end
-    
-    
-    activities.each do |activity|
-      effort = activity.efforts.where(segment_id: segments)
-      row = [activity.user.full_name]
-      ordered_segments.each do |segment|
-        effort = activity.efforts.find_by(segment_id: segment)
-        row << (effort.start_date.to_i - official_start.to_i) + effort.elapsed_time
-      end
-      out << row
     end
         
     return out
