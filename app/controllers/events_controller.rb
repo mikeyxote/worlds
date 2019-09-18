@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
-    @recommends = current_user.recommend_events
+    @alt_recommends = current_user.recommend
   end
 
   # GET /events/1

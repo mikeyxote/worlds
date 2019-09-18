@@ -19,9 +19,69 @@ class User < ActiveRecord::Base
   has_many :participating_in, through: :participations, source: :event
 
   def recommend
+    day_hash = {}
     puts "Starting New Recommend method:"
+    effort_list = []
+    efforts = Effort.where(user: self.managing)
+    efforts.each do |effort|
+      day = effort.start_date.to_date
+      if !day_hash.keys.include? day
+        day_hash[day] = {effort.segment_id => Set[effort.user_id]}
+      else
+        if !day_hash[day].keys.include? effort.segment_id
+          day_hash[day][effort.segment_id] = Set[effort.user_id]
+        else
+          day_hash[day][effort.segment_id] << effort.user_id
+        end
+      end
+    end
+
+    out = {}
+    day_hash.each do |day, segments|
+      segments.each do |segment, athlete_set|
+        if !out.keys.include? day
+          out[day] = {athlete_set => Set[segment]}
+        else
+          if !out[day].keys.include? athlete_set
+            out[day][athlete_set] = Set[segment]
+          else
+            out[day][athlete_set] << segment
+          end
+        end
+      end
+    end
+    out.each do |day, athlete_sets|
+      athlete_sets.each do |athlete_set, segments|
+        if athlete_set.size < 2 or segments.size < 3
+          out[day].delete(athlete_set)
+        end
+      end
+      if out[day] == {}
+        out.delete(day)
+      end
+    end
     
+    puts out.to_s
+    # efforts.each do |effort|
+    #   if !out.keys.include? effort.start_date.to_date
+    #     out[effort.start_date.to_date] = []
+    # end
+    # self.managing do |athlete|
+    #   row = {}
+    #   athlete.activities do |activity|
+    #     day = activity.start_date.to_date
+    #     if !row.keys.include? day
+    #       row[day] = {segments: activity.efforts.pluck(:segment_id), athletes: athlete.id}
+    #     else
+    #       row[day]['segments'] += activity.efforts.pluck(:segment_id)
+    #       row[day]['athletes'] += athlete.id
+    #     end
+    #   end
+    #   if out.keys.include? row
+    #   # add/integrate ti row to out here
+    # end
     
+    return out
   end
 
   def recommend_events

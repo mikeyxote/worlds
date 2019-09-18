@@ -43,21 +43,31 @@
 
 <%= button_to 'Create Event', new_event_path, {method: 'get', class: 'btn-success'} %>
 
-<h3>Suggested Event Days:</h3>
-<table>
+<h3>Suggested Events</h3>
+<table class="table table-hover table-striped">
   <thead>
-  <tr>
-    <th>Date</th>
-    <th>Active Athletes</th>
-  </tr>
-  </thead>
-  
-  <body>
-    <% @recommends.each do |r| %>
     <tr>
-      <td><%= r[0].strftime('%a, %d %b') %></td>
-      <td><%= r[1] %></td>
+      <th>Date</th>
+      <th>Participants</th>
+      <th>Segments</th>
+      <th></th>
     </tr>
+  </thead>
+
+    <% @alt_recommends.each do |day, athlete_sets| %>
+      <% athlete_sets.each do |athletes, segments| %>
+        <tr>
+          <td><%= day %></td>
+          <td>
+            <% athletes.each do |athlete| %>
+              <%= profile_for User.find_by(id: athlete) %>
+            <% end %>
+          </td>
+          <td><%= segments.size.to_s %></td>
+          <td><%= link_to "Create!", new_event_path %></td>
+        </tr>
+      <% end %>
     <% end %>
-  </body>
+      
+
 </table>
