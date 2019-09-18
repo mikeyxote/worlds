@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
   has_many :activities
   has_many :points, dependent: :destroy
   has_many :efforts, through: :activities
-  has_many :participations
+  has_many :participations, dependent: :destroy
   has_many :participants, through: :participations, source: :user
   has_many :featured_segments, class_name: "Feature",
                               foreign_key: "event_id",
