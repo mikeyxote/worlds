@@ -10,6 +10,8 @@ class SegmentsController < ApplicationController
   # GET /segments/1
   # GET /segments/1.json
   def show
+    @featured = @segment.featured_by.count
+    @efforts = @segment.efforts.count
   end
 
   # GET /segments/new

@@ -1,10 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Points:</strong>
-  Points: <%= @segment.points %></br>
-  Strava Id: <%= @segment.strava_id %><br>
-  <%= strava_for_segment @segment %>
+  <strong>Efforts:</strong> <%= @efforts %></br>
+  <strong>Strava Id:</strong> <%= @segment.strava_id %></br>
+  <strong>Max Grade:</strong> <%= @segment.max_grade %></br>
+  <strong>Avg Grade:</strong> <%= @segment.average_grade %> </br>
+  Featured in <%= pluralize(@featured, 'event') %>.</br>
+  View on <%= strava_for_segment @segment %>
 </p>
 
 <%= link_to 'Edit', edit_segment_path(@segment) %> |

@@ -115,8 +115,13 @@
     <table class="panel panel-default">
     <% @segments.each do |segment| %>
       <tr>
-      <td><%= link_to segment.name, segment %></td>
-      <td><%= render 'feature_form', segment: segment %></td>
+        <td><%= link_to segment.name, segment %> | </td>
+        <td>Efforts: <%= segment.efforts.count %> | </td>
+        <td>Featured: <%= segment.featured_by.count %> | </td>
+        <td>Max Grade: <%= segment.max_grade %> | </td>
+        <td>Avg Grade: <%= segment.average_grade %> | </td>
+        <td>Stars: <%= segment.star_count %> | </td>
+        <td><%= render 'feature_form', segment: segment %></td>
       </tr>
     <% end %>
     </table>
