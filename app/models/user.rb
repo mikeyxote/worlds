@@ -20,7 +20,6 @@ class User < ActiveRecord::Base
 
   def recommend
     day_hash = {}
-    puts "Starting New Recommend method:"
     effort_list = []
     efforts = Effort.where(user: self.managing)
     efforts.each do |effort|
@@ -60,26 +59,6 @@ class User < ActiveRecord::Base
         out.delete(day)
       end
     end
-    
-    puts out.to_s
-    # efforts.each do |effort|
-    #   if !out.keys.include? effort.start_date.to_date
-    #     out[effort.start_date.to_date] = []
-    # end
-    # self.managing do |athlete|
-    #   row = {}
-    #   athlete.activities do |activity|
-    #     day = activity.start_date.to_date
-    #     if !row.keys.include? day
-    #       row[day] = {segments: activity.efforts.pluck(:segment_id), athletes: athlete.id}
-    #     else
-    #       row[day]['segments'] += activity.efforts.pluck(:segment_id)
-    #       row[day]['athletes'] += athlete.id
-    #     end
-    #   end
-    #   if out.keys.include? row
-    #   # add/integrate ti row to out here
-    # end
     
     return out
   end
@@ -158,11 +137,24 @@ class User < ActiveRecord::Base
     return client
   end
   
+  def fetch_segment(segment_id)
+    puts "Getting obj from Segment_id: " + segment_id.to_s
+    ingest_segment_obj(get_segment_obj(segment_id))
+  end
+  
   def get_segment_obj(segment_id)
     client = api_client
-    
-    segment_obj = client.segment(segment_id.to_s)
+    puts "Client assigned"
+    puts "getting segment object for : " + segment_id
+    segment_obj = client.segment(segment_id)
+    # puts "Segment Yaml:"
+    # puts segment_obj.to_yaml
     return segment_obj
+  end
+  
+  def test_segment
+    sid = '6801803'.to_s
+    return get_segment_obj(sid.to_s)
   end
   
   def ingest_segment_obj(segment_obj)
@@ -176,9 +168,29 @@ class User < ActiveRecord::Base
                   average_grade: segment_obj.average_grade,
                   climb_category: segment_obj.climb_category,
                   points: 0,
-                  star_count: segment_obj.star_count)
+                  star_count: segment_obj.star_count,
+                  distance: segment_obj.distance,
+                  elevation_gain: segment_obj.total_elevation_gain,
+                  polyline: segment_obj.map['polyline'])
       return segment
     end
+  end
+  
+  def update_segment segment
+    segment_obj = get_segment_obj(segment.strava_id.to_s)
+    segment.update(name: segment_obj.name,
+                  star_count: segment_obj.star_count,
+                  distance: segment_obj.distance,
+                  elevation_gain: segment_obj.total_elevation_gain,
+                  polyline: segment_obj.map['polyline'])
+    return nil
+  end
+  
+  def update_all_segments
+    Segment.where(polyline: nil).each do |segment|
+      update_segment segment
+    end
+    return nil
   end
   
   def get_effort_obj(effort_id)
