@@ -10,6 +10,8 @@
       <th>Name</th>
       <th>Events</th>
       <th>Points</th>
+      <th>Distance</th>
+      <th>Elevation</th>
       <th>Climb Category</th>
       <th>Max Grade</th>
       <th>Average Grade</th>
@@ -24,6 +26,8 @@
         <td><%= link_to segment.name, segment %></td>
         <td><%= segment.featured_by.size %></td>
         <td><%= segment.points %></td>
+        <td><%= segment.distance %></td>
+        <td><%= segment.elevation_gain %></td>
         <td><%= segment.climb_category %></td>
         <td><%= segment.max_grade %></td>
         <td><%= segment.average_grade %></td>
