@@ -61,7 +61,7 @@
           <% if cell.is_a? Hash %>
             <td><%= Time.at(cell[:time]).strftime('%H:%M:%S') %>
             <% if cell[:trophy] > 0 %>
-              <span class='badge'><%= cell[:trophy] %></span>
+              <%= show_trophy cell[:trophy] %>
             <% end %>  
               </td>
           <% else %>
