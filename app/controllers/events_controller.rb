@@ -16,7 +16,7 @@ class EventsController < ApplicationController
       
       @table = @event.get_table
       @team = @event.owner.managing
-      @points = Point.where(event: @event)
+      @points = Point.where(event: @event).group(:user).sum(:val).sort_by { |athlete, points| -points}
       
       @participants = @event.participants
       race_day = @event.start_date.to_date

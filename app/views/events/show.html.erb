@@ -31,14 +31,12 @@
   <table class="table table-hover table-striped">
     <thead>
       <th>Athlete</th>
-      <th>Segment</th>
       <th>Points</th>
     </thead>
-      <% @points.each do |pt| %>
+      <% @points.each do |k, v| %>
         <tr>
-        <td><%= User.find_by(id: pt.user_id).full_name %></td>
-        <td><%= Segment.find_by(id: pt.effort.segment.id).name %></td>
-        <td><%= pt.val %></td>
+        <td><%= k.full_name %></td>
+        <td><%= v %></td>
         </tr>
       <% end %>
     
