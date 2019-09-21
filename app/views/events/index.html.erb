@@ -49,18 +49,18 @@
     <tr>
       <th>Date</th>
       <th>Participants</th>
-      <th>Segments</th>
+      <th>Segments in common</th>
       <th></th>
     </tr>
   </thead>
 
     <% @alt_recommends.each do |day, athlete_sets| %>
       <% athlete_sets.each do |athletes, segments| %>
-        <tr>
+        <tr class="suggest-row">
           <td><%= day %></td>
           <td>
             <% athletes.each do |athlete| %>
-              <%= profile_for User.find_by(id: athlete) %>
+              <div class="suggest-cell"><%= profile_for User.find_by(id: athlete) %></div>
             <% end %>
           </td>
           <td><%= segments.size.to_s %></td>

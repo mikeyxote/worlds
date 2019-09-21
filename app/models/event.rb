@@ -34,6 +34,24 @@ class Event < ActiveRecord::Base
     official_start = self.start_date
     segments = self.featuring.pluck(:id)
     if activities.size > 0
+      # compute winning data here and assign points
+      Point.where(event: self).delete_all
+      self.featuring.each do |segment|
+        winning_efforts = segment.efforts.where(activity_id: activity_ids).order(:stop_date).limit(3)
+        pts = 3
+        winning_efforts.each do |e|
+          winner = User.find_by(id: e.user_id)
+          Point.create(event: self,
+                    user: winner,
+                    effort: e,
+                    val: pts)
+          pts -= 1
+        end
+      end
+      
+      
+      
+      
       ordered_segments = activities.first.efforts.where(segment_id: segments).order(:strava_id).pluck(:segment_id)
       ordered_segments |= []
       segment_names = ['Athlete']
@@ -48,27 +66,17 @@ class Event < ActiveRecord::Base
         row = [activity.user.full_name]
         ordered_segments.each do |segment|
           effort = activity.efforts.find_by(segment_id: segment)
-          row << (effort.start_date.to_i - official_start.to_i) + effort.elapsed_time
+          pt_val = Point.where(effort: effort).where(event: self).first.val || 0
+          row << {'time': (effort.start_date.to_i - official_start.to_i) + effort.elapsed_time,
+                  'trophy': pt_val}
         end
-        out << row
+        out << row 
       end
       
     else
       return nil
     end
     
-    
-    # compute winning data here
-    Point.where(event: self).delete_all
-    self.featuring.each do |segment|
-      winning_effort = segment.efforts.where(activity_id: activity_ids).order(:stop_date).first
-
-      winner = User.find_by(id: winning_effort.user_id)
-
-      Point.create(event: self,
-                  user: winner,
-                  effort: winning_effort)
-    end
         
     return out
   end

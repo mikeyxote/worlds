@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :participations
+  has_many :participations, dependent: :destroy
   has_many :participating_in, through: :participations, source: :event
 
   def recommend
@@ -150,11 +150,6 @@ class User < ActiveRecord::Base
     # puts "Segment Yaml:"
     # puts segment_obj.to_yaml
     return segment_obj
-  end
-  
-  def test_segment
-    sid = '6801803'.to_s
-    return get_segment_obj(sid.to_s)
   end
   
   def ingest_segment_obj(segment_obj)

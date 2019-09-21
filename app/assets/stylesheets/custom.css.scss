@@ -521,3 +521,16 @@ td {
   padding: 0;
   border: 0;
 }
+
+.small-pic {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain; 
+}
+.suggest-row {
+  max-height: 50px;
+}
+
+.suggest-cell {
+
+}
