@@ -9,7 +9,6 @@
   <% end %></h2>
 </p>
 
-
 <div>
   <strong>Results:</strong>
   <table class="table table-hover table-striped">
@@ -29,7 +28,8 @@
 <% if @table %>
   <p>
     <strong>Segment Completion Times</strong></br>
-    <table class="table table-hover table-striped">
+    <div class="table-responsive">
+    <table class="table table-striped">
       <thead>
         <tr>
           <% @table[0].each do |cell| %>
@@ -54,11 +54,17 @@
       <% end %>
       
     </table>
+    </div>
   </p>
 <% else %>
   <strong>Add some athletes or segments to create the results table!</strong>
 <% end %>
 
+<a href="#" id="eventBuilder" class="btn btn-primary">
+Show/Hide Event Builder  
+</a>
+
+<div id="eventBuilder">
 <strong>Team:</strong></br>
 
 <% if @team.size == 0 %>
@@ -110,7 +116,7 @@
         <td>Featured: <%= segment.featured_by.count %> | </td>
         <td>Distance: <%= segment.distance.to_s %> m. | </td>
         <td>Elevation: <%= segment.elevation_gain %> | </td>
-        <td>Avg Grade: <%= segment.average_grade %> | </td>
+        <td>Avg Grade: <%= segment.average_grade %> </td>
         <td><%= render 'feature_form', segment: segment %></td>
       </tr>
     <% end %>
@@ -129,6 +135,4 @@
     <% end %>
   <% end %>
 </p>
-
-<%= link_to 'Edit', edit_event_path(@event) %>
-<%= link_to 'Back', events_path %>
+</div></br>

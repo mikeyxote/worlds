@@ -40,8 +40,9 @@
       </table>
     </div>
   <% end %>
-  <%= render 'manage_form' %>
-  
+  <% if @user != current_user %>
+    <%= render 'manage_form' %>
+  <% end %>
   <%= link_to 'Edit', edit_user_path(@user) %> |
   <%= link_to 'Back', users_path %>
 <% end %>

@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap-tooltip.js
+//= require bootstrap-popover.js
 //= require turbolinks
 //= require_tree .
 
@@ -22,4 +24,11 @@ $(document).ready(function(){
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
   });
+  $(function() {
+  $('a#eventBuilder').click(function(event) {
+   event.preventDefault();
+   $('div#eventBuilder').toggle(1500);
+  });
 });
+});
+
