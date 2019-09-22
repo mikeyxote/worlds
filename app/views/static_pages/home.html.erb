@@ -1,25 +1,21 @@
 <% if user_signed_in? %>
-
-  <h1>Jersey Tracking</h1>
   <% if current_user.has_strava? %>
-    <h3>Greetings <%= current_user.firstname %>!</h3>
-    <% if @managing.size > 1 %>
-      <h2>Your roster: <%= pluralize(@managing.count, 'rider') %></h2>
-    <% else %> Looks like you aren't managing anyone </br>
-                Try heading to the <strong><%= link_to "Users Page", users_path %></strong>, click on a profile </br>
-                and add them to your roster with the 'Manage' button.
-    <% end %>
+    <h1>Greetings <%= current_user.firstname %></h1>
     <h3>Recent Events:</h3>
     <% if @events.size > 1 %>
       <table class="table table-striped">
         <thead>
           <th>Event Name</th>
+          <th>Participants</th>
+          <th>Segments</th>
           <th>Points</th>
           <th>Date</th>
         </thead>
         <% @events.each do |event| %>
           <tr>
-            <td><%= event.name %></td>
+            <td><%= link_to event.name, event %></td>
+            <td><%= event.participants.size %></td>
+            <td><%= event.featuring.size %></td>
             <td><%= event.points.where(user: current_user).sum(:val) %></td>
             <td><%= event.start_date.to_date %></td>
           </tr>
@@ -27,6 +23,34 @@
       </table>
     <% else %>
       Looks like you aren't a participant in any Events.  Try and create one <%= link_to "HERE!", events_path %>
+    <% end %>
+    <h3>Activities Pending download:</h3>
+    <div>
+      <table class="table table-hover table-striped">
+        <thead>
+          <th>Name</th>
+          <th>StartDate</th>
+          <th>Distance</th>
+          <th>Download</th>
+        </thead>
+        <% @new_activities.each do |a| %>
+    
+          <tr>
+            <td><%= a[:name] %></td>
+            <td><%= a[:start_date].strftime('%a, %d %b, %H:%M:%S')  %></td>
+            <td><%= (a[:distance] * 0.000621).round(1) %></td>
+            <td><%= button_to "Download", download_strava_path, 
+              method: 'get', params: {strava_id: a[:strava_id], 
+                                      user_id: current_user.id} %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <% if @managing.size > 1 %>
+      <h2>Your roster: <%= pluralize(@managing.count, 'rider') %></h2>
+    <% else %> Looks like you aren't managing anyone </br>
+                Try heading to the <strong><%= link_to "Users Page", users_path %></strong>, click on a profile </br>
+                and add them to your roster with the 'Manage' button.
     <% end %>
     <% if current_user.activities.count > 0 %>
       <h2>Activity count <%= current_user.activities.count %></h2>

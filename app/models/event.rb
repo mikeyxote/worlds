@@ -66,7 +66,12 @@ class Event < ActiveRecord::Base
         row = [activity.user.full_name]
         ordered_segments.each do |segment|
           effort = activity.efforts.find_by(segment_id: segment)
-          pt_val = Point.where(effort: effort).where(event: self).first.val || 0
+          pt = Point.where(effort: effort).where(event: self).first
+          if pt
+            pt_val = pt.val
+          else
+            pt_val = 0
+          end
           row << {'time': (effort.start_date.to_i - official_start.to_i) + effort.elapsed_time,
                   'trophy': pt_val}
         end
