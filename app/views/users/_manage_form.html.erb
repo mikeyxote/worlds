@@ -1,7 +1,11 @@
   <div id="manage_form">
-  <% if current_user.managing?(@user) %>
-    <%= render 'release' %>
-  <% else %>
-    <%= render 'manage' %>
-  <% end %>
+    <% if current_user != user %>
+    <% puts "User inside Manage form------------------" %>
+    <% puts user.class %>
+      <% if current_user.managing?(user) %>
+        <%= render 'release', user: user %>
+      <% else %>
+        <%= render 'manage', user: user %>
+      <% end %>
+    <% end %>
   </div>

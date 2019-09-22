@@ -8,11 +8,11 @@
       Efforts: <%= user.efforts.size.to_s %></br>
       Segments: <%= user.efforts.group(:strava_segment_id).count.size %></br>
       Points: <%= user.points.count.to_s %></br>
+      <%= render 'manage_form', user: user %>
     </div>
     <div>
       View on <%= strava_for(user) %>
     </div>
   </div>
-
 </div>
 </li>

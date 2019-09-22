@@ -5,16 +5,18 @@ class ManagementsController < ApplicationController
     @user = User.find(params[:managed_id])
     current_user.manage(@user)
     respond_to do |format|
-      format.html { redirect_to user }
+      format.html { redirect_to users_path }
       format.js
     end
   end
 
   def destroy
-    @user = Management.find(params[:id]).managed
-    current_user.release(@user)
+    # puts "Destroy Params:"
+    # puts params.to_yaml
+    user = User.find_by(id: params[:managed_id])
+    current_user.release(user)
     respond_to do |format|
-      format.html { redirect_to user }
+      format.html { redirect_to users_path }
       format.js
     end
   end
