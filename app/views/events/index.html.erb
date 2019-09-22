@@ -64,7 +64,7 @@
             <% end %>
           </td>
           <td><%= segments.size.to_s %></td>
-          <td><%= link_to "Create!", new_event_path %></td>
+          <td><%= link_to "Create!", new_event_path(:start_date => day) %></td>
         </tr>
       <% end %>
     <% end %>
