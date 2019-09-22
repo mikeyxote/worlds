@@ -49,9 +49,6 @@ class Event < ActiveRecord::Base
         end
       end
       
-      
-      
-      
       ordered_segments = activities.first.efforts.where(segment_id: segments).order(:strava_id).pluck(:segment_id)
       ordered_segments |= []
       segment_names = ['Athlete']
