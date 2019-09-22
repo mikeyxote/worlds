@@ -18,7 +18,7 @@
     </div>
     <div class="field">
       <%= f.label 'Event Date' %><br>
-      <%= datepicker_input f, :start_date %>
+      <%= datepicker_input f, :start_date, params[:start_date] || Date.today %>
     </div>
     <div class="field">
       <%= f.label 'End Segment' %><br>
