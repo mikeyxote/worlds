@@ -64,7 +64,8 @@
             <% end %>
           </td>
           <td><%= segments.size.to_s %></td>
-          <td><%= link_to "Create!", new_event_path(:start_date => day) %></td>
+          <td><%= button_to "Create this event!", recommend_create_path, 
+              method: :get, params: { start_date: day, athletes: athletes.to_json } %></td>
         </tr>
       <% end %>
     <% end %>

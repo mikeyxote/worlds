@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'recommend/create'
+
   get 'strava/download'
 
   resources :points
