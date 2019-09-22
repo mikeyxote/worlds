@@ -20,7 +20,7 @@
         <% @events.each do |event| %>
           <tr>
             <td><%= event.name %></td>
-            <td><%= event.points.where(user: current_user).size %></td>
+            <td><%= event.points.where(user: current_user).sum(:val) %></td>
             <td><%= event.start_date.to_date %></td>
           </tr>
         <% end %>

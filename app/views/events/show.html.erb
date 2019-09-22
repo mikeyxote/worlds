@@ -9,25 +9,9 @@
   <% end %></h2>
 </p>
 
-<strong>Team:</strong></br>
-
-<% if @team.size == 0 %>
-  Looks like you're not managing anyone yet. You should try heading to the 
-  <%= link_to "Users' Page", users_path %>.  from there, click on some 
-  profiles and start building your team.
-<% else %>
-
-  <table>
-    <tr>
-      <% @team.each do |user| %>
-        <td><%= render 'participant_form', user: user %></td>
-      <% end %>
-    </tr>
-  </table>
-<% end %>
 
 <div>
-  <strong>Points assigned:</strong>
+  <strong>Results:</strong>
   <table class="table table-hover table-striped">
     <thead>
       <th>Athlete</th>
@@ -74,16 +58,23 @@
 <% else %>
   <strong>Add some athletes or segments to create the results table!</strong>
 <% end %>
-<p>
-  <strong>Available Activities:</strong></br> 
-  <% if @activities.size == 0 %>
-    No activities are included currently.
-  <% else %>
-    <% @activities.each do |activity| %><br> 
-      <%= activity.user.full_name %> -> <%= link_to activity.name, activity %>
-    <% end %>
-  <% end %>
-</p>
+
+<strong>Team:</strong></br>
+
+<% if @team.size == 0 %>
+  Looks like you're not managing anyone yet. You should try heading to the 
+  <%= link_to "Users' Page", users_path %>.  from there, click on some 
+  profiles and start building your team.
+<% else %>
+
+  <table>
+    <tr>
+      <% @team.each do |user| %>
+        <td><%= render 'participant_form', user: user %></td>
+      <% end %>
+    </tr>
+  </table>
+<% end %>
 
 <p>
   <strong>Featured Segments <span class='badge'><%= @features.size %></span></strong></br>
@@ -126,6 +117,17 @@
     </table>
   <% end %>
   </div>
+</p>
+
+<p>
+  <strong>Available Activities:</strong></br> 
+  <% if @activities.size == 0 %>
+    No activities are included currently.
+  <% else %>
+    <% @activities.each do |activity| %><br> 
+      <%= activity.user.full_name %> -> <%= link_to activity.name, activity %>
+    <% end %>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_event_path(@event) %>
