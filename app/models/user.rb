@@ -145,8 +145,8 @@ class User < ActiveRecord::Base
   def get_segment_obj(segment_id)
     client = api_client
     puts "Client assigned"
-    puts "getting segment object for : " + segment_id
-    segment_obj = client.segment(segment_id)
+    puts "getting segment object for : " + segment_id.to_s
+    segment_obj = client.segment(segment_id.to_s)
     # puts "Segment Yaml:"
     # puts segment_obj.to_yaml
     return segment_obj
