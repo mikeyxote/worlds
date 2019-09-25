@@ -69,8 +69,10 @@ class Event < ActiveRecord::Base
           else
             pt_val = 0
           end
+
           row << {'time': (effort.start_date.to_i - official_start.to_i) + effort.elapsed_time,
                   'trophy': pt_val}
+
         end
         out << row 
       end
