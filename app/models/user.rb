@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
     end
     out.each do |day, athlete_sets|
       athlete_sets.each do |athlete_set, segments|
-        if athlete_set.size < 2 or segments.size < 3
+        if athlete_set.size < 3 or segments.size < 5
           out[day].delete(athlete_set)
         end
       end

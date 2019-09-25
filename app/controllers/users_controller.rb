@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
+    NewUserNotifierMailer.send_signup_email(@user).deliver_now
     respond_to do |format|
       if @user.save
         NewUserNotifierMailer.send_signup_email(@user).deliver_now
