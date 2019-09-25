@@ -25,7 +25,7 @@ class Event < ActiveRecord::Base
 
     out = []
     race_day = self.start_date.to_date
-    activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day]).where(user: self.participants)
+    activities = Activity.where(start_date: [race_day.beginning_of_day.utc..race_day.end_of_day.utc]).where(user: self.participants)
     activity_ids = activities.pluck(:id)
     if activities.count > 0
       self.start_date = activities.pluck(:start_date).min
