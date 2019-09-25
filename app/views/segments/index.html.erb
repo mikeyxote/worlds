@@ -9,6 +9,7 @@
     <tr>
       <th>Name</th>
       <th>Events</th>
+      <th>Efforts</br>Against</th>
       <th>Points</th>
       <th>Distance</th>
       <th>Elevation</th>
@@ -25,6 +26,7 @@
       <tr>
         <td><%= link_to segment.name, segment %></td>
         <td><%= segment.featured_by.size %></td>
+        <td><%= Effort.where(segment_id: segment.id).count %></td>
         <td><%= segment.points %></td>
         <td><%= segment.distance %></td>
         <td><%= segment.elevation_gain %></td>
