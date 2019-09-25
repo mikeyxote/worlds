@@ -60,7 +60,7 @@
           <td><%= day %></td>
           <td>
             <% athletes.each do |athlete| %>
-              <div class="suggest-cell"><%= profile_for User.find_by(id: athlete) %></div>
+              <div class="suggest-cell"><%= profile_for User.find_by(id: athlete), 'size' => 50 %></div>
             <% end %>
           </td>
           <td><%= segments.size.to_s %></td>
