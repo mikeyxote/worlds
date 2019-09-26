@@ -74,7 +74,7 @@ Show/Hide Event Builder
       <table>
         <tr>
           <% @team.each do |user| %>
-            <td><%= render 'participant_form', user: user, 'size' => 100 %></td>
+            <td><%= render 'participant_form', user: user %></td>
           <% end %>
         </tr>
       </table>

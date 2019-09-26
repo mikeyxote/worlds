@@ -1,6 +1,6 @@
 <%= form_for(@event.participations.find_by(user_id: user.id),
              html: { method: :delete }) do |f| %>
- <div><img src= <%= user.profile %>></div>
+ <div><%= link_to profile_for(user, 'size' => 100) %></div>
  <div><%= hidden_field_tag :user_id, user.id %></div>
  <div><%= hidden_field_tag :event_id, @event.id %></div>
   <%= f.submit "Registered", class: "btn btn-unregister" %>
