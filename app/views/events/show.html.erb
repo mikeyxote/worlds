@@ -59,41 +59,51 @@
     <% end %>
   </div>
   
-  <h3>Available Activities</h3>
-  <table class='table table-sm'>
-    <thead>
-      <th>Athlete</th>
-      <th>Name</th>
-      <th>Distance</th>
-      <th>Efforts</th>
-      <th></th>
-    </thead>
-      <% @activities.each do |activity| %>
-        <tr>
-          <td><%= profile_for(User.find_by(id: activity.user_id), 'size' => 40) %></td>
-          <td><%= activity.name %></td>
-          <td><%= (activity.distance * 0.000621).round(1) %></td>
-          <td><%= activity.efforts.size %></td>
-          <td><%= render 'connect_form', activity: activity %></td>
-        </tr>
-      <% end %>
-  </table>
-  <h3>Available Segments</h3>
-  <table class='table table-sm'>
-    <thead>
-      <th>Name</th>
-      <th>Distance</th>
-      <th>Max Grade</th>
-      <th></th>
-    </thead>
-    <% @segments.each do |segment| %>
-      <tr>
-        <td><%= segment.name %></td>
-        <td><%= (segment.distance * 0.000621).round(1) %></td>
-        <td><%= segment.max_grade %></td>
-        <td><%= render 'feature_form', segment: segment %></td>
-      </tr>
-    <% end %>
-  </table>
+ 
   
+  <div class="panel panel-default">
+    <div class="panel-heading"><h3>Event Builder
+      <a href="#" id="eventBuilder" class="btn btn-primary right">
+      Show/Hide
+      </a></h3>
+    </div>
+    <div id="eventBuilder" class="panel-body">
+      <h3>Available Activities</h3>
+      <table class='table table-sm'>
+        <thead>
+          <th>Athlete</th>
+          <th>Name</th>
+          <th>Distance</th>
+          <th>Efforts</th>
+          <th></th>
+        </thead>
+          <% @activities.each do |activity| %>
+            <tr>
+              <td><%= profile_for(User.find_by(id: activity.user_id), 'size' => 40) %></td>
+              <td><%= activity.name %></td>
+              <td><%= (activity.distance * 0.000621).round(1) %></td>
+              <td><%= activity.efforts.size %></td>
+              <td><%= render 'connect_form', activity: activity %></td>
+            </tr>
+          <% end %>
+      </table>
+      <h3>Available Segments</h3>
+      <table class='table table-sm'>
+        <thead>
+          <th>Name</th>
+          <th>Distance</th>
+          <th>Max Grade</th>
+          <th></th>
+        </thead>
+        <% @segments.each do |segment| %>
+          <tr>
+            <td><%= segment.name %></td>
+            <td><%= (segment.distance * 0.000621).round(1) %></td>
+            <td><%= segment.max_grade %></td>
+            <td><%= render 'feature_form', segment: segment %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
 </div>
