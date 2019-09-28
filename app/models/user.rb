@@ -20,8 +20,8 @@ class User < ActiveRecord::Base
 
   def recommend
     day_hash = {}
-    effort_list = []
-    efforts = Effort.where(user: self.managing)
+    # effort_list = []
+    efforts = Effort.where('start_date >= ?', 2.weeks.ago).where(user: self.managing)
     efforts.each do |effort|
       day = effort.start_date.to_date
       if !day_hash.keys.include? day
