@@ -16,21 +16,12 @@ class EventsController < ApplicationController
       race_day = @event.start_date.to_date
       @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
       
-      
       @connections = @event.contains
       
       @segments = @event.common_segments @event.contains
       
       @table = @event.get_table
       @points = Point.where(event: @event).group(:user).sum(:val).sort_by { |athlete, points| -points}
-  
-      # @team = @event.owner.managing
-      
-      
-      # @participants = @event.participants
-
-      # @features = @event.featuring
-      # 
     end
 
   end

@@ -5,6 +5,7 @@
 <table class="table table-hover table-striped">
   <thead>
     <tr>
+      <th>Map</th>
       <th>User</th>
       <th>Name</th>
       <th>Loaded Efforts</th>
@@ -18,10 +19,18 @@
   <tbody>
     <% @activities.each do |activity| %>
       <tr>
+        <td>
+          <% if activity.summary_polyline %>
+            <%= image_tag thumbnail(activity.summary_polyline) %> 
+          <% else %>
+            No Map
+          <% end %>
+          
+        </td>
         <td><%= link_to profile_for(activity.user, 'size' => 100), activity.user %></td>
         <td><%= link_to activity.name, activity %></td>
         <% if activity.efforts.size == 0 %>
-          <% if current_user.strava_id == activity.strava_athlete_id  or current_user.developer %>
+          <% if current_user.strava_id == activity.strava_athlete_id or current_user.developer %>
             <td><%= link_to 'Load Efforts', load_efforts_activity_path(activity) %></td>
           <% else %>
             <td></td>

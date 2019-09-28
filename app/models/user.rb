@@ -18,6 +18,16 @@ class User < ActiveRecord::Base
   has_many :participations, dependent: :destroy
   has_many :participating_in, through: :participations, source: :event
 
+  def update_polylines
+    self.activities.where(polyline: nil).each do |activity|
+      activity_obj = get_activity_obj(activity.strava_id)
+      activity.update(
+        polyline: activity_obj.map['polyline'],
+        summary_polyline: activity_obj.map['summary_polyline'],
+        )
+    end
+  end
+
   def recommend
     day_hash = {}
     # effort_list = []
@@ -110,6 +120,8 @@ class User < ActiveRecord::Base
       if activity_obj.type == 'Ride' and not all_activities.include? activity_obj.id
         new_activity = self.activities.create(name: activity_obj.name,
                     strava_athlete_id: activity_obj.athlete['id'],
+                    polyline: activity_obj.map['polyline'],
+                    summary_polyline: activity_obj.map['summary_polyline'],
                     strava_id: activity_obj.id,
                     start_date: activity_obj.start_date,
                     trainer: activity_obj.trainer,
@@ -214,6 +226,8 @@ class User < ActiveRecord::Base
   def ingest_activity_obj(activity_obj)
     new_activity = self.activities.create(name: activity_obj.name,
                     strava_athlete_id: activity_obj.athlete['id'],
+                    polyline: activity_obj.map['polyline'],
+                    summary_polyline: activity_obj.map['summary_polyline'],
                     strava_id: activity_obj.id,
                     start_date: activity_obj.start_date,
                     trainer: activity_obj.trainer,
