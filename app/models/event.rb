@@ -9,6 +9,8 @@ class Event < ActiveRecord::Base
                               foreign_key: "event_id",
                               dependent: :destroy
   has_many :featuring, through: :featured_segments, source: :segment
+  has_many :connections, dependent: :destroy
+  has_many :contains, through: :connections, source: :activity
   # belongs_to :user
 
 
@@ -20,12 +22,86 @@ class Event < ActiveRecord::Base
     self.participations.find_by(user_id: user.id).destroy
   end
 
+  def array_subset(s, a)
+    a.each do |i|
+      if s.subset? i
+        return true
+      end
+    end
+    return false
+  end
+
+  def common_segments activities
+    segment_array = []
+      
+    activities.each do |activity|
+      segment_array << activity.efforts.pluck(:segment_id)
+    end
+    flat_array = segment_array.flatten
+    segment_array.each {|sa| flat_array = flat_array & sa }
+    return Segment.where(id: flat_array)
+  end
+  
+  def ride_segments_old
+    segment_hash = {}
+    efforts = Effort.where(activity: self.contains)
+    efforts.each do |effort|
+      sid = effort.segment_id
+      if !segment_hash.keys.include? sid
+        segment_hash[sid] = Set[effort.user_id]
+      else
+        segment_hash[sid] << effort.user_id
+      end
+    end
+    
+    users_hash = {}
+    
+    segment_hash.each do |segment, athlete_set|
+      if !users_hash.keys.include? athlete_set
+        users_hash[athlete_set] = Set[segment]
+      else
+        users_hash[athlete_set] << segment
+      end
+    end
+    out_hash = {}
+    users_hash.each do |users, segments|
+      if !array_subset(users, out_hash.keys)
+        out_hash[users] = segments
+      end
+    end
+    return out_hash
+  end
+
+  # def get_day_activities day
+  #   return Activity.where(start_date: [day.beginning_of_day.utc..day.end_of_day.utc])
+  # end
+
+  # def get_group day
+  #   out = []
+  #   activities = Activity.where(start_date: [day.beginning_of_day.utc..day.end_of_day.utc])
+  #   athlete_ids = activities.pluck(user_id)
+  #   activities.each do |activity|
+      
+      
+  #   end
+  #   return out
+  # end
+
+  def add_activity activity
+    Connection.create(event_id: self.id, activity_id: activity.id)
+  end
+  
+  def remove_activity activity
+    connections.where(activity_id: activity.id).destroy_all
+  end
+  
   def get_table
     puts "----Starting get_table-----"
 
     out = []
-    race_day = self.start_date.to_date
-    activities = Activity.where(start_date: [race_day.beginning_of_day.utc..race_day.end_of_day.utc]).where(user: self.participants)
+    # race_day = self.start_date.to_date
+    # activities = Activity.where(start_date: [race_day.beginning_of_day.utc..race_day.end_of_day.utc]).where(user: self.participants)
+    activities = self.contains
     activity_ids = activities.pluck(:id)
     if activities.count > 0
       self.start_date = activities.pluck(:start_date).min

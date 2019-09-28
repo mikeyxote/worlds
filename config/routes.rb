@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :managements,     only: [:create, :destroy]
   resources :features,        only: [:create, :destroy]
   resources :participations,  only: [:create, :destroy]
+  resources :connections,     only: [:create, :destroy]
   
   get 'strava_request/show'
   get 'strava_callback/show'

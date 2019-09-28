@@ -1,0 +1,5 @@
+<% if @event.contains.include? activity %>
+  <%= render 'disconnect', activity: activity %>
+<% else %>
+  <%= render 'connect', activity: activity %>
+<% end %>

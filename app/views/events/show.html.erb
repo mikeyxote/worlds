@@ -58,72 +58,42 @@
       <strong>Add some athletes or segments to create the results table!</strong>
     <% end %>
   </div>
-</div>
-<a href="#" id="eventBuilder" class="btn btn-primary">
-Show/Hide Event Builder  
-</a>
-
-<div id="eventBuilder" class='card'>
-  <div class='card-header'><h3>Team Roster</h3></div>
-  <div class='card-text'>
-    <% if @team.size == 0 %>
-      Looks like you're not managing anyone yet. You should try heading to the 
-      <%= link_to "Users' Page", users_path %>.  from there, click on some 
-      profiles and start building your team.
-    <% else %>
-      <table>
-        <tr>
-          <% @team.each do |user| %>
-            <td><%= render 'participant_form', user: user %></td>
-          <% end %>
-        </tr>
-      </table>
-    <% end %>
-  </div>
-  <div class='card-header'><h3>Featured Segments <span class='badge'><%= @features.size %></span></h3></div>
-  <div>
-    <% if @features.size == 0 %>
-      No segments are currently featured.
-    <% else %>
-      <table  class="panel panel-default">
-      <% @features.each do |segment| %>
-        <tr>
-        <td><%= link_to segment.name, segment %></td>
-        <td><%= render 'feature_form', segment: segment %></td>
-        </tr>
-      <% end %>
-      </table>
-    <% end %>
-  </div>
-  <div class='card-header'><h3>Available Segments <span class='badge'> <%= @segments.size %></span></h3></div>
-    
-  <div id='segment_table' class='card-text collapse in'>
-    <% if @segments.size == 0 %>
-      No activities are included currently.
-    <% else %>
-      <input class="form-control" id="segment_search" type="text" width='200' placeholder="Search..">
   
-      <table class="panel panel-default">
-      <% @segments.each do |segment| %>
+  <h3>Available Activities</h3>
+  <table class='table table-sm'>
+    <thead>
+      <th>Athlete</th>
+      <th>Name</th>
+      <th>Distance</th>
+      <th>Efforts</th>
+      <th></th>
+    </thead>
+      <% @activities.each do |activity| %>
         <tr>
-          <td><%= link_to segment.name, segment %></td>
-          <td>Efforts: <%= segment.efforts.count %> | </td>
-          <td>Featured: <%= segment.featured_by.count %> | </td>
-          <td>Distance: <%= segment.distance.to_s %> m. | </td>
-          <td>Elevation: <%= segment.elevation_gain %> | </td>
-          <td>Avg Grade: <%= segment.average_grade %> </td>
-          <td><%= render 'feature_form', segment: segment %></td>
+          <td><%= profile_for(User.find_by(id: activity.user_id), 'size' => 40) %></td>
+          <td><%= activity.name %></td>
+          <td><%= (activity.distance * 0.000621).round(1) %></td>
+          <td><%= activity.efforts.size %></td>
+          <td><%= render 'connect_form', activity: activity %></td>
         </tr>
       <% end %>
-      </table>
+  </table>
+  <h3>Available Segments</h3>
+  <table class='table table-sm'>
+    <thead>
+      <th>Name</th>
+      <th>Distance</th>
+      <th>Max Grade</th>
+      <th></th>
+    </thead>
+    <% @segments.each do |segment| %>
+      <tr>
+        <td><%= segment.name %></td>
+        <td><%= (segment.distance * 0.000621).round(1) %></td>
+        <td><%= segment.max_grade %></td>
+        <td><%= render 'feature_form', segment: segment %></td>
+      </tr>
     <% end %>
-  </div>
-    <strong>Available Activities:</strong></br> 
-    <% if @activities.size == 0 %>
-      No activities are included currently.
-    <% else %>
-      <% @activities.each do |activity| %><br> 
-        <%= activity.user.full_name %> -> <%= link_to activity.name, activity %>
-      <% end %>
-    <% end %>
-  </div></br>
+  </table>
+  
+</div>

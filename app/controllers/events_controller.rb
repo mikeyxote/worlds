@@ -13,25 +13,22 @@ class EventsController < ApplicationController
   def show
     @segments = []
     if @event.start_date
-      
-      @table = @event.get_table
-      @team = @event.owner.managing
+      race_day = @event.start_date.to_date
+      @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
       @points = Point.where(event: @event).group(:user).sum(:val).sort_by { |athlete, points| -points}
       
-      @participants = @event.participants
-      race_day = @event.start_date.to_date
-      @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day]).where(user: @participants)
+      @connections = @event.contains
       
-      @features = @event.featuring
-      segment_array = []
+      @segments = @event.common_segments @event.contains
       
-      @activities.each do |activity|
-        segment_array << activity.efforts.pluck(:segment_id)
-      end
-      flat_array = segment_array.flatten
-      segment_array.each {|sa| flat_array = flat_array & sa }
-      flat_array -= @features.pluck(:id)
-      @segments = Segment.where(id: flat_array)
+      @table = @event.get_table
+      # @team = @event.owner.managing
+      
+      
+      # @participants = @event.participants
+
+      # @features = @event.featuring
+      # 
     end
 
   end
