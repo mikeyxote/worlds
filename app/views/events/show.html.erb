@@ -15,12 +15,16 @@
     <table class="table table-sm table-hover table-striped">
       <thead>
         <th scope='col'>Athlete</th>
+        <th>KOM</th>
+        <th>Sprint</th>
         <th scope='col'>Points</th>
       </thead>
         <% @points.each do |k, v| %>
           <tr>
-          <td scope='row'><%= k.full_name %></td>
-          <td scope='row'><%= v %></td>
+          <td scope='row'><%= k %></td>
+          <td scope='row'><%= v[:kom] %></td>
+          <td scope='row'><%= v[:sprint] %></td>
+          <td scope='row'><%= v[:total] %></td>
           </tr>
         <% end %>
     </table>
@@ -69,7 +73,7 @@
           <tr>
             <td><%= feature.segment.name %></td>
             <td>Points: <%= feature.val %></td>
-            <td>Type: <%= feature.category %></td>
+            <td>Type: <%= image_tag cat_icon(feature.category) %></td>
             <td><%= render 'feature_form', segment: feature.segment %></td>
           </tr>
         <% end %>

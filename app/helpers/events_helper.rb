@@ -12,4 +12,10 @@ module EventsHelper
     image_tag(images[points-1], options: {height: 15, width: 15})
   end
   
+  def cat_icon cat
+    icons = {'sprint' => 'https://bucketroyal.s3.amazonaws.com/JerseyTracker/small_sprint.png',
+            'kom' => 'https://bucketroyal.s3.amazonaws.com/JerseyTracker/small_kom.png'}
+    return icons[cat]
+  end
+  
 end

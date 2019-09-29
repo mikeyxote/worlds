@@ -21,7 +21,7 @@ class EventsController < ApplicationController
       @segments = @event.common_segments @event.contains
       
       @table = @event.get_table
-      @points = Point.where(event: @event).group(:user).sum(:val).sort_by { |athlete, points| -points}
+      @points = @event.results_table
     end
 
   end

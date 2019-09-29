@@ -14,6 +14,26 @@ class Event < ActiveRecord::Base
   # belongs_to :user
 
 
+  def results_table
+    out = {}
+    # puts "Points:"
+    # puts self.points.count.to_s
+
+    self.points.pluck(:user_id).uniq.each do |user_id|
+      puts "User IDs:"
+      puts user_id.to_s
+      sprint = self.points.where(category: 'sprint').where(user_id: user_id).sum(:val)
+      kom = self.points.where(category: 'kom', user_id: user_id).sum(:val)
+      total = sprint + kom
+      out[User.find_by(id: user_id).full_name] = {
+        'sprint': sprint,
+        'kom': kom,
+        'total': total
+      }
+    end
+    return out.sort_by {|athlete, scores| -scores[:total]}
+  end
+
   def register user
     self.participations.create(user: user)
   end
@@ -74,21 +94,6 @@ class Event < ActiveRecord::Base
     return out_hash
   end
 
-  # def get_day_activities day
-  #   return Activity.where(start_date: [day.beginning_of_day.utc..day.end_of_day.utc])
-  # end
-
-  # def get_group day
-  #   out = []
-  #   activities = Activity.where(start_date: [day.beginning_of_day.utc..day.end_of_day.utc])
-  #   athlete_ids = activities.pluck(user_id)
-  #   activities.each do |activity|
-      
-      
-  #   end
-  #   return out
-  # end
-
   def add_activity activity
     Connection.create(event_id: self.id, activity_id: activity.id)
   end
@@ -147,14 +152,19 @@ class Event < ActiveRecord::Base
         row = [activity.user.full_name]
         ordered_segments.each do |segment|
           effort = activity.efforts.find_by(segment_id: segment)
-          place = self.points.where(effort: effort).first.place
-          # pt_val = pt.val || 0
+          # place = self.points.where(effort: effort).first.place || 0
+          pts = self.points.where(effort: effort).first
+          if pts
+            place = pts.place
+          else
+            place = 0
+          end
 
           row << {'time': (effort.start_date.to_i - official_start.to_i) + effort.elapsed_time,
                   'trophy': place}
 
         end
-        out << row 
+        out << row
       end
       
     else
