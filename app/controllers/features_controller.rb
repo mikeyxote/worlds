@@ -22,7 +22,9 @@ class FeaturesController < ApplicationController
   def destroy
     segment = Segment.find_by(id: params[:segment_id])
     event = Event.find_by(id: params[:event_id])
-    Feature.where(segment_id: segment.id, event_id: event.id).delete_all
+    features = Feature.where(segment_id: segment.id, event_id: event.id)
+    Point.where(feature: features).delete_all
+    features.delete_all
     respond_to do |format|
       format.html { redirect_to Event.find_by(id: params[:event_id]) }
       format.js
