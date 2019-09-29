@@ -32,6 +32,7 @@ class Event < ActiveRecord::Base
   end
 
   def common_segments activities
+    feature_ids = self.featuring.pluck(:id)
     segment_array = []
       
     activities.each do |activity|
@@ -39,6 +40,7 @@ class Event < ActiveRecord::Base
     end
     flat_array = segment_array.flatten
     segment_array.each {|sa| flat_array = flat_array & sa }
+    flat_array -= feature_ids
     return Segment.where(id: flat_array)
   end
   
@@ -112,16 +114,22 @@ class Event < ActiveRecord::Base
     if activities.size > 0
       # compute winning data here and assign points
       Point.where(event: self).delete_all
-      self.featuring.each do |segment|
-        winning_efforts = segment.efforts.where(activity_id: activity_ids).order(:stop_date).limit(3)
-        pts = 3
+      self.featured_segments.each do |feature|
+        winning_efforts = feature.segment.efforts.where(activity_id: activity_ids).order(:stop_date).limit(3)
+        # feature = Feature.where(segment_id: segment_id).where(event_id: self.id).first
+        
+        pts = feature.val || 3
+        place = 1
         winning_efforts.each do |e|
-          winner = User.find_by(id: e.user_id)
           Point.create(event: self,
-                    user: winner,
+                    user_id: e.user_id,
                     effort: e,
-                    val: pts)
+                    category: feature.category,
+                    feature_id: feature.id,
+                    val: pts,
+                    place: place)
           pts -= 1
+          place += 1
         end
       end
       
@@ -139,15 +147,11 @@ class Event < ActiveRecord::Base
         row = [activity.user.full_name]
         ordered_segments.each do |segment|
           effort = activity.efforts.find_by(segment_id: segment)
-          pt = Point.where(effort: effort).where(event: self).first
-          if pt
-            pt_val = pt.val
-          else
-            pt_val = 0
-          end
+          place = self.points.where(effort: effort).first.place
+          # pt_val = pt.val || 0
 
           row << {'time': (effort.start_date.to_i - official_start.to_i) + effort.elapsed_time,
-                  'trophy': pt_val}
+                  'trophy': place}
 
         end
         out << row 
@@ -168,8 +172,10 @@ class Event < ActiveRecord::Base
     self.start_date = self.activities.pluck(:start_date).min
   end
   
-  def add_feature segment
-    Feature.create(event_id: self.id, segment_id: segment.id)
+  def add_feature segment, points, category
+    self.featured_segments.create(segment: segment,
+      points: points,
+      category: category)
   end
   
   def remove_feature segment

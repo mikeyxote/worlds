@@ -15,7 +15,7 @@ class EventsController < ApplicationController
     if @event.start_date
       race_day = @event.start_date.to_date
       @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
-      
+      @features = @event.featured_segments
       @connections = @event.contains
       
       @segments = @event.common_segments @event.contains

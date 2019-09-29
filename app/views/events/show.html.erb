@@ -59,7 +59,23 @@
     <% end %>
   </div>
   
- 
+  <div class="panel panel-default">
+    <div class="panel-heading"><h3>Featured Segments
+
+    </div>
+    <div id="featuredSegments" class="panel-body">
+      <table class='table table-sm'>
+        <% @features.each do |feature| %>
+          <tr>
+            <td><%= feature.segment.name %></td>
+            <td>Points: <%= feature.val %></td>
+            <td>Type: <%= feature.category %></td>
+            <td><%= render 'feature_form', segment: feature.segment %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
   
   <div class="panel panel-default">
     <div class="panel-heading"><h3>Event Builder
@@ -70,36 +86,28 @@
     <div id="eventBuilder" class="panel-body">
       <h3>Available Activities</h3>
       <table class='table table-sm'>
-        <thead>
-          <th>Athlete</th>
-          <th>Name</th>
-          <th>Distance</th>
-          <th>Efforts</th>
-          <th></th>
-        </thead>
           <% @activities.each do |activity| %>
             <tr>
-              <td><%= profile_for(User.find_by(id: activity.user_id), 'size' => 40) %></td>
+              <td><%= profile_for(User.find_by(id: activity.user_id), 'size' => 100) %></td>
+              <td><%= static_map activity.summary_polyline %></td>
               <td><%= activity.name %></td>
-              <td><%= (activity.distance * 0.000621).round(1) %></td>
-              <td><%= activity.efforts.size %></td>
+              <td>Distance: <%= (activity.distance * 0.000621).round(1) %></td>
+              <td>Efforts: <%= activity.efforts.size %></td>
               <td><%= render 'connect_form', activity: activity %></td>
             </tr>
           <% end %>
       </table>
       <h3>Available Segments</h3>
       <table class='table table-sm'>
-        <thead>
-          <th>Name</th>
-          <th>Distance</th>
-          <th>Max Grade</th>
-          <th></th>
-        </thead>
+
         <% @segments.each do |segment| %>
           <tr>
             <td><%= segment.name %></td>
-            <td><%= (segment.distance * 0.000621).round(1) %></td>
-            <td><%= segment.max_grade %></td>
+            <td><%= static_map segment.polyline %></td>
+            <td>Distance: <%= (segment.distance * 0.000621).round(1) %></br>
+                Elevation Gain: <%= segment.elevation_gain %></br>
+                Average Grade: <%= segment.average_grade %></br>
+                Max Grade: <%= segment.max_grade %></td>
             <td><%= render 'feature_form', segment: segment %></td>
           </tr>
         <% end %>

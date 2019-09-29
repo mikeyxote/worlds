@@ -2,8 +2,17 @@ class FeaturesController < ApplicationController
   before_action :logged_in_user
   
   def create
-    segment = Segment.find_by(id: params[:segment_id])
-    Event.find_by(id: params[:event_id]).add_feature segment
+    puts "FeatureController Params:"
+    puts params.to_yaml
+    # segment = Segment.find_by(id: params[:segment_id])
+    # pts = params[:feature][:pts].to_s
+    Feature.create(event_id: params[:event_id], 
+                    segment_id: params[:segment_id],
+                    val: params['feature']['pts'],
+                    category: params[:category])
+    # Event.find_by(id: params[:event_id]).add_feature(segment, 
+    #                                     params[:points], 
+    #                                     params[:category])
     respond_to do |format|
       format.html { redirect_to Event.find_by(id: params[:event_id])}
       format.js
