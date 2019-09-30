@@ -242,7 +242,7 @@ class User < ActiveRecord::Base
     all_activities = Activity.all.pluck(:strava_id)
     new_activities = []
 
-    activity_list = client.athlete_activities
+    activity_list = client.athlete_activities(per_page: 60)
     activity_list.each do |activity_obj|
       if activity_obj.type == 'Ride' and not all_activities.include? activity_obj.id
         new_activities << {name: activity_obj.name,

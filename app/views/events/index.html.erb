@@ -29,7 +29,7 @@
         <% else %>
           <td>No Segment</td>
         <% end %>
-        <td><%= event.participants.size.to_s %></td>
+        <td><%= event.connections.size.to_s %></td>
         <td><%= event.featuring.count %></td>
         <td><%= event.efforts.count %></td>
         <td><%= link_to 'Edit', edit_event_path(event) %></td>
