@@ -28,6 +28,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def koms
+    Point.where(user: self, category: 'kom').sum(:val)
+  end
+  
+  def sprints
+    Point.where(user: self, category: 'sprint').sum(:val)
+  end
+
   def recommend
     day_hash = {}
     # effort_list = []

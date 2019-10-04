@@ -1,18 +1,23 @@
 <li>
-<div class="card">
-  <%= link_to profile_for(user, 'size' => 125), user %>
-  <div class="card-body">
-      <%= user.full_name %></br>
-    <div class="card-body">
+<div class="card user-card">
+  <div class="row no-gutters">
+    <div class="col-md-4 left-with-border">
+      <%= link_to profile_for(user, 'size' => 125), user %>
+      <strong><%= user.full_name %></br></strong>
       Activties: <%= user.activities.size.to_s %></br>
       Efforts: <%= user.efforts.size.to_s %></br>
       Segments: <%= user.efforts.group(:strava_segment_id).count.size %></br>
       Points: <%= user.points.count.to_s %></br>
-      <%= render 'manage_form', user: user %>
+      KOM: <%= user.koms %></br>
+      Sprint: <%= user.sprints %></br>
     </div>
-    <div>
+    <div class="card-body col-md-4">
+      Add recent event stats here
+    </div>
+    <div class="card-body col-md-4 right-with-border">
       View on <%= strava_for(user) %>
     </div>
+
   </div>
 </div>
 </li>
