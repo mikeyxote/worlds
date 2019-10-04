@@ -581,3 +581,30 @@ td {
   font-size: 10px;
   width: 80px;
 }
+
+.card-border {
+  border-style: outset;
+  border-radius: 25px;
+  padding: 15px;
+  // border-width: 1px;
+  // border-color: black;
+}
+
+.center-with-lines {
+  border-right: 1px solid grey;
+  border-left: 1px solid grey;
+}
+
+.left-with-border {
+  border-right: 1px solid grey;
+}
+
+.right-with-border {
+  border-left: 1px solid grey;
+}
+
+.segment-card {
+  border-style: outset;
+  border-radius: 20px;
+  padding: 15px;
+}

@@ -106,15 +106,15 @@
 
         <% @segments.each do |segment| %>
           <tr>
-            <div class="card mb-4" style="max-width: 540px;">
+            <div class="card mb-5 segment-card" style="max-width: 640px;">
               <div class="row no-gutters">
-                <div class="col-md-4">
+                <div class="col-md-4 left-with-border">
                   <%= static_map segment.polyline %>
                   <%= segment.name %>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="card-body">
-                    <p class="card-text"><small class="text-muted">
+                    <p class="card-text">
                       <ul class="list-group list-group-flush crd-sml-txt">
                         <li class="list-group-item crd-sml-row">
                           Distance: <%= (segment.distance * 0.000621).round(1) %>
@@ -129,11 +129,11 @@
                           Max Grade: <%= segment.max_grade %>
                         </li>
                       </ul>
-                     </small></p>
+                     </p>
                   </div>
                   
                 </div>
-                <div class="card-text col-md-4">
+                <div class="card-text col-md-5 right-with-border">
                     <%= render 'feature_form', segment: segment %>
                   </div>
               </div>
