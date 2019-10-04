@@ -2,19 +2,19 @@
   <div><%= hidden_field_tag :segment_id, segment.id %></div>
   <div><%= hidden_field_tag :event_id, @event.id %></div>
   
-  <div class="form-check form-check-inline">
+  <div class="form-check form-check-inline btn-small">
     <input class="form-check-input" type="radio" name="category" id="sprintRadio" value="sprint" checked>
     <label class="form-check-label" for="sprintRadios">
       Sprint
     </label>
   </div>
-  <div class="form-check">
+  <div class="form-check btn-small">
     <input class="form-check-input" type="radio" name="category" id="komRadios" value="kom">
     <label class="form-check-label" for="komRadios">
       KOM
     </label>
   </div>
   
-  <div>Points: <%= f.number_field(:pts, in: 3..5, step: 1, class:'feature-form-points', :value => 3 ) %></div>
-  <%= f.submit "Feature", class: "btn btn-primary" %>
+  <div>Points: <%= f.number_field(:pts, in: 3..10, step: 1, class:'feature-form-points', :value => 3 ) %></div>
+  <%= f.submit "Feature", class: "btn btn-primary btn-small" %>
 <% end %>

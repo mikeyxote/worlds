@@ -106,13 +106,42 @@
 
         <% @segments.each do |segment| %>
           <tr>
-            <td><%= segment.name %></td>
-            <td><%= static_map segment.polyline %></td>
-            <td>Distance: <%= (segment.distance * 0.000621).round(1) %></br>
-                Elevation Gain: <%= segment.elevation_gain %></br>
-                Average Grade: <%= segment.average_grade %></br>
-                Max Grade: <%= segment.max_grade %></td>
-            <td><%= render 'feature_form', segment: segment %></td>
+            <div class="card mb-4" style="max-width: 540px;">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <%= static_map segment.polyline %>
+                  <%= segment.name %>
+                </div>
+                <div class="col-md-4">
+                  <div class="card-body">
+                    <p class="card-text"><small class="text-muted">
+                      <ul class="list-group list-group-flush crd-sml-txt">
+                        <li class="list-group-item crd-sml-row">
+                          Distance: <%= (segment.distance * 0.000621).round(1) %>
+                        </li>
+                        <li class="list-group-item crd-sml-row">
+                          Elevation Gain: <%= segment.elevation_gain %>
+                        </li>
+                        <li class="list-group-item crd-sml-row">
+                          Average Grade: <%= segment.average_grade %>
+                        </li>
+                        <li class="list-group-item crd-sml-row">
+                          Max Grade: <%= segment.max_grade %>
+                        </li>
+                      </ul>
+                     </small></p>
+                  </div>
+                  
+                </div>
+                <div class="card-text col-md-4">
+                    <%= render 'feature_form', segment: segment %>
+                  </div>
+              </div>
+            </div>
+            
+            
+              
+            
           </tr>
         <% end %>
       </table>
