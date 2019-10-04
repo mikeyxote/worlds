@@ -18,6 +18,28 @@ class User < ActiveRecord::Base
   has_many :participations, dependent: :destroy
   has_many :participating_in, through: :participations, source: :event
 
+  def get_recent_activities
+    client = api_client
+    
+    all_activities = Activity.all.pluck(:strava_id)
+    activity_list = client.athlete_activities
+    activity_list.each do |activity_obj|
+      if activity_obj.start_date > 1.week.ago and activity_obj.type == 'Ride' and not all_activities.include? activity_obj.id
+        new_activity = self.activities.create(name: activity_obj.name,
+                    strava_athlete_id: activity_obj.athlete['id'],
+                    polyline: activity_obj.map['polyline'],
+                    summary_polyline: activity_obj.map['summary_polyline'],
+                    strava_id: activity_obj.id,
+                    start_date: activity_obj.start_date,
+                    trainer: activity_obj.trainer,
+                    distance: activity_obj.distance)
+        get_activity_efforts(new_activity.strava_id)
+      end
+    end
+    return nil
+    
+  end
+
   def update_polylines
     self.activities.where(polyline: nil).each do |activity|
       activity_obj = get_activity_obj(activity.strava_id)
