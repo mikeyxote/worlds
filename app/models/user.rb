@@ -18,6 +18,16 @@ class User < ActiveRecord::Base
   has_many :participations, dependent: :destroy
   has_many :participating_in, through: :participations, source: :event
 
+  def recent_events
+    out = {}
+    pts = Point.where(user: self).group(:event_id, :category).sum(:val)
+    pts.each do |k, v|
+      event = Event.find_by(id: k[0])
+      # out[event.name] = {start_date: event.start_date, 
+    end
+    return pts
+  end
+
   def get_recent_activities
     client = api_client
     
@@ -37,7 +47,6 @@ class User < ActiveRecord::Base
       end
     end
     return nil
-    
   end
 
   def update_polylines

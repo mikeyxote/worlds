@@ -2,5 +2,5 @@
              html: { method: :delete }) do |f| %>
  <div><%= hidden_field_tag :activity_id, activity.id %></div>
  <div><%= hidden_field_tag :event_id, @event.id %></div>
-  <%= f.submit "Remove", class: "btn btn-unregister" %>
+  <%= f.submit "Remove", class: "btn btn-unregister btn-pop" %>
 <% end %>
