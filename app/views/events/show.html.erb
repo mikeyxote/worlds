@@ -106,13 +106,13 @@
 
         <% @segments.each do |segment| %>
           <tr>
-            <div class="card mb-5 segment-card" style="max-width: 640px;">
+            <div class="card mb-5 segment-card" style="max-width: 740px;">
               <div class="row no-gutters">
-                <div class="col-md-4 left-with-border">
+                <div class="col-md-4 left-with-border" style="max-width: 180px;">
                   <%= static_map segment.polyline %>
                   <%= segment.name %>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <div class="card-body">
                     <p class="card-text">
                       <ul class="list-group list-group-flush crd-sml-txt">

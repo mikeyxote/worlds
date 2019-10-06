@@ -1,23 +1,25 @@
 <% if user_signed_in? %>
   <% if current_user.has_strava? %>
     <h1>Greetings <%= current_user.firstname %></h1>
-    <h3>Recent Events:</h3>
-    <% if @events.size > 1 %>
+    <h3>Recent Results:</h3>
+    <% if @results.size > 1 %>
       <table class="table table-striped">
         <thead>
-          <th>Event Name</th>
-          <th>Participants</th>
-          <th>Segments</th>
-          <th>Points</th>
           <th>Date</th>
+          <th>Event Name</th>
+          <th>Segments</th>
+          <th>Sprint</th>
+          <th>KOM</th>
+          <th>Total</th>
         </thead>
-        <% @events.each do |event| %>
+        <% @results.each do |result| %>
           <tr>
-            <td><%= link_to event.name, event %></td>
-            <td><%= event.participants.size %></td>
-            <td><%= event.featuring.size %></td>
-            <td><%= event.points.where(user: current_user).sum(:val) %></td>
-            <td><%= event.start_date.to_date %></td>
+            <td><%= result[:event].start_date.localtime.strftime('%a, %d %b %Y') %></td>
+            <td><%= link_to result[:event].name, result[:event] %></td>
+            <td><%= result[:event].featuring.size %></td>
+            <td><%= result[:sprint] %></td>
+            <td><%= result[:kom] %></td>
+            <td><%= result[:sprint] + result[:kom] %></td>
           </tr>
         <% end %>
       </table>

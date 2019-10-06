@@ -14,6 +14,15 @@ class Event < ActiveRecord::Base
   # belongs_to :user
 
 
+  def user_result user
+    pts = self.points.where(user: user)
+    return {user: user,
+            event: self,
+            sprint: pts.where(category: 'sprint').sum(:val),
+            kom: pts.where(category: 'kom').sum(:val)
+    }
+  end
+
   def results_table
     out = {}
     # puts "Points:"
