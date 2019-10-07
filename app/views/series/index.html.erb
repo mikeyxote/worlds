@@ -1,26 +1,29 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Series</h1>
+<h1>Series</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Name</th>
       <th>Description</th>
       <th>Start date</th>
       <th>End date</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @series.each do |series| %>
       <tr>
-        <td><%= series.name %></td>
+        <td><%= link_to series.name, series %></td>
         <td><%= series.description %></td>
-        <td><%= series.start_date %></td>
-        <td><%= series.end_date %></td>
-        <td><%= link_to 'Show', series %></td>
+        <td><%= series.start_date.strftime('%a, %d %b %Y') %></td>
+        <% if series.end_date %>
+          <td><%= series.end_date.strftime('%a, %d %b %Y') %></td>
+        <% else %>
+          <td>Pending</td>
+        <% end %>
         <td><%= link_to 'Edit', edit_series_path(series) %></td>
         <td><%= link_to 'Destroy', series, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

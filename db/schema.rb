@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191007002533) do
+ActiveRecord::Schema.define(version: 20191007193715) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "strava_id",         limit: 8
@@ -133,6 +133,19 @@ ActiveRecord::Schema.define(version: 20191007002533) do
 
   add_index "races", ["event_id"], name: "index_races_on_event_id"
   add_index "races", ["series_id"], name: "index_races_on_series_id"
+
+  create_table "results", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.integer  "kom"
+    t.integer  "sprint"
+    t.integer  "finish"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "results", ["event_id"], name: "index_results_on_event_id"
+  add_index "results", ["user_id"], name: "index_results_on_user_id"
 
   create_table "segments", force: :cascade do |t|
     t.integer  "points"

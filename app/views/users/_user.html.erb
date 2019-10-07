@@ -6,7 +6,7 @@
         <%= link_to profile_for(user, 'size' => 125), user %></br>
         <strong><%= user.full_name %></strong>
         <div class="view-strava">
-          View on </br>
+          View <%= user.firstname %> on </br>
           <%= strava_for(user) %>
         </div>
       </div>
