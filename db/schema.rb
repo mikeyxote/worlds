@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191007193715) do
+ActiveRecord::Schema.define(version: 20191007210222) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "strava_id",         limit: 8
@@ -142,6 +142,8 @@ ActiveRecord::Schema.define(version: 20191007193715) do
     t.integer  "finish"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "total"
+    t.integer  "place"
   end
 
   add_index "results", ["event_id"], name: "index_results_on_event_id"

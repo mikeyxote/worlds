@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   has_many :participations, dependent: :destroy
   has_many :participating_in, through: :participations, source: :event
+  has_many :results
 
   def recent_events
     event_ids = self.points.pluck(:event_id).uniq

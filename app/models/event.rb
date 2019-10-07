@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
   belongs_to :segment
-  has_many :activities
+  has_many :activities, through: :connections
   has_many :points, dependent: :destroy
   has_many :efforts, through: :activities
   has_many :participations, dependent: :destroy
@@ -13,6 +13,7 @@ class Event < ActiveRecord::Base
   has_many :contains, through: :connections, source: :activity
   has_many :races, dependent: :destroy
   has_many :series, through: :races
+  has_many :results
   # belongs_to :user
 
 
@@ -21,8 +22,32 @@ class Event < ActiveRecord::Base
     return {user: user,
             event: self,
             sprint: pts.where(category: 'sprint').sum(:val),
-            kom: pts.where(category: 'kom').sum(:val)
+            kom: pts.where(category: 'kom').sum(:val),
+            total: pts.sum(:val)
     }
+  end
+
+  def make_results
+    self.results.delete_all
+    results = []
+    User.where(id: self.activities.pluck(:user_id)).each do |user|
+      # pts = self.user_result user
+      results << self.user_result(user)
+    end
+    results.sort_by{|r| r[:total]}
+    place = 1
+    results.each do |r|
+      Result.create(event: r[:event],
+                    user: r[:user],
+                    kom: r[:kom],
+                    sprint: r[:sprint],
+                    total: r[:total],
+                    place: r[:place]
+                    )
+      place += 1
+                    
+    end
+    return nil
   end
 
   def results_table

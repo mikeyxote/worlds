@@ -14,17 +14,19 @@
   <div class='card-text' id='eventScoring'>
     <table class="table table-sm table-hover table-striped">
       <thead>
+        <th>Place</th>
         <th scope='col'>Athlete</th>
         <th>KOM</th>
         <th>Sprint</th>
         <th scope='col'>Points</th>
       </thead>
-        <% @points.each do |k, v| %>
+        <% @results.each do |r| %>
           <tr>
-          <td scope='row'><%= k %></td>
-          <td scope='row'><%= v[:kom] %></td>
-          <td scope='row'><%= v[:sprint] %></td>
-          <td scope='row'><%= v[:total] %></td>
+          <td scope='row'><%= r[:place] %></td>
+          <td scope='row'><%= r.user.full_name %></td>
+          <td scope='row'><%= r[:kom] %></td>
+          <td scope='row'><%= r[:sprint] %></td>
+          <td scope='row'><%= r[:total] %></td>
           </tr>
         <% end %>
     </table>

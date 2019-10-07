@@ -22,6 +22,7 @@ class EventsController < ApplicationController
       
       @table = @event.get_table
       @points = @event.results_table
+      @results = @event.results.order(:place)
     end
 
   end
