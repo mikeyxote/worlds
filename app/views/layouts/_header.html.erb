@@ -8,10 +8,12 @@
         <%= link_to current_user.firstname, root_path %></li>
       <% end %>
       <li><%= link_to "Home", root_path %></li>
+      <li><%= link_to "Series", series_index_path %></li>
+      <li><%= link_to "Events", events_path %></li>
       <li><%= link_to "Athletes", users_path %></li>
       <li><%= link_to "Segments", segments_path %></li>
       <li><%= link_to "Activities", activities_path %></li>
-      <li><%= link_to "Events", events_path %></li>
+
       <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
       </ul>
     <% else %>

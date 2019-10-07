@@ -24,10 +24,6 @@ class User < ActiveRecord::Base
     Event.where(id: event_ids).order(start_date: :desc)
   end
 
-  def recent_event_table
-    
-  end
-
   def get_recent_activities
     client = api_client
     

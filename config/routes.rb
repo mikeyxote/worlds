@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :points
   resources :events
+  resources :series
   
   resources :events do
     member do
@@ -30,6 +31,7 @@ Rails.application.routes.draw do
   resources :features,        only: [:create, :destroy]
   resources :participations,  only: [:create, :destroy]
   resources :connections,     only: [:create, :destroy]
+  resources :races,           only: [:create, :destroy]
   
   get 'strava_request/show'
   get 'strava_callback/show'

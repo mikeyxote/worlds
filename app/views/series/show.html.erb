@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @series.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @series.description %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @series.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @series.end_date %>
+</p>
+
+<%= link_to 'Edit', edit_series_path(@series) %> |
+<%= link_to 'Back', series_index_path %>

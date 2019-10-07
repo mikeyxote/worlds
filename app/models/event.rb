@@ -11,6 +11,8 @@ class Event < ActiveRecord::Base
   has_many :featuring, through: :featured_segments, source: :segment
   has_many :connections, dependent: :destroy
   has_many :contains, through: :connections, source: :activity
+  has_many :races, dependent: :destroy
+  has_many :series, through: :races
   # belongs_to :user
 
 
