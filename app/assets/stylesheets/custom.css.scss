@@ -610,19 +610,32 @@ td {
 }
 
 .user-card {
+  display: flex;
+  width: 500px;
+  height: 250px;
   border-style: outset;
   border-radius: 20px;
   padding: 15px;
 }
 
 .user-card:hover {
-  transform: scale(.9);
+  // transform: scale(.9);
 }
 
 .btn-pop:hover {
   transition: .5s ease;
   cursor: pointer;
   transform: scale(1.2);
-  background-color: green;
+  // background-color: green;
   box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+}
+
+.users-flex {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.view-strava {
+  vertical-align: bottom;
 }
