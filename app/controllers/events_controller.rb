@@ -21,7 +21,7 @@ class EventsController < ApplicationController
       @segments = @event.common_segments @event.contains
       
       @table = @event.get_table
-      @points = @event.results_table
+      @event.make_results
       @results = @event.results.order(:place)
     end
 

@@ -22,11 +22,11 @@
       </thead>
         <% @results.each do |r| %>
           <tr>
-          <td scope='row'><%= r[:place] %></td>
-          <td scope='row'><%= r.user.full_name %></td>
-          <td scope='row'><%= r[:kom] %></td>
-          <td scope='row'><%= r[:sprint] %></td>
-          <td scope='row'><%= r[:total] %></td>
+            <td scope='row'><%= r[:place] %></td>
+            <td scope='row'><%= r.user.full_name %></td>
+            <td scope='row'><%= r[:kom] %></td>
+            <td scope='row'><%= r[:sprint] %></td>
+            <td scope='row'><%= r[:total] %></td>
           </tr>
         <% end %>
     </table>

@@ -20,9 +20,13 @@
       Sprint: <%= user.sprints %></br>
     </div>
     <div class="user-card-row">
-      Add recent event stats here
+      Recent Events:
+      <ul>
+        <% user.recent_results.each do |r| %>
+          <li><%= r.start_date.strftime('%d %b %Y') %> Points: <%= r.total %></li>
+        <% end %>
+      </ul>
     </div>
     
-
 </div>
 </li>

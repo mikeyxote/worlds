@@ -14,7 +14,6 @@ class Event < ActiveRecord::Base
   has_many :races, dependent: :destroy
   has_many :series, through: :races
   has_many :results
-  # belongs_to :user
 
 
   def user_result user
@@ -28,33 +27,32 @@ class Event < ActiveRecord::Base
   end
 
   def make_results
-    self.results.delete_all
+    Result.where(event_id: self.id).delete_all
     results = []
-    User.where(id: self.activities.pluck(:user_id)).each do |user|
-      # pts = self.user_result user
+    User.where(id: self.activities.pluck(:user_id).uniq).each do |user|
+      puts self.user_result(user)
       results << self.user_result(user)
     end
-    results.sort_by{|r| r[:total]}
     place = 1
+    results = results.sort_by{|r| -r[:total]}
     results.each do |r|
-      Result.create(event: r[:event],
-                    user: r[:user],
+      Result.create(event_id: r[:event].id,
+                    user_id: r[:user].id,
                     kom: r[:kom],
                     sprint: r[:sprint],
                     total: r[:total],
-                    place: r[:place]
+                    place: place,
+                    start_date: self.start_date
                     )
       place += 1
-                    
     end
+    puts "New Results count"
+    puts self.results.count
     return nil
   end
 
   def results_table
     out = {}
-    # puts "Points:"
-    # puts self.points.count.to_s
-
     self.points.pluck(:user_id).uniq.each do |user_id|
       puts "User IDs:"
       puts user_id.to_s

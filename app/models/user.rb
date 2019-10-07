@@ -21,8 +21,11 @@ class User < ActiveRecord::Base
 
   def recent_events
     event_ids = self.points.pluck(:event_id).uniq
-    puts event_ids
     Event.where(id: event_ids).order(start_date: :desc)
+  end
+
+  def recent_results
+    self.results.where('total > 0').order(start_date: :desc).limit(5)
   end
 
   def get_recent_activities
