@@ -6,8 +6,9 @@
       <th>Name</th>
       <th>Owner</th>
       <th>Start Date</th>
-      <th>Segment</th>
+      <th>End Segment</th>
       <th>Participants</th>
+      <th>Series</th>
       <th>Segments</th>
       <th>Efforts</th>
       <th colspan="2"></th>
@@ -23,6 +24,11 @@
           <td><%= Time.at(event.start_date).strftime('%a, %d %b')  %></td>
         <% else %>
           <td>Pending...</td>
+        <% end %>
+        <% if event.series %>
+          <td><%= event.series.name %></td>
+        <% else %>
+          <td>None</td>
         <% end %>
         <% if event.segment %>
           <td><%= link_to event.segment.name, event.segment %></td>
