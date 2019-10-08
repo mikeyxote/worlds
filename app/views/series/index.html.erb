@@ -7,6 +7,7 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
+      <th>Events</th>
       <th>Start date</th>
       <th>End date</th>
       <th colspan="2"></th>
@@ -18,6 +19,7 @@
       <tr>
         <td><%= link_to series.name, series %></td>
         <td><%= series.description %></td>
+        <td><%= series.events.count %></td>
         <td><%= series.start_date.strftime('%a, %d %b %Y') %></td>
         <% if series.end_date %>
           <td><%= series.end_date.strftime('%a, %d %b %Y') %></td>

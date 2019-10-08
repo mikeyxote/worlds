@@ -20,6 +20,10 @@
       <%= f.label 'Event Date' %><br>
       <%= datepicker_input f, :start_date, params[:start_date] || Date.today %>
     </div>
+    <div>
+      <%= f.label 'Series:' %></br>
+      <%= f.collection_select(:series, Series.all, :id, :name, prompt: true) %>
+    </div>
     <div class="field">
       <%= f.label 'End Segment' %><br>
       <%= f.collection_select(:segment_id, Segment.all, :id, :name, prompt: true) %>

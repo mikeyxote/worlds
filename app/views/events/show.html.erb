@@ -7,6 +7,12 @@
   <% else %>
     Official Start Time Pending...
   <% end %></h2>
+  <h2>Series:
+  <% if @event.series %>
+    <% @event.series.name %>
+  <% else %>
+    <%= "Ad Hoc" %>
+  <% end %></h2>
 </p>
 
 <div class='card'>

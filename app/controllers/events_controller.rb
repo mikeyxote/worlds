@@ -39,12 +39,13 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-
     @event = Event.new(event_params)
     @event.update(user_id: params['user_id'],
-                  segment_id: params['event']['segment'])
+                  segment_id: params['event']['segment'],
+                  series_id: params['event']['series'])
     respond_to do |format|
       if @event.save
+        # series = Series.find_by(id: params['series '])
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else

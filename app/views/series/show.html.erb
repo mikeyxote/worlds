@@ -1,24 +1,32 @@
-<p id="notice"><%= notice %></p>
-
 <p>
-  <strong>Name:</strong>
-  <%= @series.name %>
+  <h1><%= @series.name %></h1>
 </p>
 
 <p>
   <strong>Description:</strong>
   <%= @series.description %>
 </p>
-
-<p>
-  <strong>Start date:</strong>
-  <%= @series.start_date %>
-</p>
-
-<p>
-  <strong>End date:</strong>
-  <%= @series.end_date %>
-</p>
+<h1>Results</h1>
+<div>
+  <table class="table">
+    <thead>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Participants</th>
+      <th>Total Point Value</th>
+      <th>Winner</th>
+    </thead>
+    <% @series.events.each do |event| %>
+      <tr>
+        <td><%= link_to event.name, event %></td>
+        <td><%= event.start_date.strftime('%a, %d %b %Y') %></td>
+        <td><%= event.activities.count %></td>
+        <td><%= event.results.sum(:total) %></td>
+        <td><%= link_to event.winner.full_name, event.winner %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
 
 <%= link_to 'Edit', edit_series_path(@series) %> |
 <%= link_to 'Back', series_index_path %>

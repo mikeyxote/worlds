@@ -12,9 +12,14 @@ class Event < ActiveRecord::Base
   has_many :connections, dependent: :destroy
   has_many :contains, through: :connections, source: :activity
   has_many :races, dependent: :destroy
-  has_many :series, through: :races
+  # has_many :series, through: :races
+  belongs_to :series
   has_many :results
 
+
+  def winner
+    User.find_by(id: self.results.order(total: :desc).first.user_id)
+  end
 
   def user_result user
     pts = self.points.where(user: user)
