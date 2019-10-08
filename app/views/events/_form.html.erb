@@ -18,7 +18,7 @@
     </div>
     <div class="field">
       <%= f.label 'Event Date' %><br>
-      <%= datepicker_input f, :start_date, params[:start_date] || Date.today %>
+      <%= datepicker_input f, :start_date, Event.find_by(id: params['id']).start_date.strftime('%Y-%m-%d') || Date.today %>
     </div>
     <div>
       <%= f.label 'Series:' %></br>
