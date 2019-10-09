@@ -10,6 +10,9 @@ class SeriesController < ApplicationController
   # GET /series/1
   # GET /series/1.json
   def show
+    # @standings = Result.where(event_id: @series.events.pluck(:id)).group(:user_id).sum(:sprint, :kom, :total)
+    @standings = Result.where(event_id: @series.events.pluck(:id)).group(:user_id).pluck('user_id', 'SUM(sprint)', 'SUM(kom)', 'SUM(total)')
+    @standings = @standings.sort_by{|r| -r[3]}
   end
 
   # GET /series/new

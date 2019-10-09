@@ -1,11 +1,31 @@
 <p>
   <h1><%= @series.name %></h1>
 </p>
-
 <p>
   <strong>Description:</strong>
   <%= @series.description %>
 </p>
+<h1>Standings</h1>
+<div>
+  <table class="table">
+    <thead>
+      <th>Athlete</th>
+      <th>Sprint</th>
+      <th>KOM</th>
+      <th>Score</th>
+    </thead>
+    <% @standings.each do |s| %>
+      <tr>
+        <td><%= User.find_by(id: s[0]).full_name %></td>
+        <td><%= s[1] %></td>
+        <td><%= s[2] %></td>
+        <td><%= s[3] %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+
 <h1>Results</h1>
 <div>
   <table class="table">
