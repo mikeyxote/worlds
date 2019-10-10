@@ -24,6 +24,10 @@ class User < ActiveRecord::Base
     Event.where(id: event_ids).order(start_date: :desc)
   end
 
+  def shared_events user
+    return (self.results.pluck(:event_id).uniq & user.results.pluck(:event_id).uniq).size
+  end
+
   def recent_results
     self.results.where('total > 0').order(start_date: :desc).limit(5)
   end

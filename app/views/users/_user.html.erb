@@ -18,6 +18,9 @@
       Points: <%= user.points.count.to_s %></br>
       KOM: <%= user.koms %></br>
       Sprint: <%= user.sprints %></br>
+      <% if current_user != user %>
+        Shared events: <%= current_user.shared_events user %>
+      <% end %>
     </div>
     <div class="user-card-row">
       Recent Events:
