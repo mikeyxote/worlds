@@ -8,7 +8,16 @@
         <%= link_to current_user.firstname, root_path %></li>
       <% end %>
       <li><%= link_to "Home", root_path %></li>
-      <li><%= link_to "Series", series_index_path %></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Series <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <% Series.all.each do |s| %>
+            <li><%= link_to s.name, s %></li>
+          <% end %>
+        </ul>
+      </li>
       <li><%= link_to "Events", events_path %></li>
       <li><%= link_to "Athletes", users_path %></li>
       <li><%= link_to "Segments", segments_path %></li>

@@ -21,6 +21,15 @@
 //= require_tree .
 
 $(document).ready(function(){
+    $('.dropdown').mouseenter(function(){
+        $(event.currentTarget).find('.dropdown-menu').toggle();
+    })
+    $('.dropdown').mouseleave(function() {
+        $(event.currentTarget).find('.dropdown-menu').hide();
+    })
+    $('.dropdown-menu').mouseleave(function(){
+        $('dropdown-menu').hide();
+    })
   $("#segment_search").on("keyup", function() {
     var value = $(this).val().toLowerCase();
     $("#segment_table tr").filter(function() {
