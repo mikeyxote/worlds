@@ -26,7 +26,6 @@ class EventsController < ApplicationController
       @event.make_results
       @results = @event.results.order(:place)
     end
-
   end
 
   # GET /events/new
