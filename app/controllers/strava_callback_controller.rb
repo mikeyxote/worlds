@@ -21,9 +21,11 @@ class StravaCallbackController < ApplicationController
         profile_medium: response.athlete.profile_medium,
         profile: response.athlete.profile
         )
-      current_user.grab_five
+      Thread.new do
+        flash[:success] = "Strava connected! Activities downloading..."
+        current_user.grab_five
+      end
       @profile = response.athlete.profile
-      # Place to start can go here
 
       @message = "Success"
     else
