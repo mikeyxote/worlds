@@ -20,6 +20,8 @@ class EventsController < ApplicationController
       
       @segments = @event.common_segments @event.contains
       
+      @segments = @segments.sort_by{|s| -s.featured_by.count}
+      
       @table = @event.get_table
       @event.make_results
       @results = @event.results.order(:place)

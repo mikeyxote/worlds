@@ -124,18 +124,13 @@
                   <div class="card-body">
                     <p class="card-text">
                       <ul class="list-group list-group-flush crd-sml-txt">
-                        <li class="list-group-item crd-sml-row">
-                          Distance: <%= (segment.distance * 0.000621).round(1) %>
-                        </li>
-                        <li class="list-group-item crd-sml-row">
-                          Elevation Gain: <%= segment.elevation_gain %>
-                        </li>
-                        <li class="list-group-item crd-sml-row">
-                          Average Grade: <%= segment.average_grade %>
-                        </li>
-                        <li class="list-group-item crd-sml-row">
-                          Max Grade: <%= segment.max_grade %>
-                        </li>
+                        
+                          Featured <%= pluralize(segment.featured_by.size, "time") %></br>
+                          Distance: <%= (segment.distance * 0.000621).round(1) %></br>
+                          Elevation Gain: <%= segment.elevation_gain %></br>
+                          Average Grade: <%= segment.average_grade %></br>
+                          Max Grade: <%= segment.max_grade %></br>
+                          
                       </ul>
                      </p>
                   </div>
