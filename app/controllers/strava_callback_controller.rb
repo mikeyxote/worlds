@@ -23,7 +23,7 @@ class StravaCallbackController < ApplicationController
         )
       Thread.new do
         flash[:success] = "Strava connected! Activities downloading..."
-        current_user.grab_five
+        current_user.get_season
       end
       @profile = response.athlete.profile
 
