@@ -19,6 +19,29 @@ class User < ActiveRecord::Base
   has_many :participating_in, through: :participations, source: :event
   has_many :results
 
+  def get_date d
+    d = d.to_date
+    client = api_client
+    # all_activities = Activity.all.pluck(:strava_id)
+    last = Time.now
+    i = 1
+    while last > d
+      activities = client.athlete_activities(page: i)
+      activities.each do |a|
+        if [2,6].include? a.start_date.wday
+          puts a.id
+        elsif a.start_date.to_date == d
+          puts "Found it: " + a.id.to_s
+          return a.id
+        end
+      end
+      last = activities.last.start_date
+      i += 1
+    end
+    return nil
+    
+  end
+
   def recent_events
     event_ids = self.points.pluck(:event_id).uniq
     Event.where(id: event_ids).order(start_date: :desc)
