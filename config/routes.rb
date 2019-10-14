@@ -6,11 +6,13 @@ Rails.application.routes.draw do
   resources :points
   resources :events
   resources :series
+  resources :connections
   
   resources :events do
     member do
       get :features
       get :participations
+      get :connections
     end
   end
   

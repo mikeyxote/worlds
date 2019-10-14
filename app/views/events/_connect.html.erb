@@ -1,6 +1,6 @@
-<%= form_for(@event.connections.build) do |f| %>
+<%= form_for(@event.connections.build, remote: true) do |f| %>
   <div class="form-reg"></div>
-  <div><%= hidden_field_tag :activity_id, activity.id %></div>
+  <div><%= hidden_field_tag :activity_id, activity_id %></div>
   <div><%= hidden_field_tag :event_id, @event.id %></div>
   <%= f.submit "Add", class: "btn btn-primaery btn-register btn-pop" %>
 <% end %>

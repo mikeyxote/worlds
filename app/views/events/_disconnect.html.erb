@@ -1,6 +1,7 @@
-<%= form_for(@event.connections.find_by(activity_id: activity.id),
-             html: { method: :delete }) do |f| %>
- <div><%= hidden_field_tag :activity_id, activity.id %></div>
+<%= form_for(@event.connections.find_by(activity_id: activity_id),
+             html: { method: :delete },
+             remote: true) do |f| %>
+ <div><%= hidden_field_tag :activity_id, activity_id %></div>
  <div><%= hidden_field_tag :event_id, @event.id %></div>
   <%= f.submit "Remove", class: "btn btn-unregister btn-pop" %>
 <% end %>

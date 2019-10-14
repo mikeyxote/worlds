@@ -1,0 +1,1 @@
+$("#connect_form-<%= escape_javascript(params[:activity_id]) %>").html("<%= escape_javascript(render('events/disconnect', activity_id: params[:activity_id])) %>");
