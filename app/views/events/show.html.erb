@@ -14,128 +14,135 @@
     "Ad Hoc"
   <% end %></h2>
 </p>
-
-<div class='card'>
-  <div class='card-header'><h3>Event Scoring</h3></div>
-  <div class='card-text' id='eventScoring'>
-    <table class="table table-sm table-hover table-striped">
-      <thead>
-        <th>Place</th>
-        <th scope='col'>Athlete</th>
-        <th>KOM</th>
-        <th>Sprint</th>
-        <th scope='col'>Points</th>
-      </thead>
-        <% @results.each do |r| %>
-          <tr>
-            <td scope='row'><%= r[:place] %></td>
-            <td scope='row'><%= r.user.full_name %></td>
-            <td scope='row'><%= r[:kom] %></td>
-            <td scope='row'><%= r[:sprint] %></td>
-            <td scope='row'><%= r[:total] %></td>
-          </tr>
-        <% end %>
-    </table>
-  </div>
-  <div class='card'>
-    <% if @table %>
-      <div class='card-header'><h3>Segment Times</h3></div>
-      <div class="table-responsive">
-        <table class="table table-striped">
+<a href="#" id="edit-toggle" class="btn btn-primary right btn-pop">
+Edit Mode
+</a>
+<div class="show-edit-event">
+  <div id="show-event">
+    <div class='card'>
+      <div class='card-header'><h3>Event Scoring</h3></div>
+      <div class='card-text' id='eventScoring'>
+        <table class="table table-sm table-hover table-striped">
           <thead>
-            <tr>
-              <% @table[0].each do |cell| %>
-                <th><%= cell %></th>
-                <% end %>
-            </tr>
+            <th>Place</th>
+            <th scope='col'>Athlete</th>
+            <th>KOM</th>
+            <th>Sprint</th>
+            <th scope='col'>Points</th>
           </thead>
-          <% @table[1, @table.size-1].each do |row| %>
-          <tr>
-            <% row.each do |cell| %>
-              <% if cell.is_a? Hash %>
-                <td><%= Time.at(cell[:time]).strftime('%H:%M:%S') %>
-                <% if cell[:trophy] > 0 %>
-                  <%= show_trophy cell[:trophy] %>
-                <% end %>  
-                  </td>
-              <% else %>
-                <td><%= cell %></td>
-              <% end %>
+            <% @results.each do |r| %>
+              <tr>
+                <td scope='row'><%= r[:place] %></td>
+                <td scope='row'><%= r.user.full_name %></td>
+                <td scope='row'><%= r[:kom] %></td>
+                <td scope='row'><%= r[:sprint] %></td>
+                <td scope='row'><%= r[:total] %></td>
+              </tr>
             <% end %>
-          </tr>
+        </table>
+      </div>
+      <div class='card'>
+        <% if @table %>
+          <div class='card-header'><h3>Segment Times</h3></div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <% @table[0].each do |cell| %>
+                    <th><%= cell %></th>
+                    <% end %>
+                </tr>
+              </thead>
+              <% @table[1, @table.size-1].each do |row| %>
+              <tr>
+                <% row.each do |cell| %>
+                  <% if cell.is_a? Hash %>
+                    <td><%= Time.at(cell[:time]).strftime('%H:%M:%S') %>
+                    <% if cell[:trophy] > 0 %>
+                      <%= show_trophy cell[:trophy] %>
+                    <% end %>  
+                      </td>
+                  <% else %>
+                    <td><%= cell %></td>
+                  <% end %>
+                <% end %>
+              </tr>
+              <% end %>
+            </table>
+          </div>
+        <% else %>
+          <strong>Add some athletes or segments to create the results table!</strong>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="edit-event" style="display: none;">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>Featured Segments
+  
+      </div>
+      <div id="featuredSegments" class="panel-body">
+        <table class='table table-sm'>
+          <% @features.each do |feature| %>
+            <tr>
+              <td><%= feature.segment.name %></td>
+              <td>Points: <%= feature.val %></td>
+              <td>Type: <%= image_tag cat_icon(feature.category) %></td>
+              <td><%= render 'feature_form', segment: feature.segment %></td>
+            </tr>
           <% end %>
         </table>
       </div>
-    <% else %>
-      <strong>Add some athletes or segments to create the results table!</strong>
-    <% end %>
-  </div>
-  
-  <div class="panel panel-default">
-    <div class="panel-heading"><h3>Featured Segments
-
     </div>
-    <div id="featuredSegments" class="panel-body">
-      <table class='table table-sm'>
-        <% @features.each do |feature| %>
-          <tr>
-            <td><%= feature.segment.name %></td>
-            <td>Points: <%= feature.val %></td>
-            <td>Type: <%= image_tag cat_icon(feature.category) %></td>
-            <td><%= render 'feature_form', segment: feature.segment %></td>
-          </tr>
-        <% end %>
-      </table>
-    </div>
-  </div>
-  
-  <div class="panel panel-default">
-    <div class="panel-heading"><h3>Event Builder
-      <a href="#" id="eventBuilder" class="btn btn-primary right btn-pop">
-      Show/Hide
-      </a></h3>
-    </div>
-    <div id="eventBuilder" class="panel-body">
-      <h3>Available Activities</h3>
-      <table class='table table-sm'>
-          <% @activities.each do |activity| %>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>Event Builder
+        <a href="#" id="eventBuilder" class="btn btn-primary right btn-pop">
+        Show/Hide
+        </a></h3>
+      </div>
+      <div id="eventBuilder" class="panel-body">
+        <h3>Available Activities</h3>
+        <table class='table table-sm'>
+            <% @activities.each do |activity| %>
+              <tr>
+                <td><%= profile_for(User.find_by(id: activity.user_id), 'size' => 100) %></td>
+                <td><%= static_map activity.summary_polyline %></td>
+                <td><%= activity.name %></td>
+                <td>Distance: <%= (activity.distance * 0.000621).round(1) %></td>
+                <td>Efforts: <%= activity.efforts.size %></td>
+                <td><%= render 'connect_form', activity: activity %></td>
+              </tr>
+            <% end %>
+        </table>
+        <h3>Available Segments</h3>
+        <input class="form-control" id="segment_search" type="text" width='200' placeholder="Search..">
+        <table class='table table-sm' id='segment_table'>
+          <thead>
+            <th class="segment-name">Name</th>
+            <th>Featured</th>	
+            <th>Distance</th>
+            <th>Elevation Gain</th>
+            <th>Average Grade</th>
+            <th>Max Grade</th>
+            <th>Map</th>
+            <th>Points/Add</th>
+          </thead>
+          <% @segments.each do |segment| %>
             <tr>
-              <td><%= profile_for(User.find_by(id: activity.user_id), 'size' => 100) %></td>
-              <td><%= static_map activity.summary_polyline %></td>
-              <td><%= activity.name %></td>
-              <td>Distance: <%= (activity.distance * 0.000621).round(1) %></td>
-              <td>Efforts: <%= activity.efforts.size %></td>
-              <td><%= render 'connect_form', activity: activity %></td>
+              <td><%= segment.name %></td>
+              <td><%= pluralize(segment.featured_by.size, "time") %></td>
+              <td><%= (segment.distance * 0.000621).round(1) %></td>
+              <td><%= segment.elevation_gain %></td>
+              <td><%= segment.average_grade %></td>
+              <td><%= segment.max_grade %></td>
+              <td><%= static_map segment.polyline %></td>
+              <td><%= render 'feature_form', segment: segment %></td>
             </tr>
+  
           <% end %>
-      </table>
-      <h3>Available Segments</h3>
-      <input class="form-control" id="segment_search" type="text" width='200' placeholder="Search..">
-      <table class='table table-sm' id='segment_table'>
-        <thead>
-          <th class="segment-name">Name</th>
-          <th>Featured</th>	
-          <th>Distance</th>
-          <th>Elevation Gain</th>
-          <th>Average Grade</th>
-          <th>Max Grade</th>
-          <th>Map</th>
-          <th>Points/Add</th>
-        </thead>
-        <% @segments.each do |segment| %>
-          <tr>
-            <td><%= segment.name %></td>
-            <td><%= pluralize(segment.featured_by.size, "time") %></td>
-            <td><%= (segment.distance * 0.000621).round(1) %></td>
-            <td><%= segment.elevation_gain %></td>
-            <td><%= segment.average_grade %></td>
-            <td><%= segment.max_grade %></td>
-            <td><%= static_map segment.polyline %></td>
-            <td><%= render 'feature_form', segment: segment %></td>
-          </tr>
-
-        <% end %>
-      </table>
+        </table>
+      </div>
     </div>
   </div>
 </div>

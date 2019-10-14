@@ -42,5 +42,12 @@ $(document).ready(function(){
      $('div#eventBuilder').toggle(1500);
     });
   });
+ $(function() {
+     $('a#edit-toggle').click(function(event) {
+      event.preventDefault();
+      $('div#show-event').toggle(1000);   
+      $('div#edit-event').toggle(1000);
+     });
+ })
 });
 
