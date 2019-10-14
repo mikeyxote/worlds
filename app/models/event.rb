@@ -12,9 +12,79 @@ class Event < ActiveRecord::Base
   has_many :connections, dependent: :destroy
   has_many :contains, through: :connections, source: :activity
   has_many :races, dependent: :destroy
-  # has_many :series, through: :races
   belongs_to :series
   has_many :results
+  has_many :segments, through: :featured_segments, source: :segment
+
+
+  def make_connection activity
+    Connection.create(activity_id: activity.id,
+                      event_id: self.id)
+  end
+  
+  def drop_connection activity
+    self.connections.where(activity_id: activity.id).delete_all
+  end
+
+  def self.make_day d, name = nil, owner = nil, segments = nil, users = nil, end_segment = nil
+    puts "Starting ---------------"
+    puts "users Count:"
+    puts users.count.to_s
+    puts "segment Count:"
+    puts segments.count.to_s
+    name = d.strftime('%a, %d %b %Y').to_s if name == nil
+    event = Event.create(start_date: d,
+                        name: name)
+    if owner == nil
+      owner = User.where(developer: true).first 
+    end
+    event.update(user_id: owner.id) if owner != nil
+    event.update(segment_id: end_segment.id) if end_segment != nil
+    puts event.to_json
+    puts "Connecting Segments ---------------"
+    if segments
+      puts "We have segments"
+      segments.each do |segment|
+        # puts segment.class.to_s
+        # puts segment.id
+        # puts segment.to_json
+        
+        Feature.create(segment_id: segment.id,
+                        event_id: event.id,
+                        category: 'sprint',
+                        val: 6)
+        # event.add_feature(segment, '5', 'sprint')
+      end
+    end
+    puts "Connecting Users ---------------"
+    if users and segments
+      segment_ids = event.featuring.pluck(:segment_id)
+      users.each do |user|
+        user.activities.where(start_date: [event.start_date.beginning_of_day..event.start_date.end_of_day]).each do |activity|
+          puts "Found activities for " + user.full_name
+          puts activity.name
+          puts Set[segment_ids].to_json
+          puts Set[activity.efforts.pluck(:segment_id)].to_json
+          segment_set = segment_ids.to_set
+          activity_set = activity.efforts.pluck(:segment_id).to_set
+          puts segment_set.to_json
+          puts activity_set.to_json
+          if segment_set.subset? activity_set
+            puts "Subset Found"
+            event.make_connection activity
+          end
+        end
+      end
+    end
+    puts "Finishing ---------------"
+    return event
+  end
+
+  def qualified_user user
+    event_segments = Set[self.features.pluck(:segment_id)]
+    user_segments = Set[user.efforts.where(start_date: [event.start_date.beginning_of_day..event.start_date.end_of_day]).pluck(:segment_id)]
+    event_segments.subset?(user_segments) ? (return true): (return false)
+  end
 
 
   def winner
@@ -145,8 +215,6 @@ class Event < ActiveRecord::Base
     puts "----Starting get_table-----"
 
     out = []
-    # race_day = self.start_date.to_date
-    # activities = Activity.where(start_date: [race_day.beginning_of_day.utc..race_day.end_of_day.utc]).where(user: self.participants)
     activities = self.contains
     activity_ids = activities.pluck(:id)
     if activities.count > 0
@@ -209,21 +277,17 @@ class Event < ActiveRecord::Base
     else
       return nil
     end
-    
-        
+
     return out
   end
   
   def set_start_date #might not need this one
-    puts "----SETTING START DATE-----"
-    puts "Start Dates"
-    puts self.activities.pluck(:start_date).to_s
     self.start_date = self.activities.pluck(:start_date).min
   end
   
   def add_feature segment, points, category
     self.featured_segments.create(segment: segment,
-      points: points,
+      val: points,
       category: category)
   end
   
