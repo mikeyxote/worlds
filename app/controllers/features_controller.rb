@@ -4,7 +4,7 @@ class FeaturesController < ApplicationController
   def create
     puts "FeatureController Params:"
     puts params.to_yaml
-    @segment_id = params[:segment_id]
+    @segment = Segment.find_by(id: params[:segment_id])
     @event = Event.find_by(id: params[:event_id])
     @feature = Feature.create(event_id: params[:event_id], 
                     segment_id: params[:segment_id],

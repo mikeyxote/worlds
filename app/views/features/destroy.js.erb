@@ -1,1 +1,1 @@
-$("#feature_form").html("<%= escape_javascript(render('events/feature', segment: @segment)) %>")
+$("#feature_form-<%= escape_javascript(params[:segment_id]) %>").html("<%= escape_javascript(render('events/feature', segment: @segment)) %>")

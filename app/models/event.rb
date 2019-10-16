@@ -161,7 +161,7 @@ class Event < ActiveRecord::Base
   end
 
   def common_segments activities
-    feature_ids = self.featuring.pluck(:id)
+    # feature_ids = self.featuring.pluck(:id)
     segment_array = []
       
     activities.each do |activity|
@@ -169,7 +169,7 @@ class Event < ActiveRecord::Base
     end
     flat_array = segment_array.flatten
     segment_array.each {|sa| flat_array = flat_array & sa }
-    flat_array -= feature_ids
+    # flat_array -= feature_ids
     return Segment.where(id: flat_array)
   end
   

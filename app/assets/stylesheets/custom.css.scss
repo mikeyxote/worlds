@@ -580,6 +580,7 @@ td {
 .btn-small {
   font-size: 10px;
   width: 80px;
+  height: 15px;
 }
 
 .card-border {
@@ -651,8 +652,24 @@ td {
 
 .feature-form {
   display: flex;
+  height: 30px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.feature-form-row {
+  font-size: 11px;
+}
+
+.feature-form-name {
+  font-size: 12px;
 }
 
 .unfeature-form {
   display: flex;
+}
+
+#edit-toggle {
+  font-size: 10px;
+  width: 80px;
 }

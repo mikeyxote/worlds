@@ -1,7 +1,7 @@
-  <div id="feature_form">
-    <% if segment.featured? @event %>
-      <%= render 'events/unfeature', segment: segment %>
-    <% else %>
-      <%= render 'events/feature', segment: segment %>
-    <% end %>
-  </div> 
+<div id="feature_form-<%= segment.id.to_s %>">
+  <% if segment.featured? @event %>
+    <%= render 'events/unfeature', segment: segment %>
+  <% else %>
+    <%= render 'events/feature', segment: segment %>
+  <% end %>
+</div> 
