@@ -1,6 +1,5 @@
 <p>
   <h1><%= @event.name %></h1>
-  <h2>Managed by: <%= @event.owner.full_name %></h2>
   <% if @event.start_date %>
     <h2>Official Start Time:
     <%= @event.start_date.strftime('%a, %d %b, %H:%M:%S') %>
@@ -34,7 +33,7 @@ Results/Edit
             <% @results.each do |r| %>
               <tr>
                 <td scope='row'><%= r[:place] %></td>
-                <td scope='row'><%= r.user.full_name %></td>
+                <td scope='row'><%= link_to r.user.full_name, r.user %></td>
                 <td scope='row'><%= r[:kom] %></td>
                 <td scope='row'><%= r[:sprint] %></td>
                 <td scope='row'><%= r[:total] %></td>
@@ -58,13 +57,13 @@ Results/Edit
               <tr>
                 <% row.each do |cell| %>
                   <% if cell.is_a? Hash %>
-                    <td><%= Time.at(cell[:time]).strftime('%H:%M:%S') %>
+                    <td class="segment-result-table-cell"><%= Time.at(cell[:time]).strftime('%H:%M:%S') %>
                     <% if cell[:trophy] > 0 %>
                       <%= show_trophy cell[:trophy] %>
                     <% end %>  
                       </td>
                   <% else %>
-                    <td><%= cell %></td>
+                    <td class="segment-result-table-cell"><%= cell %></td>
                   <% end %>
                 <% end %>
               </tr>
@@ -87,8 +86,8 @@ Results/Edit
         <table class='table table-sm'>
             <% @activities.each do |activity| %>
               <tr>
-                <td><%= profile_for(User.find_by(id: activity.user_id), 'size' => 100) %></td>
-                <td><%= static_map activity.summary_polyline %></td>
+                
+                <td><%= render 'activities/map_card', activity: activity %></td>
                 <td><%= activity.name %></td>
                 <td>Distance: <%= (activity.distance * 0.000621).round(1) %></td>
                 <td>Efforts: <%= activity.efforts.size %></td>

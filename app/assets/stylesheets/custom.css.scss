@@ -679,3 +679,41 @@ td {
   font-size: 10px;
   width: 80px;
 }
+
+.segment-result-table-row {
+  display: flex;
+}
+
+.segment-result-table-cell {
+  // display: flex;
+  font-size: 11px;
+}
+
+.map-card {
+  position: relative;
+  text-align: center;
+}
+
+.map-card div{
+  display: block;
+}
+
+div + img {
+  position: absolute; 
+  z-index: 1;
+  bottom: 1px;
+  left: 1px;
+}
+
+.top-left {
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  border: 1px black solid;
+  background-color: white;
+}
+
+.inner-prof {
+  display: block;
+  position: relative;
+}

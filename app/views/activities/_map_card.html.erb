@@ -1,0 +1,7 @@
+<div class="map-card">
+  <div>
+    <img src=<%= thumbnail activity.summary_polyline %>>
+  </div>
+  <%= profile_for(activity.user, 'size' => 30) %>
+  <div class="top-left"><%= activity.user.full_name %></div>
+</div>
