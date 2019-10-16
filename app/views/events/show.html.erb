@@ -86,7 +86,6 @@ Results/Edit
         <table class='table table-sm'>
             <% @activities.each do |activity| %>
               <tr>
-                
                 <td><%= render 'activities/map_card', activity: activity %></td>
                 <td><%= activity.name %></td>
                 <td>Distance: <%= (activity.distance * 0.000621).round(1) %></td>

@@ -691,7 +691,10 @@ td {
 
 .map-card {
   position: relative;
-  text-align: center;
+}
+
+.map-card img {
+  // width: 100%;
 }
 
 .map-card div{
@@ -707,13 +710,34 @@ div + img {
 
 .top-left {
   position: absolute;
-  top: 4px;
-  left: 8px;
+  font-size: 11px;
+  padding-left: 5px;
+  padding-right: 5px;
+  top: 1px;
+  left: 1px;
   border: 1px black solid;
-  background-color: white;
+  color: black;
+  background-color: #57c0f5;
+  opacity: 0.65;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 
 .inner-prof {
   display: block;
   position: relative;
+}
+
+.inner-pic {
+  left: 1px;
+  width: 150px;
+}
+
+.bottomleft {
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  font-size: 18px;
+  width: 30px;
+  
 }
