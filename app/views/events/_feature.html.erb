@@ -1,11 +1,10 @@
-<div class="card ">
-  <%= form_for(@event.featured_segments.build) do |f| %>
+<div class="feature-form">
+  <%= form_for(@event.featured_segments.build, remote: true) do |f| %>
     <div><%= hidden_field_tag :segment_id, segment.id %></div>
     <div><%= hidden_field_tag :event_id, @event.id %></div>
     
-    Points: 
-    <%= f.number_field(:pts, in: 3..10, step: 1, class:'feature-form-points', :value => 3 ) %></br>
-    Type:</br>
-    <%= f.submit "Sprint", class: "btn btn-primary btn-small btn-pop" %> or <%= f.submit "KOM", class: "btn btn-primary btn-small btn-pop" %>
+    <%= f.number_field(:pts, in: 3..10, step: 1, class:'feature-form-points', :value => 3 ) %>
+    <%= f.submit "Sprint", class: "btn btn-primary btn-small btn-pop" %>
+    <%= f.submit "KOM", class: "btn btn-primary btn-small btn-pop" %>
   <% end %>
 </div>

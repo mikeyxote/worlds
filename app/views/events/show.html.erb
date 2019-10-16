@@ -77,23 +77,6 @@ Edit Mode
     </div>
   </div>
   <div id="edit-event" style="display: none;">
-    <div class="panel panel-default">
-      <div class="panel-heading"><h3>Featured Segments
-  
-      </div>
-      <div id="featuredSegments" class="panel-body">
-        <table class='table table-sm'>
-          <% @features.each do |feature| %>
-            <tr>
-              <td><%= feature.segment.name %></td>
-              <td>Points: <%= feature.val %></td>
-              <td>Type: <%= image_tag cat_icon(feature.category) %></td>
-              <td><%= render 'feature_form', segment: feature.segment %></td>
-            </tr>
-          <% end %>
-        </table>
-      </div>
-    </div>
     
     <div class="panel panel-default">
       <div class="panel-heading"><h3>Event Builder
@@ -115,32 +98,7 @@ Edit Mode
               </tr>
             <% end %>
         </table>
-        <h3>Available Segments</h3>
-        <input class="form-control" id="segment_search" type="text" width='200' placeholder="Search..">
-        <table class='table table-sm' id='segment_table'>
-          <thead>
-            <th class="segment-name">Name</th>
-            <th>Featured</th>	
-            <th>Distance</th>
-            <th>Elevation Gain</th>
-            <th>Average Grade</th>
-            <th>Max Grade</th>
-            <th>Map</th>
-            <th>Points/Add</th>
-          </thead>
-          <% @segments.each do |segment| %>
-            <tr>
-              <td><%= segment.name %></td>
-              <td><%= pluralize(segment.featured_by.size, "time") %></td>
-              <td><%= (segment.distance * 0.000621).round(1) %></td>
-              <td><%= segment.elevation_gain %></td>
-              <td><%= segment.average_grade %></td>
-              <td><%= segment.max_grade %></td>
-              <td><%= static_map segment.polyline %></td>
-              <td><%= render 'feature_form', segment: segment %></td>
-            </tr>
-          <% end %>
-        </table>
+        <%= render 'events/available_segments' %>
       </div>
     </div>
   </div>

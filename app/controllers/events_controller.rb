@@ -18,9 +18,7 @@ class EventsController < ApplicationController
       @features = @event.featured_segments
       @connections = @event.contains
       
-      @segments = @event.common_segments @event.contains
-      
-      @segments = @segments.sort_by{|s| -s.featured_by.count}
+      @segments = @event.common_segments(@event.contains).sort_by{|s| -s.featured_by.count}
       
       @table = @event.get_table
       @event.make_results
@@ -56,6 +54,10 @@ class EventsController < ApplicationController
     end
   end
 
+  # def update_segments
+  #   @segments = @event.common_segments(@event.contains).sort_by{|s| -s.featured_by.count}
+  # end
+
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
@@ -74,7 +76,7 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
-    puts "I'm triggering the destroyt method in the events controller"
+    puts "I'm triggering the destroy method in the events controller"
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }

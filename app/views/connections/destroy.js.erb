@@ -1,1 +1,2 @@
 $("#connect_form-<%= escape_javascript(params[:activity_id]) %>").html("<%= escape_javascript(render('events/connect', activity_id: params[:activity_id])) %>");
+$("#available-segments").html("<%= escape_javascript(render('events/available_segments', segments: @segments)) %>");

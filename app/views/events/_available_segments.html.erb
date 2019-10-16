@@ -1,0 +1,29 @@
+<% puts "Available_segments Parameters" %>
+<% puts params.to_json %>
+<div id="available-segments">
+  <h3>Available Segments</h3>
+  <input class="form-control" id="segment_search" type="text" width='200' placeholder="Search..">
+  <table class='table table-sm' id='segment_table'>
+    <thead>
+      <th class="segment-name">Name</th>
+      <th>Featured</th>	
+      <th>Distance</th>
+      <th>Elevation Gain</th>
+      <th>Average Grade</th>
+      <th>Max Grade</th>
+      <th>Points/Type</th>
+    </thead>
+    <% @segments.each do |segment| %>
+      <tr>
+        <td><%= segment.name %></td>
+        <td><%= pluralize(segment.featured_by.size, "time") %></td>
+        <td><%= (segment.distance * 0.000621).round(1) %></td>
+        <td><%= segment.elevation_gain %></td>
+        <td><%= segment.average_grade %></td>
+        <td><%= segment.max_grade %></td>
+
+        <td><%= render 'events/feature_form', segment: segment %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
