@@ -581,6 +581,7 @@ td {
   font-size: 10px;
   width: 80px;
   height: 15px;
+  padding: 3px;
 }
 
 .card-border {
@@ -667,6 +668,11 @@ td {
 
 .unfeature-form {
   display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  height: 30px;
+  margin: 0px;
+  padding: 0px;
 }
 
 #edit-toggle {
