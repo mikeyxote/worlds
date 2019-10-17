@@ -7,6 +7,8 @@
         <thead>
           <th>Date</th>
           <th>Event Name</th>
+          <th>Place</th>
+          <th>Trophies</th>
           <th>Segments</th>
           <th>Sprint</th>
           <th>KOM</th>
@@ -16,6 +18,8 @@
           <tr>
             <td><%= result[:event].start_date.localtime.strftime('%a, %d %b %Y') %></td>
             <td><%= link_to result[:event].name, result[:event] %></td>
+            <td><%= result[:place] %></td>
+            <td><%= render 'layouts/bling', bling: result[:bling] %></td>
             <td><%= result[:event].featuring.size %></td>
             <td><%= result[:sprint] %></td>
             <td><%= result[:kom] %></td>
@@ -36,7 +40,6 @@
           <th>Download</th>
         </thead>
         <% @new_activities.each do |a| %>
-    
           <tr>
             <td><%= a[:name] %></td>
             <td><%= a[:start_date].strftime('%a, %d %b, %H:%M:%S')  %></td>
@@ -48,20 +51,11 @@
         <% end %>
       </table>
     </div>
-    <% if @managing.size > 1 %>
-      <h2>Your roster: <%= pluralize(@managing.count, 'rider') %></h2>
-    <% else %> Looks like you aren't managing anyone </br>
-                Try heading to the <strong><%= link_to "Users Page", users_path %></strong>, click on a profile </br>
-                and add them to your roster with the 'Manage' button.
-    <% end %>
     <% if current_user.activities.count > 0 %>
       <h2>Activity count <%= current_user.activities.count %></h2>
     <% else %>
       <h2>Looks like you don't have any activities downloaded.  Start by loading some <%= link_to "HERE!", current_user %></h2>
     <% end %>
-    <h2>You are a member of <%= pluralize(current_user.managers.count.to_s, 'team') %>.</h2>
-    <h2>Effort count <%= current_user.efforts.count %></h2>
-    <h2>Unique Segments: <%= current_user.efforts.group(:segment_id).count.size %></h2>
   <% else %>
 
     <h1><%= link_to 'Click here to connect with Strava!', strava_request_path %></h1>

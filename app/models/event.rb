@@ -93,12 +93,24 @@ class Event < ActiveRecord::Base
 
   def user_result user
     pts = self.points.where(user: user)
+    bling = self.get_bling user
+    place = self.results.where(user: user).first.place
     return {user: user,
             event: self,
+            place: place,
             sprint: pts.where(category: 'sprint').sum(:val),
             kom: pts.where(category: 'kom').sum(:val),
-            total: pts.sum(:val)
+            total: pts.sum(:val),
+            bling: bling
     }
+  end
+
+  def get_bling user
+    bling = {}
+    bling['sprint'] = self.points.where(user: user, category: 'sprint', place: 1).count
+    bling['kom'] = self.points.where(user: user, category: 'kom', place: 1).count
+    # self.points.where(user: user).where(place: 1).group(:category).count(:place)
+    return bling
   end
 
   def make_results
