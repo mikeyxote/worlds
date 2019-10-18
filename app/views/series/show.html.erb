@@ -42,7 +42,11 @@
         <td><%= event.start_date.strftime('%a, %d %b %Y') %></td>
         <td><%= event.activities.count %></td>
         <td><%= event.results.sum(:total) %></td>
-        <td><%= link_to event.winner.full_name, event.winner %></td>
+        <% if event.results.size > 0 %>
+          <td><%= link_to event.winner.full_name, event.winner %></td>
+        <% else %>
+          <td>Pending</td>
+        <% end %>
       </tr>
     <% end %>
   </table>

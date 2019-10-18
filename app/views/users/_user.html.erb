@@ -1,10 +1,11 @@
 <li>
+  <h5 class="card-header"><strong><%= user.full_name %></strong></h5>
 <div class="card user-card">
+  
   
     <div class="user-card-row">
       <div class="card">
         <%= link_to profile_for(user, 'size' => 125), user %></br>
-        <strong><%= user.full_name %></strong>
         <div class="view-strava">
           View <%= user.firstname %> on </br>
           <%= strava_for(user) %>
