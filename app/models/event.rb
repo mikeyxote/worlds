@@ -94,7 +94,12 @@ class Event < ActiveRecord::Base
   def user_result user
     pts = self.points.where(user: user)
     bling = self.get_bling user
-    place = self.results.where(user: user).first.place
+    if self.results.size > 0
+      place = self.results.where(user: user).first.place
+    else 
+      place = 0
+    end
+      
     return {user: user,
             event: self,
             athletes: self.connections.count,
@@ -134,8 +139,6 @@ class Event < ActiveRecord::Base
                     )
       place += 1
     end
-    puts "New Results count"
-    puts self.results.count
     return nil
   end
 
