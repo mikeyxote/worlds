@@ -18,9 +18,12 @@
           <tr>
             <td><%= result[:event].start_date.localtime.strftime('%a, %d %b %Y') %></td>
             <td><%= link_to result[:event].name, result[:event] %></td>
-            <td><%= result[:place] %>
-            <%= show_trophy result[:place] %>
-
+            <td>
+            <% if result[:place] <= 3 %>
+              <%= show_trophy result[:place] %>
+            <% else %>
+              <%= result[:place] %>
+            <% end %>
             </td>
             <td><%= render 'layouts/bling', bling: result[:bling] %></td>
             <td><%= result[:event].featuring.size %></td>
