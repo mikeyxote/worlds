@@ -7,6 +7,7 @@
         <thead>
           <th>Date</th>
           <th>Event Name</th>
+          <th>Athletes</th>
           <th>Place</th>
           <th>Trophies</th>
           <th>Segments</th>
@@ -18,6 +19,7 @@
           <tr>
             <td><%= result[:event].start_date.localtime.strftime('%a, %d %b %Y') %></td>
             <td><%= link_to result[:event].name, result[:event] %></td>
+            <td><%= result[:athletes] %></td>
             <td>
             <% if result[:place] <= 3 %>
               <%= show_trophy result[:place] %>

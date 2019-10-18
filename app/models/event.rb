@@ -97,6 +97,7 @@ class Event < ActiveRecord::Base
     place = self.results.where(user: user).first.place
     return {user: user,
             event: self,
+            athletes: self.connections.count,
             place: place,
             sprint: pts.where(category: 'sprint').sum(:val),
             kom: pts.where(category: 'kom').sum(:val),
