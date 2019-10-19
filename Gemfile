@@ -22,6 +22,8 @@ gem 'sdoc', '>= 0.4.0', group: :doc
 gem 'strava-ruby-client'
 gem 'bcrypt', '~> 3.1.7'
 gem 'gmaps4rails'
+gem 'underscore-rails'
+gem 'polylines'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.3.6'

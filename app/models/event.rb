@@ -19,7 +19,7 @@ class Event < ActiveRecord::Base
 
   def get_gmap
     # polyline for shortest route of all competitors
-    route = self.activities.order(:distance).first.polyline
+    route = polyline2hash(self.activities.order(:distance).first.polyline)
     
     segments = [] # array of segment-polyline/segment-name/category dicts
     self.features.each do |f|
@@ -30,16 +30,25 @@ class Event < ActiveRecord::Base
     winners = [] # array of end-segment-locs/winner-icons
     self.points.where(place: 1).each do |pt|
       winners << {'endpoint': pt.feature.segment.endpoint,
-                  'winner': User.find_by(id: pt.user_id).profile}
+                  'profile': User.find_by(id: pt.user_id).profile}
     end
     
     out =  {'route': route,
             'segments': segments,
             'winners': winners}
-    puts out.to_yaml
-    return nil
+    return out
   end
 
+  def polyline2hash(polyline)
+    array = Polylines::Decoder.decode_polyline(polyline)
+    # puts "Array in polyline2hash" + array.to_s
+    # puts "Array in polyline2hash count: " + array.length.to_s
+    track = []
+    array.each do |pt|
+      track << {lat: pt[0], lng: pt[1]}
+    end
+    return track
+  end
 
   def make_connection activity
     Connection.create(activity_id: activity.id,

@@ -1,3 +1,6 @@
+<script src="//maps.google.com/maps/api/js?key=<%= ENV['GOOGLE_EMBED_KEY'] %>"></script>
+<script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+
 <p>
   <h1><%= @event.name %></h1>
   <% if @event.start_date %>
@@ -19,6 +22,27 @@ Results/Edit
 </a>
 <div class="show-edit-event">
   <div id="show-event">
+    <div style='width: 800px;'>
+      <div id="map" style='width: 800px; height: 400px;'></div>
+    </div>
+
+<script>
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    var route = handler.addPolygons(
+          [<%= raw(@route.to_json) %>]
+          ,
+          { strokeColor: '#0000FF'}
+          )
+    markers = handler.addMarkers(<%=raw @hash.to_json %>);
+    
+    handler.bounds.extendWith(route);
+    handler.fitMapToBounds();
+  });
+</script>
+    
+    
+    
     <div class='card'>
       <div class='card-header'><h3>Event Scoring</h3></div>
       <div class='card-text' id='eventScoring'>

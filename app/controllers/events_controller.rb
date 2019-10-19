@@ -17,12 +17,23 @@ class EventsController < ApplicationController
       @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
       @features = @event.featured_segments
       @connections = @event.contains
-      
+      @winners = @event.get_gmap[:winners]
+      # puts "Winners:"
+      # puts @winners.to_yaml
+      @route = @event.get_gmap[:route]
+      @hash = Gmaps4rails.build_markers(@winners) do |pt, marker|
+        marker.lat pt[:endpoint][0]
+        marker.lng pt[:endpoint][1]
+      end
+      # puts "Markers---------------"
+      # puts @hash.to_yaml
       @segments = @event.common_segments(@event.contains).sort_by{|s| -s.featured_by.count}
       
       @table = @event.get_table
       @event.make_results
       @results = @event.results.order(:place)
+      puts "Route----------------------"
+      puts @route
     end
   end
 
