@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191008214545) do
+ActiveRecord::Schema.define(version: 20191019191915) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "strava_id",         limit: 8
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20191008214545) do
     t.float    "distance"
     t.float    "elevation_gain"
     t.string   "polyline"
+    t.string   "endpoint"
   end
 
   create_table "series", force: :cascade do |t|

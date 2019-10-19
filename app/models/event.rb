@@ -8,6 +8,7 @@ class Event < ActiveRecord::Base
   has_many :featured_segments, class_name: "Feature",
                               foreign_key: "event_id",
                               dependent: :destroy
+  has_many :features
   has_many :featuring, through: :featured_segments, source: :segment
   has_many :connections, dependent: :destroy
   has_many :contains, through: :connections, source: :activity
@@ -15,6 +16,29 @@ class Event < ActiveRecord::Base
   belongs_to :series
   has_many :results
   has_many :segments, through: :featured_segments, source: :segment
+
+  def get_gmap
+    # polyline for shortest route of all competitors
+    route = self.activities.order(:distance).first.polyline
+    
+    segments = [] # array of segment-polyline/segment-name/category dicts
+    self.features.each do |f|
+      segments << {'polyline': f.segment.polyline,
+                    'name': f.segment.name,
+                    'category': f.category}
+    end
+    winners = [] # array of end-segment-locs/winner-icons
+    self.points.where(place: 1).each do |pt|
+      winners << {'endpoint': pt.feature.segment.endpoint,
+                  'winner': User.find_by(id: pt.user_id).profile}
+    end
+    
+    out =  {'route': route,
+            'segments': segments,
+            'winners': winners}
+    puts out.to_yaml
+    return nil
+  end
 
 
   def make_connection activity

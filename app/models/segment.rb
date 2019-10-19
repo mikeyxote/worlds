@@ -4,7 +4,7 @@ class Segment < ActiveRecord::Base
                         dependent: :destroy
   has_many :efforts, dependent: :destroy
   
-                
+  serialize :endpoint, Array            
   def user_count
     Effort.where(strava_segment_id: self.strava_id).group(:user_id).size.size
   end

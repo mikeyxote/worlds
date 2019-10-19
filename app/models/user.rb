@@ -267,6 +267,7 @@ class User < ActiveRecord::Base
     segment.update(name: segment_obj.name,
                   star_count: segment_obj.star_count,
                   distance: segment_obj.distance,
+                  endpoint: segment_obj.end_latlng,
                   elevation_gain: segment_obj.total_elevation_gain,
                   polyline: segment_obj.map['polyline'])
     return nil
