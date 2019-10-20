@@ -22,32 +22,34 @@ Results/Edit
 </a>
 <div class="show-edit-event">
   <div id="show-event">
-    <div style='width: 800px;'>
-      <div id="map" style='width: 800px; height: 400px;'></div>
-    </div>
-
-<script>
-  handler = Gmaps.build('Google');
-  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
     
-    var route = handler.addPolyline(
-          <%= raw(@route.to_json) %>
+<% if @showmap %>
+      <div style='width: 800px;'>
+        <div id="map" style='width: 600px; height: 400px;'></div>
+      </div>
+  
+  <script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      
+      var route = handler.addPolyline(
+            <%= raw(@route.to_json) %>
+            ,
+            { strokeColor: '#0000FF'}
+            )
+      <% @map_segments.each do |seg| %>
+        handler.addPolyline(<%= raw(seg[:route].to_json) %>
           ,
-          { strokeColor: '#0000FF'}
+          { strokeColor: <%= raw(seg[:color].to_json) %> }
           )
-    <% @map_segments.each do |seg| %>
-      handler.addPolyline(<%= raw(seg[:route].to_json) %>
-        ,
-        { strokeColor: <%= raw(seg[:color].to_json) %> }
-        )
-    <% end %>
-    markers = handler.addMarkers(<%=raw @hash.to_json %>);
-    
-    handler.bounds.extendWith(markers);
-    handler.fitMapToBounds();
-  });
-</script>
-    
+      <% end %>
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+    });
+  </script>
+<% end %>
     
     
     <div class='card'>

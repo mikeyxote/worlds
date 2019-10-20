@@ -17,18 +17,26 @@ class EventsController < ApplicationController
       @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
       @features = @event.featured_segments
       @connections = @event.contains
-      gmap = @event.get_gmap
-      
-      @route = gmap[:route]
-      @map_segments = gmap[:segments]
-      @hash = Gmaps4rails.build_markers(gmap[:winners]) do |pt, marker|
-        marker.lat pt[:endpoint][0]
-        marker.lng pt[:endpoint][1]
-        marker.picture({
-        :url => pt[:profile],
-        :width => 10,
-        :height => 10
-      })
+      if @event.activities.count > 0
+        @showmap = true
+      else
+        @showmap = false
+      end
+      if @event.activities.count > 0
+        gmap = @event.get_gmap
+        
+        @route = gmap[:route]
+        @map_segments = gmap[:segments]
+        @hash = Gmaps4rails.build_markers(gmap[:winners]) do |pt, marker|
+          marker.lat pt[:endpoint][0]
+          marker.lng pt[:endpoint][1]
+          marker.picture({
+          :url => pt[:profile],
+          # :scaledSize => [20,20]
+          :width => 20,
+          :height => 20
+          })
+        end
       end
 
       @segments = @event.common_segments(@event.contains).sort_by{|s| -s.featured_by.count}
