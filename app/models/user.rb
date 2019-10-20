@@ -274,7 +274,8 @@ class User < ActiveRecord::Base
   end
   
   def update_all_segments
-    Segment.where(polyline: nil).each do |segment|
+    segment_ids = self.efforts.pluck(:segment_id).uniq
+    Segment.where(endpoint: nil).where(id: segment_ids).each do |segment|
       update_segment segment
     end
     return nil
