@@ -23,9 +23,14 @@ class Event < ActiveRecord::Base
     
     segments = [] # array of segment-polyline/segment-name/category dicts
     self.features.each do |f|
-      segments << {'polyline': f.segment.polyline,
+      if f.category == 'sprint'
+        color = '#00FF00'
+      else
+        color = '#FF0000'
+      end
+      segments << {'route': polyline2hash(f.segment.polyline),
                     'name': f.segment.name,
-                    'category': f.category}
+                    'color': color}
     end
     winners = [] # array of end-segment-locs/winner-icons
     self.points.where(place: 1).each do |pt|

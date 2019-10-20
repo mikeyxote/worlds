@@ -29,14 +29,21 @@ Results/Edit
 <script>
   handler = Gmaps.build('Google');
   handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-    var route = handler.addPolygons(
-          [<%= raw(@route.to_json) %>]
+    
+    var route = handler.addPolyline(
+          <%= raw(@route.to_json) %>
           ,
           { strokeColor: '#0000FF'}
           )
+    <% @map_segments.each do |seg| %>
+      handler.addPolyline(<%= raw(seg[:route].to_json) %>
+        ,
+        { strokeColor: <%= raw(seg[:color].to_json) %> }
+        )
+    <% end %>
     markers = handler.addMarkers(<%=raw @hash.to_json %>);
     
-    handler.bounds.extendWith(route);
+    handler.bounds.extendWith(markers);
     handler.fitMapToBounds();
   });
 </script>
