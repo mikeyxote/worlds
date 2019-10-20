@@ -17,7 +17,7 @@ class EventsController < ApplicationController
       @activities = Activity.where(start_date: [race_day.beginning_of_day..race_day.end_of_day])
       @features = @event.featured_segments
       @connections = @event.contains
-      if @event.activities.count > 0
+      if @event.activities.count > 0 and @event.features.count > 0
         @showmap = true
       else
         @showmap = false
@@ -32,7 +32,7 @@ class EventsController < ApplicationController
           marker.lng pt[:endpoint][1]
           marker.picture({
           :url => pt[:profile],
-          # :scaledSize => [20,20]
+          # :scaledSize => "20x20"
           :width => 20,
           :height => 20
           })

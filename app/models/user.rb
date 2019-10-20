@@ -257,6 +257,7 @@ class User < ActiveRecord::Base
                   star_count: segment_obj.star_count,
                   distance: segment_obj.distance,
                   elevation_gain: segment_obj.total_elevation_gain,
+                  endpoint: segment_obj.end_latlng,
                   polyline: segment_obj.map['polyline'])
       return segment
     end
