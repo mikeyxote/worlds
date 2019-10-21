@@ -2,8 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.10'
-
+gem 'rails', '4.2.11'
 gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
 gem 'sass-rails', '~> 5.0'
