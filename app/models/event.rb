@@ -35,7 +35,7 @@ class Event < ActiveRecord::Base
     winners = [] # array of end-segment-locs/winner-icons
     self.points.where(place: 1).each do |pt|
       winners << {'endpoint': pt.feature.segment.endpoint,
-                  'profile': User.find_by(id: pt.user_id).profile}
+                  'user': User.find_by(id: pt.user_id)}
     end
     
     out =  {'route': route,
@@ -44,10 +44,26 @@ class Event < ActiveRecord::Base
     return out
   end
 
+  def finishers
+    out = {}
+    efforts = self.efforts.where(segment_id: self.segment_id)
+    efforts.each do |effort|
+      finish_time = (effort.start_date.to_i - self.start_date.to_i) + effort.elapsed_time
+      out[effort.user_id] = {finish_time: finish_time,
+                          effort: effort.id
+      }
+    end
+    placed = 1
+    out = out.sort_by{|k,v| v[:finish_time]}
+    out.each do |k,v|
+      v[:place] = placed
+      placed += 1
+    end
+    return out
+  end
+
   def polyline2hash(polyline)
     array = Polylines::Decoder.decode_polyline(polyline)
-    # puts "Array in polyline2hash" + array.to_s
-    # puts "Array in polyline2hash count: " + array.length.to_s
     track = []
     array.each do |pt|
       track << {lat: pt[0], lng: pt[1]}
@@ -65,11 +81,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.make_day d, name = nil, owner = nil, segments = nil, users = nil, end_segment = nil
-    puts "Starting ---------------"
-    puts "users Count:"
-    puts users.count.to_s
-    puts "segment Count:"
-    puts segments.count.to_s
+
     name = d.strftime('%a, %d %b %Y').to_s if name == nil
     event = Event.create(start_date: d,
                         name: name)
@@ -83,9 +95,6 @@ class Event < ActiveRecord::Base
     if segments
       puts "We have segments"
       segments.each do |segment|
-        # puts segment.class.to_s
-        # puts segment.id
-        # puts segment.to_json
         
         Feature.create(segment_id: segment.id,
                         event_id: event.id,
@@ -99,14 +108,10 @@ class Event < ActiveRecord::Base
       segment_ids = event.featuring.pluck(:segment_id)
       users.each do |user|
         user.activities.where(start_date: [event.start_date.beginning_of_day..event.start_date.end_of_day]).each do |activity|
-          puts "Found activities for " + user.full_name
-          puts activity.name
-          puts Set[segment_ids].to_json
-          puts Set[activity.efforts.pluck(:segment_id)].to_json
+
           segment_set = segment_ids.to_set
           activity_set = activity.efforts.pluck(:segment_id).to_set
-          puts segment_set.to_json
-          puts activity_set.to_json
+
           if segment_set.subset? activity_set
             puts "Subset Found"
             event.make_connection activity

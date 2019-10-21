@@ -30,12 +30,17 @@ class EventsController < ApplicationController
         @hash = Gmaps4rails.build_markers(gmap[:winners]) do |pt, marker|
           marker.lat pt[:endpoint][0]
           marker.lng pt[:endpoint][1]
+          
+          marker.infowindow pt[:user].full_name
           marker.picture({
-          :url => pt[:profile],
-          # :scaledSize => "20x20"
-          :width => 20,
-          :height => 20
-          })
+              # url: pt[:profile],
+              marker_anchor: [0,50],
+              width: '50',
+              height: '50',
+              scaledSize: [20,20],
+              scaledWidth: '10',
+              scaledHeight: '10'
+              })
         end
       end
 
