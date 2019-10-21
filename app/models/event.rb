@@ -283,7 +283,7 @@ class Event < ActiveRecord::Base
     official_start = self.start_date
     segments = self.featuring.pluck(:id)
     if activities.size > 0
-      # compute winning data here and assign points
+
       Point.where(event: self).delete_all
       self.featured_segments.each do |feature|
         winning_efforts = feature.segment.efforts.where(activity_id: activity_ids).order(:stop_date).limit(3)

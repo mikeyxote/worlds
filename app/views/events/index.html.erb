@@ -7,7 +7,6 @@
       <th>Owner</th>
       <th>Start Date</th>
       <th>Series</th>
-      <th>End Segment</th>
       <th>Participants</th>
       <th>Segments</th>
       <th>Efforts</th>
@@ -29,11 +28,6 @@
           <td><%= event.series.name %></td>
         <% else %>
           <td>None</td>
-        <% end %>
-        <% if event.segment %>
-          <td><%= link_to event.segment.name, event.segment %></td>
-        <% else %>
-          <td>No Segment</td>
         <% end %>
         <td><%= event.connections.size.to_s %></td>
         <td><%= event.featuring.count %></td>
