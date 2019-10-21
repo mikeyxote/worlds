@@ -42,7 +42,6 @@ class User < ActiveRecord::Base
       i += 1
     end
     return nil
-    
   end
 
   def get_sample
@@ -109,7 +108,6 @@ class User < ActiveRecord::Base
 
   def recommend
     day_hash = {}
-    # effort_list = []
     efforts = Effort.where('start_date >= ?', 2.weeks.ago).where(user: self.managing)
     efforts.each do |effort|
       day = effort.start_date.to_date
@@ -189,32 +187,6 @@ class User < ActiveRecord::Base
     managing.include?(other_user)
   end
 
-  def grab_five
-    client = api_client
-    
-    all_activities = Activity.all.pluck(:strava_id)
-    ingest_count = 0
-    activity_list = client.athlete_activities
-    activity_list.each do |activity_obj|
-      if activity_obj.type == 'Ride' and not all_activities.include? activity_obj.id
-        new_activity = self.activities.create(name: activity_obj.name,
-                    strava_athlete_id: activity_obj.athlete['id'],
-                    polyline: activity_obj.map['polyline'],
-                    summary_polyline: activity_obj.map['summary_polyline'],
-                    strava_id: activity_obj.id,
-                    start_date: activity_obj.start_date,
-                    trainer: activity_obj.trainer,
-                    distance: activity_obj.distance)
-        get_activity_efforts(new_activity.strava_id)
-        ingest_count += 1
-        if ingest_count >= 5
-          return nil
-        end
-      end
-    end
-    return nil
-  end
-
   def clear_all
     self.activities.delete_all
     self.efforts.delete_all
@@ -235,11 +207,7 @@ class User < ActiveRecord::Base
   
   def get_segment_obj(segment_id)
     client = api_client
-    puts "Client assigned"
-    puts "getting segment object for : " + segment_id.to_s
     segment_obj = client.segment(segment_id.to_s)
-    # puts "Segment Yaml:"
-    # puts segment_obj.to_yaml
     return segment_obj
   end
   
@@ -348,7 +316,6 @@ class User < ActiveRecord::Base
   end
   
   def get_activity_efforts(activity_id)
-    puts "Activity ID: " + activity_id.to_s
     client = api_client
     
     activity_obj = client.activity(activity_id)
@@ -368,7 +335,6 @@ class User < ActiveRecord::Base
               stop_date: effort.start_date + effort.elapsed_time,
               strava_id: effort.id)
     end
-    
   end
   
   def fetch_activity(activity_id)
@@ -381,22 +347,6 @@ class User < ActiveRecord::Base
     end
     return nil
   end
-  
-  def test_me
-    
-    segments = Segment.all.pluck(:strava_id)
-    puts segments.to_yaml
-    Effort.all.pluck(:strava_segment_id).each do |s|
-      puts "testing: " + s.to_s
-      if not segments.include? s
-        puts "It wasn't there"
-        create_segment_from_id(s)
-      end
-    end
-    
-    return nil
-     
-  end
     
   def refresh_token
     if Time.new.to_i > self.strava_expiration
@@ -408,7 +358,6 @@ class User < ActiveRecord::Base
           refresh_token: self.strava_refresh_token,
           grant_type: 'refresh_token'
         )
-      puts response.to_s
       self.update(strava_token: response.access_token,
             strava_refresh_token: response.refresh_token,
             strava_expiration: response.expires_at

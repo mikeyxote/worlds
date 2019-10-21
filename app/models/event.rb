@@ -90,20 +90,15 @@ class Event < ActiveRecord::Base
     end
     event.update(user_id: owner.id) if owner != nil
     event.update(segment_id: end_segment.id) if end_segment != nil
-    puts event.to_json
-    puts "Connecting Segments ---------------"
     if segments
-      puts "We have segments"
       segments.each do |segment|
         
         Feature.create(segment_id: segment.id,
                         event_id: event.id,
                         category: 'sprint',
                         val: 6)
-        # event.add_feature(segment, '5', 'sprint')
       end
     end
-    puts "Connecting Users ---------------"
     if users and segments
       segment_ids = event.featuring.pluck(:segment_id)
       users.each do |user|
@@ -113,13 +108,11 @@ class Event < ActiveRecord::Base
           activity_set = activity.efforts.pluck(:segment_id).to_set
 
           if segment_set.subset? activity_set
-            puts "Subset Found"
             event.make_connection activity
           end
         end
       end
     end
-    puts "Finishing ---------------"
     return event
   end
 
@@ -158,7 +151,6 @@ class Event < ActiveRecord::Base
     bling = {}
     bling['sprint'] = self.points.where(user: user, category: 'sprint', place: 1).count
     bling['kom'] = self.points.where(user: user, category: 'kom', place: 1).count
-    # self.points.where(user: user).where(place: 1).group(:category).count(:place)
     return bling
   end
 
@@ -188,8 +180,6 @@ class Event < ActiveRecord::Base
   def results_table
     out = {}
     self.points.pluck(:user_id).uniq.each do |user_id|
-      puts "User IDs:"
-      puts user_id.to_s
       sprint = self.points.where(category: 'sprint').where(user_id: user_id).sum(:val)
       kom = self.points.where(category: 'kom', user_id: user_id).sum(:val)
       total = sprint + kom
@@ -220,7 +210,6 @@ class Event < ActiveRecord::Base
   end
 
   def common_segments activities
-    # feature_ids = self.featuring.pluck(:id)
     segment_array = []
       
     activities.each do |activity|
@@ -228,38 +217,7 @@ class Event < ActiveRecord::Base
     end
     flat_array = segment_array.flatten
     segment_array.each {|sa| flat_array = flat_array & sa }
-    # flat_array -= feature_ids
     return Segment.where(id: flat_array)
-  end
-  
-  def ride_segments_old
-    segment_hash = {}
-    efforts = Effort.where(activity: self.contains)
-    efforts.each do |effort|
-      sid = effort.segment_id
-      if !segment_hash.keys.include? sid
-        segment_hash[sid] = Set[effort.user_id]
-      else
-        segment_hash[sid] << effort.user_id
-      end
-    end
-    
-    users_hash = {}
-    
-    segment_hash.each do |segment, athlete_set|
-      if !users_hash.keys.include? athlete_set
-        users_hash[athlete_set] = Set[segment]
-      else
-        users_hash[athlete_set] << segment
-      end
-    end
-    out_hash = {}
-    users_hash.each do |users, segments|
-      if !array_subset(users, out_hash.keys)
-        out_hash[users] = segments
-      end
-    end
-    return out_hash
   end
 
   def add_activity activity
@@ -271,7 +229,6 @@ class Event < ActiveRecord::Base
   end
   
   def get_table
-    puts "----Starting get_table-----"
 
     out = []
     activities = self.contains
@@ -287,8 +244,7 @@ class Event < ActiveRecord::Base
       Point.where(event: self).delete_all
       self.featured_segments.each do |feature|
         winning_efforts = feature.segment.efforts.where(activity_id: activity_ids).order(:stop_date).limit(3)
-        # feature = Feature.where(segment_id: segment_id).where(event_id: self.id).first
-        
+         
         pts = feature.val || 3
         place = 1
         winning_efforts.each do |e|
@@ -318,7 +274,6 @@ class Event < ActiveRecord::Base
         row = [activity.user.full_name]
         ordered_segments.each do |segment|
           effort = activity.efforts.find_by(segment_id: segment)
-          # place = self.points.where(effort: effort).first.place || 0
           pts = self.points.where(effort: effort).first
           if pts
             place = pts.place
