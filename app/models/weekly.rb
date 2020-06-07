@@ -10,11 +10,11 @@ class Weekly < ActiveRecord::Base
   end
   
   def entry_count
-    return 1
+    return self.placements.count
   end
   
   def winner
-    return User.first
+    self.placements.order(elapsed_time: :desc).first
   end
   
   
