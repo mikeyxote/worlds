@@ -8,8 +8,8 @@ class Team < ActiveRecord::Base
                       team: self)
   end
   
-  def delete_member user
-    Membership.delete.where(user: user,
-                            team: self)
+  def drop_member user
+    Membership.where(user: user,
+                    team: self).destroy_all
   end
 end
