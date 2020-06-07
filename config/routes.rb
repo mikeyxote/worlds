@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :teams
+  get 'team/view'
+
   get 'recommend/create'
 
   get 'strava/download'
