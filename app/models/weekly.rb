@@ -5,7 +5,7 @@ class Weekly < ActiveRecord::Base
   
   def placements
     efforts = self.segment.efforts.where(user_id: self.team.members.pluck(:id)).where(:start_date => self.start_date..self.end_date)
-    efforts = efforts.uniq(:user_id).minimum(:elapsed_time)
+    # best_efforts = efforts.order(:elapsed_time)
     return efforts
   end
   
