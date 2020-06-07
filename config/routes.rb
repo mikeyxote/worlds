@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :weeklies
+  resources :memberships
   resources :teams
   get 'team/view'
 

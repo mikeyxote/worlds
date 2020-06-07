@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Segment:</strong>
+  <%= @weekly.segment.name %>
+</p>
+
+<p>
+  <strong>Dates:</strong>
+  <%= @weekly.start_date.strftime('%a, %d %b %Y').to_s %> through 
+  <%= @weekly.end_date.strftime('%a, %d %b %Y').to_s %>
+</p>
+
+<p>
+  <strong>Creator:</strong>
+  <%= @weekly.user.full_name %>
+</p>
+
+<strong>Best Efforts:</strong></br>
+
+<table>
+  <thead>
+    <tr>Athlete</tr>
+    <tr>Date</tr>
+    <tr>Time</tr>
+  </thead>
+  <tbody>
+    <% @weekly.placements.each do |p| %>
+    <tr>
+      <td><%= p.user.full_name %></td>
+      <td><%= p.start_date %></td>
+      <td><%= p.elapsed_time %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% @weekly.placements.each do |p| %>
+
+
+
+<% end %>
+
+<%= link_to 'Edit', edit_weekly_path(@weekly) %> |
+<%= link_to 'Back', weeklies_path %>

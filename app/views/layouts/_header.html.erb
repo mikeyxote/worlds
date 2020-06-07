@@ -18,6 +18,17 @@
           <% end %>
         </ul>
       </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data_toggle="dropdown">
+          Teams <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <% current_user.teams.each do |t| %>
+            <li><%= link_to t.name, t %></li>
+          <% end %>
+        </ul>
+      </li>
+      
       <li><%= link_to "Events", events_path %></li>
       <li><%= link_to "Athletes", users_path %></li>
       <li><%= link_to "Segments", segments_path %></li>

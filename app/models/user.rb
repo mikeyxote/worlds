@@ -18,6 +18,19 @@ class User < ActiveRecord::Base
   has_many :participations, dependent: :destroy
   has_many :participating_in, through: :participations, source: :event
   has_many :results
+  has_many :memberships, dependent: :destroy
+  has_many :teams, through: :memberships, source: :team
+  has_many :weeklies
+
+  def add_team team
+    Membership.create(user: self,
+                      team: team)
+  end
+
+  def remove_team team
+    Mebership.delete.where(user: self,
+                          team: team)
+  end
 
   def get_through_date d
     d = d.to_date

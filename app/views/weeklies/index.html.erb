@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Weeklies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Segment</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @weeklies.each do |weekly| %>
+      <tr>
+        <td><%= weekly.segment %></td>
+        <td><%= weekly.start_date %></td>
+        <td><%= weekly.end_date %></td>
+        <td><%= weekly.user %></td>
+        <td><%= link_to 'Show', weekly %></td>
+        <td><%= link_to 'Edit', edit_weekly_path(weekly) %></td>
+        <td><%= link_to 'Destroy', weekly, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Weekly', new_weekly_path %>

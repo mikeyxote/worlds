@@ -16,4 +16,13 @@ class Segment < ActiveRecord::Base
       return false
     end
   end
+  
+  def create_weekly user, team, start_date, end_date
+    Weekly.create(user: user,
+                  segment: self,
+                  team: team,
+                  start_date: start_date,
+                  end_date: end_date)
+  end
+  
 end

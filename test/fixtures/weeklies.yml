@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  segment_id: 
+  start_date: 2020-06-07 14:26:53
+  end_date: 2020-06-07 14:26:53
+  user_id: 
+
+two:
+  segment_id: 
+  start_date: 2020-06-07 14:26:53
+  end_date: 2020-06-07 14:26:53
+  user_id: 

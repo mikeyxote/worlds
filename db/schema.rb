@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200607130032) do
+ActiveRecord::Schema.define(version: 20200607142948) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "strava_id",         limit: 8
@@ -98,6 +98,16 @@ ActiveRecord::Schema.define(version: 20200607130032) do
   add_index "managements", ["managed_id"], name: "index_managements_on_managed_id"
   add_index "managements", ["manager_id", "managed_id"], name: "index_managements_on_manager_id_and_managed_id", unique: true
   add_index "managements", ["manager_id"], name: "index_managements_on_manager_id"
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "memberships", ["team_id"], name: "index_memberships_on_team_id"
+  add_index "memberships", ["user_id"], name: "index_memberships_on_user_id"
 
   create_table "participations", force: :cascade do |t|
     t.integer  "user_id"
@@ -207,5 +217,19 @@ ActiveRecord::Schema.define(version: 20200607130032) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "weeklies", force: :cascade do |t|
+    t.integer  "segment_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "team_id"
+  end
+
+  add_index "weeklies", ["segment_id"], name: "index_weeklies_on_segment_id"
+  add_index "weeklies", ["team_id"], name: "index_weeklies_on_team_id"
+  add_index "weeklies", ["user_id"], name: "index_weeklies_on_user_id"
 
 end

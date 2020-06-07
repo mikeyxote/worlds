@@ -10,5 +10,19 @@
   <%= @team.profile %>
 </p>
 
+<p>
+  <strong>Weeklies:</strong></br>
+  <% @team.weeklies.each do |w| %>
+   <%= render w %></br>
+  <% end %>
+</p>
+
+<p>
+  <strong>Members:</strong>
+  <% @team.members.each do |m| %>
+    <%= render m %></br>
+  <% end %>
+</p>
+
 <%= link_to 'Edit', edit_team_path(@team) %> |
 <%= link_to 'Back', teams_path %>
