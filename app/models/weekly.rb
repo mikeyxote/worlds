@@ -14,7 +14,7 @@ class Weekly < ActiveRecord::Base
   end
   
   def winner
-    self.placements.order(elapsed_time: :desc).first
+    self.placements.order(elapsed_time: :desc).first.user
   end
   
   
