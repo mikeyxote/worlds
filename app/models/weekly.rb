@@ -14,7 +14,12 @@ class Weekly < ActiveRecord::Base
   end
   
   def winner
-    self.placements.order(elapsed_time: :desc).first.user
+    first = self.placements.order(elapsed_time: :desc).first
+    if first != nil
+      return first.user.full_name
+    else
+      return "Pending"
+    end
   end
   
   
